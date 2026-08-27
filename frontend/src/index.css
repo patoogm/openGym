@@ -204,6 +204,7 @@ h4.sec{
   padding:16px;margin-bottom:12px;
 }
 .card .big{font-size:30px;font-weight:600;letter-spacing:-.026em;line-height:1.1}
+.card.warn{border:1px solid var(--orange)}
 
 /* ------------------------------------------------------ inset group list -- */
 .sect{margin-bottom:22px}
