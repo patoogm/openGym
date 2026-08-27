@@ -51,6 +51,28 @@ export default function Home() {
       <button className="iconbtn" onClick={() => nav('/settings')} aria-label={t('Settings')}><Icon name="gear" /></button>
     </div>
 
+    {(() => {
+      const P = S.profile || {}
+      // "Has profile" = a meaningful field is set. NOT Object.keys(P).length: Profile.jsx
+      // writes empty-string `limitations`/`notes` on textarea blur, so that would false-positive.
+      const hasProfile = !!(P.goal || P.level || P.cardio || P.daysPerWeek != null || P.sessionMin != null || (P.equipment || []).length)
+      const hasProgram = !!(S.program?.blocks || []).length
+      if (hasProfile && hasProgram) return null
+      return (
+        <div className="card" style={{ marginBottom: 16 }}>
+          <h2 style={{ marginTop: 0 }}>{t('Set up your training')}</h2>
+          <p className="small dim" style={{ marginTop: 4, marginBottom: 12 }}>
+            {hasProfile
+              ? t('Create your first training block.')
+              : t('Tell us your goal and constraints to build a periodized plan.')}
+          </p>
+          <Button size="sm" variant="primary" onClick={() => nav(hasProfile ? '/program' : '/profile')}>
+            {hasProfile ? t('Go to Program') : t('Set up profile')}
+          </Button>
+        </div>
+      )
+    })()}
+
     <div className="card">
       <div className="row between" style={{ marginBottom: 8 }}>
         <button className="iconbtn" style={{ width: 30, height: 30, fontSize: 15 }} onClick={() => setWeekOffset(w => w - 1)} aria-label="Previous week"><Icon name="chevronLeft" /></button>
