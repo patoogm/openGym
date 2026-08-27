@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+build/
+frontend/dist/
+
+# runtime data (secrets, per-user state, db) — regenerated on first run
+data/
+
+# downloaded exercise media (fetched by the `media` compose service)
+media/img/
+media/gif/
+
+# env
+.env
+.env.local
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+
+# native builds
+frontend/android/app/build/
+frontend/ios/App/build/
+frontend/ios/App/Pods/
