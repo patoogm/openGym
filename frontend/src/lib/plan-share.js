@@ -10,6 +10,7 @@
 
 import { EXIDX, isBodyweightEq } from './exercises.js'
 import { modeOf, fmtSec, isBw, isPerSide, sideReps } from './history.js'
+import { intervalSummary } from './cardio.js'
 import { uid, todayISO, DAYN, fmtNum, exCount } from './format.js'
 import { t } from './i18n.js'
 
@@ -148,7 +149,7 @@ function scheme(e, unit) {
   const sets = e.sets || 1
   const mode = modeOf(e)
   if (mode === 'cardio') {
-    const body = `${e.min || 20} min @ ${fmtNum(e.speed || 8)} km/h`
+    const body = e.intervals ? intervalSummary(e.intervals) : `${e.min || 20} min @ ${fmtNum(e.speed || 8)} km/h`
     return sets > 1 ? `${sets} × ${body}` : body
   }
   let s = mode === 'time' ? `${sets} × ${fmtSec(e.sec || 45)}` : `${sets} × ${e.reps ?? 10}`

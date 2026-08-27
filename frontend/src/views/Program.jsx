@@ -32,16 +32,43 @@ export default function Program() {
   const preview = blocks.find(b => b.id === previewId)
 
   const addBlock = () => {
-    const b = newManualBlock({ name: t('New block'), weeks: 4 })
+    const b = newManualBlock({ name: t('Block {0}', (S.program?.blocks?.length || 0) + 1), weeks: 4 })
     update(s => { s.program.blocks.push(b) })
   }
 
+  const clone = o => JSON.parse(JSON.stringify(o))
+
   // Per controller ruling: snapshot the outgoing active block first (activeId
-  // still points at it), then materialize the incoming one.
-  const activate = id => update(s => {
-    snapshotActiveBlock(s)
-    materializeBlock(s, id)
-  })
+  // still points at it), then materialize the incoming one — but never let that
+  // wipe a live plan the target block cannot reproduce.
+  const activate = id => {
+    const block = (S.program?.blocks || []).find(b => b.id === id)
+    if (!block) return
+    const live = S.routines || []
+    // Target block is empty and there's a live plan: adopt it into the block first,
+    // so activating turns "my current plan" into this block instead of erasing it.
+    if (!block.routines?.length && live.length > 0) {
+      update(s => {
+        const b = s.program.blocks.find(x => x.id === id)
+        b.routines = clone(s.routines)
+        b.week = clone(s.week)
+        snapshotActiveBlock(s)
+        materializeBlock(s, id)
+      })
+      return
+    }
+    // Target block has its own routines and would swap out a different live plan: confirm.
+    if (block.routines?.length && live.length > 0 && id !== activeId) {
+      confirmSheet({
+        title: t('Replace your current routines?'),
+        message: t('Activating “{0}” swaps in its routines and weekly schedule. Your current ones are saved into the block you were on.', block.name),
+        confirmText: t('Activate'),
+        onConfirm: () => update(s => { snapshotActiveBlock(s); materializeBlock(s, id) }),
+      })
+      return
+    }
+    update(s => { snapshotActiveBlock(s); materializeBlock(s, id) })
+  }
 
   const finish = () => confirmSheet({
     title: t('Finish current block?'),

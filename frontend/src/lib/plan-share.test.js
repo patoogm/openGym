@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { buildPlanBundle, parsePlan } from './plan-share.js'
+import { buildPlanBundle, parsePlan, planPrintHTML } from './plan-share.js'
 
 const stateWith = (ex, customEx = []) => ({
   unit: 'kg', customEx, week: { 1: 'r1' },
@@ -16,6 +16,15 @@ describe('plan bundle round-trip', () => {
     const parsed = parsePlan(JSON.stringify(bundle))
     const ex = parsed.routines[0].ex[0]
     expect(ex.intervals).toEqual(intervals)
+  })
+
+  it('prints the interval breakdown, not stale steady-state text', () => {
+    const intervals = { warmupMin: 5, rounds: 8, workMin: 1, restMin: 1.5, cooldownMin: 5 }
+    const html = planPrintHTML(stateWith(
+      [{ id: 'treadmill', sets: 1, mode: 'cardio', min: 30, speed: 8, intervals }]
+    ), '')
+    expect(html).toContain('8 × (1′ / 1.5′)')
+    expect(html).not.toContain('30 min @')
   })
 
   it('keeps repsMin / repsMax for double progression', () => {

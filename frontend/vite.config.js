@@ -14,6 +14,5 @@ export default defineConfig({
       '/gif': { target: media, changeOrigin: true }
     }
   },
-  build: { chunkSizeWarningLimit: 1500 },
-  test: { environment: 'jsdom' }
+  build: { chunkSizeWarningLimit: 1500 }
 })
