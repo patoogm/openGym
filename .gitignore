@@ -17,6 +17,9 @@ media/gif/
 .env
 .env.local
 
+# claude code local workspace
+.claude/
+
 # OS / editor
 .DS_Store
 Thumbs.db
