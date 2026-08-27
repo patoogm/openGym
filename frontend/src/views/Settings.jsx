@@ -103,6 +103,9 @@ export default function Settings() {
       <Row icon="target" iconTint="var(--purple)" title={t('Training profile')}
         subtitle={t('Goal, experience, equipment and limits — used to generate your training blocks.')}
         accessory="chevron" onClick={() => nav('/profile')} />
+      <Row icon="calendar" iconTint="var(--orange)" title={t('Program')}
+        subtitle={t('Your training blocks — create, activate and finish them.')}
+        accessory="chevron" onClick={() => nav('/program')} />
     </Section>
 
     {/* ---------- general ---------- */}
