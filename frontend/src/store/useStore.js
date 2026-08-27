@@ -15,7 +15,13 @@ export const DEF = {
   // that a profile which never chose (loaded state is overlaid on DEF, on every path: local,
   // server pull, backup import) still falls back to the `showRir` boolean this replaced and
   // keeps the column it had. See effortOf.
-  reminder: { on: false, time: '08:00', tz: null }, effort: null
+  reminder: { on: false, time: '08:00', tz: null }, effort: null,
+  // Training profile for the block generator (Plan 2). Free-form until then.
+  profile: {},
+  // Periodized program: an ordered list of self-contained blocks. The active block's
+  // routines are materialized into `routines`/`week` above, so every existing screen
+  // keeps working. See lib/blocks.js.
+  program: { blocks: [], activeId: null }
 }
 const clone = o => JSON.parse(JSON.stringify(o))
 
