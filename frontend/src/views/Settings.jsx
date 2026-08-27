@@ -98,6 +98,13 @@ export default function Settings() {
     </Section>
     {!user && !DEMO && !MOBILE && <p className="sect-f" style={{ marginTop: -18, marginBottom: 22 }}>{t('Guest mode — data lives only in this browser.')}</p>}
 
+    {/* ---------- training profile (feeds the block generator) ---------- */}
+    <Section title={t('Training')}>
+      <Row icon="target" iconTint="var(--purple)" title={t('Training profile')}
+        subtitle={t('Goal, experience, equipment and limits — used to generate your training blocks.')}
+        accessory="chevron" onClick={() => nav('/profile')} />
+    </Section>
+
     {/* ---------- general ---------- */}
     <Section title={t('General')} footer={t('Note: switching units only changes the label — logged numbers are not converted.')}>
       <SelectRow
