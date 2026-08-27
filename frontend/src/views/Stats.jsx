@@ -161,8 +161,17 @@ export default function Stats() {
   })() : 'reps'
   const curCardio = curMode === 'cardio'
   const curTimed = curMode === 'time'
-  const metric = s => curCardio ? (s.speed || 0) : curTimed ? (s.sec || 0) : (s.w || 0)
-  const exUnit = curCardio ? 'km/h' : curTimed ? 's' : S.unit
+  // Interval-cardio sets carry no speed — they log minutes jogged — so the curve falls
+  // back to s.min for them (and the axis label follows). Steady-state (has speed) is unchanged.
+  const curCardioMin = curCardio && curEx ? (() => {
+    for (let i = S.workouts.length - 1; i >= 0; i--) {
+      const en = S.workouts[i].entries.find(e => e.id === curEx)
+      if (en) return !en.sets.some(s => s.done && s.speed > 0)
+    }
+    return false
+  })() : false
+  const metric = s => curCardio ? (s.speed || s.min || 0) : curTimed ? (s.sec || 0) : (s.w || 0)
+  const exUnit = curCardio ? (curCardioMin ? 'min' : 'km/h') : curTimed ? 's' : S.unit
   let exPts = [], exList = [], exBest = 0
   if (curEx) {
     S.workouts.forEach(w => {

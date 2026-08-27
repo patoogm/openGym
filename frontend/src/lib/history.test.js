@@ -64,7 +64,12 @@ describe('setLabel', () => {
 
   it('reads a legacy set with no config exactly as before', () => {
     expect(setLabel(LIFT, { w: 0, r: 0 })).toBe('0×0')
-    expect(setLabel(CARDIO, {})).toBe('0 min @ 0 km/h')
+    expect(setLabel(CARDIO, {})).toBe('0 min')
+  })
+
+  it('describes an interval-cardio set by rounds and minutes', () => {
+    expect(setLabel(CARDIO, { rounds: 8, min: 8 })).toBe('8 rounds · 8 min')
+    expect(setLabel(CARDIO, { rounds: 0, min: 0 })).toBe('0 rounds · 0 min')
   })
 
   it('appends RIR when present, including a valid 0', () => {
@@ -331,6 +336,11 @@ describe('exLine', () => {
     expect(exLine({ id: LIFT, sets: 3, sec: 45, mode: 'time' }, 'kg')).toBe('3 × 0:45')
     expect(exLine({ id: LIFT, sets: 2, sec: 90, weight: 20, mode: 'time' }, 'kg')).toBe('2 × 1:30 · 20 kg')
     expect(exLine({ id: CARDIO, sets: 1, min: 20, speed: 8 }, 'kg')).toBe('1 × 20 min @ 8 km/h')
+  })
+  it('renders interval config instead of stale steady-state text', () => {
+    const intervals = { warmupMin: 5, rounds: 8, workMin: 1, restMin: 1.5, cooldownMin: 5 }
+    expect(exLine({ id: CARDIO, sets: 1, min: 20, speed: 8, intervals }, 'kg'))
+      .toBe('5′ warm-up · 8 × (1′ / 1.5′) · 5′ cool-down')
   })
 })
 

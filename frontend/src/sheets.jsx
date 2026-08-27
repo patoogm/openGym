@@ -20,6 +20,7 @@ import { buildPlanBundle, parsePlan, mergePlan, printPlan } from './lib/plan-sha
 import { estimate1RM, best1RM, is1RMRecord, REP_CAP } from './lib/onerm.js'
 import { nextPrescription, applyPrescription, policyFor, defaultIncrement, POLICIES_FOR, POLICY_NAME, POLICY_DESC, MAX_BW_SETS } from './lib/progression.js'
 import { MOBILE, shareExport } from './lib/mobile.js'
+import { intervalSummary } from './lib/cardio.js'
 
 const S = () => useStore.getState().S
 const update = (...a) => useStore.getState().update(...a)
@@ -509,7 +510,20 @@ function ExConfig({ ex, existing, onSave, onDelete, close, routine }) {
     // rather than carrying a flag nothing downstream can read.
     const flags = {}
     if (bw !== isBodyweightEq(ex.id)) flags.bodyweight = bw
-    if (cardio) onSave({ sets, min: Math.max(1, Math.round(c.min) || 20), speed: Math.max(0, c.speed || 8) })
+    if (cardio) {
+      const base = { sets, min: Math.max(1, Math.round(c.min) || 20), speed: Math.max(0, c.speed || 8) }
+      if (c.intervals) {
+        const iv = c.intervals
+        base.intervals = {
+          warmupMin: Math.max(0, Math.round(iv.warmupMin) || 0),
+          rounds: Math.max(1, Math.round(iv.rounds) || 1),
+          workMin: Math.max(0.5, iv.workMin || 1),
+          restMin: Math.max(0, iv.restMin || 0),
+          cooldownMin: Math.max(0, Math.round(iv.cooldownMin) || 0)
+        }
+      }
+      onSave(base)
+    }
     else if (mode === 'time') onSave({ sets, mode: 'time', sec: Math.max(1, Math.round(c.sec) || 45), weight: Math.max(0, c.weight || 0), ...flags, ...prog })
     else {
       // A unilateral target is stored even: the split has to divide, and a typed 15 would
@@ -538,8 +552,8 @@ function ExConfig({ ex, existing, onSave, onDelete, close, routine }) {
     <div className="row cfgrow" style={{ marginBottom: mode === 'time' ? 8 : 18 }}>
       {cardio ? <>
         <Stepper label={t('Intervals')} value={c.sets} step={1} decimal={false} onChange={v => setC(x => ({ ...x, sets: v }))} />
-        <Stepper label={t('Minutes')} value={c.min} step={1} decimal={false} onChange={v => setC(x => ({ ...x, min: v }))} />
-        <Stepper label={t('Speed (km/h)')} value={c.speed} step={0.5} onChange={v => setC(x => ({ ...x, speed: v }))} />
+        {!c.intervals && <Stepper label={t('Minutes')} value={c.min} step={1} decimal={false} onChange={v => setC(x => ({ ...x, min: v }))} />}
+        {!c.intervals && <Stepper label={t('Speed (km/h)')} value={c.speed} step={0.5} onChange={v => setC(x => ({ ...x, speed: v }))} />}
       </> : mode === 'time' ? <>
         <Stepper label={t('Sets')} value={c.sets} step={1} decimal={false} onChange={v => setC(x => ({ ...x, sets: v }))} />
         <Stepper label={t('Seconds')} value={c.sec} step={5} decimal={false} onChange={v => setC(x => ({ ...x, sec: v }))} />
@@ -552,6 +566,31 @@ function ExConfig({ ex, existing, onSave, onDelete, close, routine }) {
         {!bw && <Stepper label={t('Weight ({0})', st.unit)} value={c.weight} step={2.5} onChange={v => setC(x => ({ ...x, weight: v }))} />}
       </>}
     </div>
+    {cardio && <div className="sect-b" style={{ marginBottom: 12 }}>
+      <Row icon="figureRun" iconTint="var(--blue)" title={t('Interval training')}
+        subtitle={t('Rounds of hard and easy instead of one steady pace.')}>
+        <Switch checked={!!c.intervals} onChange={on => setC(x => on
+          ? { ...x, intervals: x.intervals || { warmupMin: 5, rounds: 8, workMin: 1, restMin: 1.5, cooldownMin: 5 } }
+          : { ...x, intervals: undefined })} />
+      </Row>
+    </div>}
+    {cardio && c.intervals && <>
+      <div className="row cfgrow" style={{ marginBottom: 10 }}>
+        <Stepper label={t('Warm-up (min)')} value={c.intervals.warmupMin} step={1} decimal={false}
+          onChange={v => setC(x => ({ ...x, intervals: { ...x.intervals, warmupMin: v } }))} />
+        <Stepper label={t('Rounds')} value={c.intervals.rounds} step={1} decimal={false}
+          onChange={v => setC(x => ({ ...x, intervals: { ...x.intervals, rounds: v } }))} />
+      </div>
+      <div className="row cfgrow" style={{ marginBottom: 10 }}>
+        <Stepper label={t('Work (min)')} value={c.intervals.workMin} step={0.5}
+          onChange={v => setC(x => ({ ...x, intervals: { ...x.intervals, workMin: v } }))} />
+        <Stepper label={t('Rest (min)')} value={c.intervals.restMin} step={0.5}
+          onChange={v => setC(x => ({ ...x, intervals: { ...x.intervals, restMin: v } }))} />
+        <Stepper label={t('Cool-down (min)')} value={c.intervals.cooldownMin} step={1} decimal={false}
+          onChange={v => setC(x => ({ ...x, intervals: { ...x.intervals, cooldownMin: v } }))} />
+      </div>
+      <div className="small dim" style={{ marginBottom: 18 }}>{intervalSummary(c.intervals)}</div>
+    </>}
     {mode === 'time' && !bw && <div className="small dim" style={{ marginBottom: 18 }}>
       {t('A timer runs while you hold the set. Leave the weight at 0 for bodyweight holds.')}
     </div>}
