@@ -14,6 +14,7 @@ import Icon from '../components/Icon.jsx'
 import { Button, Check, NumberField } from '../components/ui.jsx'
 import { nextPrescription, applyPrescription } from '../lib/progression.js'
 import { glyphOf } from '../lib/glyphs.js'
+import { intervalSummary, minutesJogged, plannedRounds } from '../lib/cardio.js'
 
 /* ---------- start chooser (no active workout) ---------- */
 function StartChooser() {
@@ -79,10 +80,14 @@ function ExerciseBlock({ entryIdx, compact, onToggle, onField, onAddSet, onRemov
   // The reps column is the total in every mode, unilateral included — the stepper walks in
   // twos there so the number you land on is one you can actually split evenly.
   const repCol = { f: 'r', step: repStep(cfg), dec: false, hd: t('Reps') }
-  const col1 = cardio ? { f: 'min', step: 1, dec: false, hd: t('Duration (min)') }
+  // Interval cardio (a target with an `intervals` block, added in Plan) logs a count of
+  // rounds done, not raw minutes — the stored `min` is derived from it (minutesJogged) so
+  // the running chart still plots minutes. Steady-state cardio keeps the minutes stepper.
+  const iv = cardio ? (entry.target && entry.target.intervals) : null
+  const col1 = cardio ? (iv ? { f: 'rounds', step: 1, dec: false, hd: t('Rounds done') } : { f: 'min', step: 1, dec: false, hd: t('Duration (min)') })
     : timed ? { f: 'sec', step: 5, dec: false, hd: t('Seconds') }
       : (bw && !added) ? repCol : loadCol
-  const col2 = cardio ? { f: 'speed', step: 0.5, dec: true, hd: t('Speed (km/h)') }
+  const col2 = cardio ? (iv ? null : { f: 'speed', step: 0.5, dec: true, hd: t('Speed (km/h)') })
     : timed ? ((bw && !added) ? null : loadCol)
       : (bw && !added) ? null : repCol
   // Effort (RIR or RPE, whichever the profile logs) only makes sense for weighted rep sets,
@@ -123,6 +128,7 @@ function ExerciseBlock({ entryIdx, compact, onToggle, onField, onAddSet, onRemov
       {ex.eq && <span className="tag">{t(ex.eq)}</span>}
       {best > 0 && <span className="tag nocap">{t('Best:')} {fmtNum(best)} {S.unit}</span>}
     </div>
+    {iv && <div className="small dim" style={{ margin: '2px 0 10px' }}>{intervalSummary(iv)}</div>}
     {last && <div className="small dim" style={{ marginBottom: 4 }}>{t('Last time')} ({fmtDate(last.d)}): {last.sets.map(s => setLabel(entry.id, s, last.target)).join(', ')}</div>}
     {plan && plan.why && plan.kind !== 'off' && <div className={'progline' + (plan.kind === 'deload' ? ' warn' : '')}>
       <Icon name={plan.kind === 'up' ? 'arrowUp' : plan.kind === 'deload' ? 'arrowDown' : 'lightbulb'} />
@@ -172,12 +178,24 @@ function ActiveWorkout() {
   // what was actually logged — in the session, in history and in a backup.
   const setField = (idx, i, field, v) => mutEntry(idx, e => {
     if (v == null) delete e.sets[i][field]; else e.sets[i][field] = v
+    // Interval cardio: the stepper edits `rounds`; the persisted `min` (what the running
+    // chart plots) is always derived from it so 6 rounds never reads as a dip below 8.
+    if (field === 'rounds') {
+      const iv = (e.target || {}).intervals
+      if (iv) e.sets[i].min = minutesJogged(iv, v || 0)
+    }
   })
   const modeAt = idx => modeOf({ ...(A.entries[idx].target || {}), id: A.entries[idx].id })
   const addSet = idx => mutEntry(idx, e => {
     const l = e.sets[e.sets.length - 1]
     const m = modeOf({ ...(e.target || {}), id: e.id })
-    if (m === 'cardio') e.sets.push({ min: l ? l.min : (e.target.min || 20), speed: l ? l.speed : (e.target.speed || 8), done: false })
+    if (m === 'cardio') {
+      const iv = (e.target || {}).intervals
+      if (iv) {
+        const rounds = l && l.rounds != null ? l.rounds : plannedRounds(iv)
+        e.sets.push({ rounds, min: minutesJogged(iv, rounds), done: false })
+      } else e.sets.push({ min: l ? l.min : (e.target.min || 20), speed: l ? l.speed : (e.target.speed || 8), done: false })
+    }
     else if (m === 'time') e.sets.push({ sec: l ? l.sec : (e.target.sec || 45), w: l ? (l.w || 0) : (e.target.weight || 0), done: false })
     else e.sets.push({ w: l ? l.w : 0, r: l ? l.r : e.target.reps, done: false })
   })

@@ -2,6 +2,7 @@
 import { todayISO, isoOf, weekKey, fmtNum } from './format.js'
 import { isCardio, isBodyweightEq } from './exercises.js'
 import { t } from './i18n.js'
+import { minutesJogged, plannedRounds } from './cardio.js'
 
 // How an exercise is logged (issue #16). This used to be derived from the body part alone,
 // which meant a plank or a farmer's carry could only be timed by filing it under cardio.
@@ -178,9 +179,17 @@ export function buildSets(S, cfg) {
   const prevAt = i => (last ? (last.sets[i] || last.sets[last.sets.length - 1]) : null)
 
   if (mode === 'cardio') {
+    const iv = cfg.intervals
     for (let i = 0; i < n; i++) {
       const prev = prevAt(i)
-      sets.push({ min: prev ? prev.min : (cfg.min || 20), speed: prev ? prev.speed : (cfg.speed || 8), done: false })
+      if (iv) {
+        // Interval cardio seeds the prescribed round count; the stored `min` (the running
+        // chart's value) is derived from it, never entered directly.
+        const rounds = prev && prev.rounds != null ? prev.rounds : plannedRounds(iv)
+        sets.push({ rounds, min: minutesJogged(iv, rounds), done: false })
+      } else {
+        sets.push({ min: prev ? prev.min : (cfg.min || 20), speed: prev ? prev.speed : (cfg.speed || 8), done: false })
+      }
     }
     return sets
   }
