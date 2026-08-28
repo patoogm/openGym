@@ -118,6 +118,10 @@ export default function Settings() {
           subtitle: INSTR_LANGS.includes(k) ? null : t("Exercise instructions aren't available in this language yet — they stay in English."),
         }))}
       />
+      {(S.lang || 'es') !== 'en' && <Row icon="globe" iconTint="var(--blue)" title={t('Exercise names in English')}
+        subtitle={t('Show every exercise by its English name instead of the translation.')}>
+        <Switch checked={!!S.exNamesEn} onChange={v => update(s => { s.exNamesEn = v })} />
+      </Row>}
       <Row icon="scale" iconTint="var(--teal)" title={t('Weight unit')}>
         <Segmented className="seg-inline"
           options={[{ value: 'kg', label: 'kg' }, { value: 'lb', label: 'lb' }]}

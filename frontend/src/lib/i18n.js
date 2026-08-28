@@ -19,10 +19,13 @@ const DATE_LOCALES = {
 
 const localePacks = import.meta.glob('../locales/*.js')
 const instrPacks = import.meta.glob('../instr/*.js')
+const namePacks = import.meta.glob('../names/*.js')
 
 let lang = 'en'
 let dict = {}
 let instr = null            // { exId: [steps] } for the current language, null = English
+let names = null            // { exId: name } for the current language, null = English
+let namesEn = false         // S.exNamesEn: force English exercise names regardless of UI language
 let version = 0
 const subs = new Set()
 const notify = () => { version++; subs.forEach(f => f()) }
@@ -39,6 +42,18 @@ export function t(s, ...args) {
 // Instructions for an exercise in the current language (English steps as fallback).
 export const instrFor = ex => (instr && instr[ex.id]) || ex.st || []
 
+// Exercise name in the current language. Falls back to the English name (ex.n) when the
+// language has no pack, the id isn't translated, or the user forced English names.
+export const nameFor = ex => (!namesEn && names && names[ex.id]) || ex.n
+
+// Toggle for S.exNamesEn — wired from App.jsx. Re-renders subscribers so names swap live.
+export function setExNamesEn(v) {
+  v = !!v
+  if (v === namesEn) return
+  namesEn = v
+  notify()
+}
+
 export async function setLang(l) {
   if (!LANGS[l]) l = 'en'
   if (l === lang && version > 0) return
@@ -46,7 +61,9 @@ export async function setLang(l) {
   try {
     dict = l === 'en' ? {} : (await localePacks['../locales/' + l + '.js']()).default
     instr = l === 'en' || !INSTR_LANGS.includes(l) ? null : (await instrPacks['../instr/' + l + '.js']()).default
-  } catch (e) { dict = {}; instr = null }
+    const namePack = namePacks['../names/' + l + '.js']
+    names = l === 'en' || !namePack ? null : (await namePack()).default
+  } catch (e) { dict = {}; instr = null; names = null }
   notify()
 }
 
