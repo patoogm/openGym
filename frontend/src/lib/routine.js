@@ -32,3 +32,15 @@ export function sectionAt(list, i) {
   }
   return null
 }
+
+// Flatten a routine's ex list to the exercise configs a workout is built from,
+// each tagged with the section it sits in. Markers are consumed, not emitted.
+export function entryConfigs(list) {
+  const out = []
+  let section = null
+  ;(list || []).forEach(e => {
+    if (isSection(e)) { section = e.section; return }
+    out.push({ cfg: e, section })
+  })
+  return out
+}
