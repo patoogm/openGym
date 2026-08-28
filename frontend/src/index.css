@@ -153,6 +153,12 @@ button,.chip,.tile,.item,.wday,.cal-d,.swatch,.hm-c,.lrow,.seg button,.stp butto
 .small{font-size:13px;line-height:1.38}
 .accent{color:var(--acc)}
 .capitalize{text-transform:capitalize}
+/* cap1: only the first letter. Exercise names in the Spanish (and other) name packs are
+   written in natural sentence case ("press de banca con barra"); blanket capitalize would
+   Title-Case every word. English names arrive lowercase from the dataset, so the first
+   letter still needs lifting. */
+.cap1{text-transform:none}
+.cap1::first-letter{text-transform:uppercase}
 /* exercise names and body-part/equipment terms arrive lowercase from the dataset,
    so tags and chips capitalise by default. Anything that is a unit or a sentence opts
    back out — blanket-capitalising turned "60 kg" into "60 Kg" and a whole hint into

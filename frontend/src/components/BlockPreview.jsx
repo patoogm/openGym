@@ -5,7 +5,7 @@
 import { exOr } from '../lib/exercises.js'
 import { intervalSummary } from '../lib/cardio.js'
 import { DAYN } from '../lib/format.js'
-import { t } from '../lib/i18n.js'
+import { t, nameFor } from '../lib/i18n.js'
 import Icon from './Icon.jsx'
 import { Button } from './ui.jsx'
 
@@ -73,7 +73,7 @@ export default function BlockPreview({ block, onAccept, onDiscard, droppedCount 
           <div className="list">
             {(r.ex || []).map((e, i) => (
               <div key={i} className="item">
-                <div className="grow"><div className="tt capitalize">{exOr(e.id).n}</div></div>
+                <div className="grow"><div className="tt cap1">{nameFor(exOr(e.id))}</div></div>
                 <div className="ss" style={{ whiteSpace: 'nowrap' }}>{exScheme(e)}</div>
               </div>
             ))}

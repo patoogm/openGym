@@ -8,6 +8,9 @@ import { MOBILE, nativeLoad, nativeSave, syncReminder } from '../lib/mobile.js'
 const KEY = 'gym_state_v1'
 export const DEF = {
   unit: 'kg', restSec: 90, sound: true, keepAwake: true, lang: 'es',
+  // Show exercise names in English instead of the translated pack for the current UI language.
+  // Opt-in per profile (synced): some coaches/lifters know exercises only by their English name.
+  exNamesEn: false,
   theme: 'dark', accent: 'lime', body: 'male', targetW: null,
   bodyweight: [], routines: [], week: {}, dayPlan: {},
   exWeights: {}, workouts: [], active: null, customEx: [], gifSize: 'full',

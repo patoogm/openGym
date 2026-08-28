@@ -18,4 +18,13 @@ describe('DEF', () => {
     expect(merged.profile).toEqual({})
     expect(merged.routines).toHaveLength(1)
   })
+
+  it('shows translated exercise names by default (exNamesEn false)', () => {
+    expect(DEF.exNamesEn).toBe(false)
+  })
+
+  it('an old state without exNamesEn reads as false after merge', () => {
+    const merged = Object.assign(JSON.parse(JSON.stringify(DEF)), { routines: [] })
+    expect(merged.exNamesEn).toBe(false)
+  })
 })
