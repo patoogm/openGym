@@ -13,6 +13,19 @@ import { Button, SelectRow } from '../components/ui.jsx'
 import { POLICIES_FOR, POLICY_NAME, POLICY_DESC } from '../lib/progression.js'
 import BodyMap from '../components/BodyMap.jsx'
 import { loadOfRoutine, rankOf, MUSCLE_NAME } from '../lib/muscles.js'
+import { sectionsOf, isSection, countEx } from '../lib/routine.js'
+
+function SectionHeader({ idx, name, count, onRename, onMove, onDelete }) {
+  return (
+    <div className="sect-hdr">
+      <input className="input sect-name" defaultValue={name}
+        onChange={e => onRename(e.target.value)} />
+      <button className="iconbtn" aria-label="Move section up" style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={() => onMove(-1)}><Icon name="chevronUp" /></button>
+      <button className="iconbtn" aria-label="Move section down" style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={() => onMove(1)}><Icon name="chevronDown" /></button>
+      <button className="iconbtn" aria-label="Delete section" style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={onDelete}><Icon name="trash" /></button>
+    </div>
+  )
+}
 
 export default function RoutineEdit() {
   const nav = useNavigate()
@@ -37,6 +50,15 @@ export default function RoutineEdit() {
   const unitFirst = new Set(units.filter(u => u.length > 1).map(u => u[0]))
   const inSS = new Set(units.filter(u => u.length > 1).flat())
 
+  // The index in r.ex of the marker that opens the gi-th named section (0-based over named groups).
+  const sectionMarkerIndex = gi => {
+    let seen = -1
+    for (let k = 0; k < r.ex.length; k++) {
+      if (isSection(r.ex[k]) && ++seen === gi) return k
+    }
+    return -1
+  }
+
   return <div className="narrow">
     <div className="hdr">
       <button className="iconbtn" onClick={() => nav('/plan')} aria-label={t('Plan')}><Icon name="chevronLeft" /></button>
@@ -56,28 +78,50 @@ export default function RoutineEdit() {
       {t('Applies to every exercise in this routine that does not set its own rule.')}
     </div>
 
-    {r.ex.length ? <div className="list">{r.ex.map((e, i) => {
-      // An unresolvable id is shown rather than skipped — hiding it left an entry you
-      // could neither see nor delete, but that still turned up in the workout.
-      const ex = exOr(e.id)
-      const linkedPrev = i > 0 && e.sg && r.ex[i - 1].sg === e.sg
-      return <div key={i}>
-        {unitFirst.has(i) && <div className="ss-label"><Icon name="link" />{t('Superset')}</div>}
-        <div className={'item' + (inSS.has(i) ? ' in-ss' : '')} onClick={() => {
-          exConfigSheet(ex, e, cfg => edit(x => { x[i] = { id: x[i].id, sg: x[i].sg, ...cfg } }), () => edit(x => { x.splice(i, 1); cleanupSg(x) }), r)
-        }}>
-          <Thumb ex={ex} />
-          <div className="grow"><div className="tt cap1">{nameFor(ex)}</div><div className="ss">{exLine(e, S.unit)}</div></div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: 'none', alignItems: 'center' }}>
-            {i > 0 && <button className={'iconbtn' + (linkedPrev ? ' on-ss' : '')} title={t('Superset with exercise above')} style={{ width: 32, height: 28, borderRadius: 8, fontSize: 15 }} onClick={ev => { ev.stopPropagation(); toggleLink(i) }}><Icon name="link" /></button>}
-            <div style={{ display: 'flex', gap: 2 }}>
-              <button className="iconbtn" aria-label="Move up" style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={ev => { ev.stopPropagation(); move(i, -1) }}><Icon name="chevronUp" /></button>
-              <button className="iconbtn" aria-label="Move down" style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={ev => { ev.stopPropagation(); move(i, 1) }}><Icon name="chevronDown" /></button>
+    {countEx(r.ex) || r.ex.some(isSection)
+      ? <div className="list">
+        {sectionsOf(r.ex).map((g, gi) => <div key={gi}>
+          {g.name !== null && (() => {
+            const mi = sectionMarkerIndex(gi)
+            return <SectionHeader idx={mi} name={g.name} count={g.rows.length}
+              onRename={v => update(s => { s.routines.find(x => x.id === id).ex[mi].section = v.trim() || t('New section') })}
+              onMove={dir => move(mi, dir)}
+              onDelete={() => {
+                if (g.rows.length === 0) {
+                  edit(ex => { ex.splice(mi, 1) })
+                  return
+                }
+                confirmSheet({
+                  title: t('Delete section?'),
+                  message: t('“{0}” and its {1} exercises will be removed. This can’t be undone.', g.name, g.rows.length),
+                  confirmText: t('Delete'), danger: true,
+                  onConfirm: () => edit(ex => { ex.splice(mi, g.rows.length + 1); cleanupSg(ex) })
+                })
+              }} />
+          })()}
+          {g.rows.map(({ e, i }) => {
+            const ex = exOr(e.id)
+            const linkedPrev = i > 0 && e.sg && r.ex[i - 1] && r.ex[i - 1].sg === e.sg
+            return <div key={i}>
+              {unitFirst.has(i) && <div className="ss-label"><Icon name="link" />{t('Superset')}</div>}
+              <div className={'item' + (inSS.has(i) ? ' in-ss' : '')} onClick={() => {
+                exConfigSheet(ex, e, cfg => edit(x => { x[i] = { id: x[i].id, sg: x[i].sg, ...cfg } }), () => edit(x => { x.splice(i, 1); cleanupSg(x) }), r)
+              }}>
+                <Thumb ex={ex} />
+                <div className="grow"><div className="tt cap1">{nameFor(ex)}</div><div className="ss">{exLine(e, S.unit)}</div></div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: 'none', alignItems: 'center' }}>
+                  {i > 0 && <button className={'iconbtn' + (linkedPrev ? ' on-ss' : '')} title={t('Superset with exercise above')} style={{ width: 32, height: 28, borderRadius: 8, fontSize: 15 }} onClick={ev => { ev.stopPropagation(); toggleLink(i) }}><Icon name="link" /></button>}
+                  <div style={{ display: 'flex', gap: 2 }}>
+                    <button className="iconbtn" aria-label="Move up" style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={ev => { ev.stopPropagation(); move(i, -1) }}><Icon name="chevronUp" /></button>
+                    <button className="iconbtn" aria-label="Move down" style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={ev => { ev.stopPropagation(); move(i, 1) }}><Icon name="chevronDown" /></button>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          })}
+        </div>)}
       </div>
-    })}</div> : <div className="empty"><div className="ico"><Icon name="dumbbell" /></div>{t('No exercises yet — add your first one.')}</div>}
+      : <div className="empty"><div className="ico"><Icon name="dumbbell" /></div>{t('No exercises yet — add your first one.')}</div>}
 
     {/* Coverage of the routine as planned, so a gap shows up while you're building it
         rather than after a month of training around it. */}
@@ -95,6 +139,8 @@ export default function RoutineEdit() {
 
     <div className="small dim row" style={{ margin: '10px 2px', gap: 5 }}><Icon name="link" style={{ fontSize: 13 }} />{t('Tap the link button on an exercise to superset it with the one above — you’ll do them back-to-back.')}</div>
     <Button variant="primary" onClick={() => exercisePicker(ex => exConfigSheet(ex, null, cfg => edit(x => { x.push({ id: ex.id, ...cfg }) }), null, r))} icon="plus">{t('Add exercise')}</Button>
+    <div style={{ height: 8 }} />
+    <Button onClick={() => edit(ex => { ex.push({ section: t('New section') }) })} icon="plus">{t('Add section')}</Button>
     <div style={{ height: 10 }} />
     <Button variant="danger" onClick={() => confirmSheet({
       title: t('Delete routine?'), message: t('“{0}” and its exercises will be removed.', r.name), confirmText: t('Delete'), danger: true,
