@@ -15,7 +15,7 @@ import BodyMap from '../components/BodyMap.jsx'
 import { loadOfRoutine, rankOf, MUSCLE_NAME } from '../lib/muscles.js'
 import { sectionsOf, isSection, countEx } from '../lib/routine.js'
 
-function SectionHeader({ idx, name, count, onRename, onMove, onDelete }) {
+function SectionHeader({ name, onRename, onMove, onDelete }) {
   return (
     <div className="sect-hdr">
       <input className="input sect-name" defaultValue={name}
@@ -80,13 +80,14 @@ export default function RoutineEdit() {
 
     {countEx(r.ex) || r.ex.some(isSection)
       ? <div className="list">
-        {sectionsOf(r.ex).map((g, gi) => <div key={gi}>
+        {(() => { const groups = sectionsOf(r.ex); const leadingOffset = groups[0] && groups[0].name === null ? 1 : 0; return groups.map((g, gi) => <div key={gi}>
           {g.name !== null && (() => {
-            const mi = sectionMarkerIndex(gi)
-            return <SectionHeader idx={mi} name={g.name} count={g.rows.length}
-              onRename={v => update(s => { s.routines.find(x => x.id === id).ex[mi].section = v.trim() || t('New section') })}
-              onMove={dir => move(mi, dir)}
+            const mi = sectionMarkerIndex(gi - leadingOffset)
+            return <SectionHeader name={g.name}
+              onRename={v => { if (mi < 0) return; update(s => { s.routines.find(x => x.id === id).ex[mi].section = v.trim() || t('New section') }) }}
+              onMove={dir => { if (mi < 0) return; move(mi, dir) }}
               onDelete={() => {
+                if (mi < 0) return
                 if (g.rows.length === 0) {
                   edit(ex => { ex.splice(mi, 1) })
                   return
@@ -119,7 +120,7 @@ export default function RoutineEdit() {
               </div>
             </div>
           })}
-        </div>)}
+        </div>) })()}
       </div>
       : <div className="empty"><div className="ico"><Icon name="dumbbell" /></div>{t('No exercises yet — add your first one.')}</div>}
 
