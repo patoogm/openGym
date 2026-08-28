@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { newManualBlock, activeBlock, materializeBlock, snapshotActiveBlock, finishActiveBlock } from './blocks.js'
+import { isSection } from './routine.js'
 
 const baseState = () => ({
   routines: [], week: {}, dayPlan: {},
@@ -73,6 +74,25 @@ describe('materializeBlock', () => {
     materializeBlock(s, 'blk1')
     s.routines[0].ex[0].sets = 99
     expect(s.program.blocks[0].routines[0].ex[0].sets).toBe(3)
+  })
+
+  it('materializing a block keeps section markers and re-ids exercises', () => {
+    const s = baseState()
+    const block = blockWith({
+      routines: [{
+        id: 'br1', name: 'Lunes', emoji: '', ex: [
+          { section: 'Fuerza' },
+          { id: '0043', sets: 3, reps: 10 },
+        ],
+      }],
+      week: { 1: 'br1' },
+    })
+    s.program.blocks = [block]
+    materializeBlock(s, 'blk1')
+    const ex = s.routines[0].ex
+    expect(isSection(ex[0])).toBe(true)
+    expect(ex[0].section).toBe('Fuerza')
+    expect(ex[1].id).toBe('0043')
   })
 })
 
