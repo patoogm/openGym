@@ -36,3 +36,33 @@ describe('plan bundle round-trip', () => {
     expect(ex.repsMax).toBe(12)
   })
 })
+
+describe('sections in a shared plan', () => {
+  const S = {
+    unit: 'kg',
+    routines: [{
+      id: 'r1', name: 'Full body', emoji: '',
+      ex: [
+        { section: 'Fuerza' },
+        { id: '0025', sets: 4, reps: 6 },
+        { section: 'Accesorios' },
+        { id: '0294', sets: 3, reps: 12 },
+      ],
+    }],
+    week: {}, customEx: [],
+  }
+
+  it('round-trips the markers in place and counts only real exercises', () => {
+    const bundle = JSON.parse(JSON.stringify(buildPlanBundle(S, 'x')))
+    const parsed = parsePlan(JSON.stringify(bundle))
+    expect(parsed.routines[0].ex.map(e => e.section ?? e.id))
+      .toEqual(['Fuerza', '0025', 'Accesorios', '0294'])
+    expect(parsed.exerciseCount).toBe(2)
+  })
+
+  it('prints a header per named section', () => {
+    const html = planPrintHTML(S, 'owner')
+    expect(html.indexOf('Fuerza')).toBeLessThan(html.indexOf('Accesorios'))
+    expect(html).toContain('rt-section')
+  })
+})

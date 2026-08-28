@@ -8,6 +8,7 @@
 // ankles, "cardiovascular system") maps to null and is dropped rather than guessed at.
 
 import { EXIDX } from './exercises.js'
+import { exItems } from './routine.js'
 
 // The muscles a map can shade, in head-to-toe order — also the order of any list
 // built from them, so "what am I neglecting" reads top-down like a body.
@@ -112,7 +113,7 @@ export const loadOfWorkouts = (workouts, pick) =>
 
 /** Load a routine *would* produce, from its planned set counts. */
 export const loadOfRoutine = routine =>
-  loadOf((routine?.ex || []).map(c => ({ id: c.id, sets: c.sets || 1 })))
+  loadOf(exItems(routine?.ex).map(c => ({ id: c.id, sets: c.sets || 1 })))
 
 /** Load for a workout still in progress — the sets ticked so far. */
 export const loadOfActive = active =>

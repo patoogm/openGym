@@ -303,13 +303,13 @@ Line ~21: change `if (r && r.ex.length) { onStart(r.id); return }` to `if (r && 
 
 - [ ] **Step 8: Update `sheets.jsx`**
 
-Add `countEx, exItems` to the existing `lib/routine.js`… there is no such import yet — add:
+There is no `lib/routine.js` import in `sheets.jsx` yet — add one with only what this task uses:
 
 ```js
-import { countEx, exItems, isSection, sectionAt } from './lib/routine.js'
+import { countEx, exItems } from './lib/routine.js'
 ```
 
-(`isSection` / `sectionAt` are used in Task 3; import them all now.)
+(Task 3 extends this same import with `entryConfigs` when it adds that function.)
 
 - Line ~333, ~768, ~786: change `{exCount(r.ex.length)}` → `{exCount(countEx(r.ex))}` (three occurrences; verify each is the routine-picker row and not something else).
 - Line ~677: change `const hasRoutines = (st.routines || []).some(r => r.ex && r.ex.length)` → `const hasRoutines = (st.routines || []).some(r => countEx(r.ex) > 0)`.
@@ -415,7 +415,7 @@ In `frontend/src/sheets.jsx`, `beginWorkout` currently has:
   })
 ```
 
-Replace with (the `entryConfigs` import was added in Task 2 Step 8 — if implementing out of order, add `entryConfigs` to that import from `./lib/routine.js`):
+Replace with (extend the `sheets.jsx` import added in Task 2 Step 8 to `import { countEx, exItems, entryConfigs } from './lib/routine.js'`):
 
 ```js
   const entries = entryConfigs(r ? r.ex : []).map(({ cfg, section }) => {

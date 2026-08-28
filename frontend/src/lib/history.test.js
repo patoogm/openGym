@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { modeOf, isTimed, fmtSec, setLabel, defaultConfig, buildSets, exLine, workoutVolume, effortOf, stepEffort, capEffort, isBw, isPerSide, sideReps, repStep } from './history.js'
 import { EXDB } from './exercises.js'
+import { supersetUnits, cleanupSg } from './history.js'
 
 // Real ids out of the shipped catalogue, so the body-part fallback is exercised for real.
 const CARDIO = EXDB.find(e => e.bp === 'cardio').id
@@ -404,5 +405,27 @@ describe('workoutVolume', () => {
   it('leaves an unloaded bodyweight set at zero volume rather than inventing a number', () => {
     const w = { entries: [{ id: BW, target: { bodyweight: true }, sets: [{ w: 0, r: 20, done: true }] }] }
     expect(workoutVolume(w)).toBe(0)
+  })
+})
+
+describe('superset grouping with section markers', () => {
+  it('a marker between two sg partners breaks the group', () => {
+    const list = [
+      { id: 'a', sg: 'g1' },
+      { section: 'Cardio' },
+      { id: 'b', sg: 'g1' },
+    ]
+    expect(supersetUnits(list)).toEqual([[0], [1], [2]])
+  })
+
+  it('cleanupSg strips an sg with no adjacent partner across a marker', () => {
+    const list = [
+      { id: 'a', sg: 'g1' },
+      { section: 'X' },
+      { id: 'b', sg: 'g1' },
+    ]
+    cleanupSg(list)
+    expect(list[0].sg).toBeUndefined()
+    expect(list[2].sg).toBeUndefined()
   })
 })

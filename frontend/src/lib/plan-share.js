@@ -13,12 +13,14 @@ import { modeOf, fmtSec, isBw, isPerSide, sideReps } from './history.js'
 import { intervalSummary } from './cardio.js'
 import { uid, todayISO, DAYN, fmtNum, exCount } from './format.js'
 import { t, nameFor } from './i18n.js'
+import { isSection, exItems, sectionsOf } from './routine.js'
 
 const PLAN_FMT = 1
 const WEEK_ORDER = [1, 2, 3, 4, 5, 6, 0]   // Mon-first, matching the Plan screen
 
 // Keep only the meaningful config fields, so the file stays small and readable.
 function cleanEx(e) {
+  if (isSection(e)) return { section: e.section }
   const o = { id: e.id, sets: e.sets }
   const mode = modeOf(e)
   if (mode === 'cardio') {
@@ -55,7 +57,7 @@ export function buildPlanBundle(S, name) {
   const routines = (S.routines || []).map(r => ({
     id: r.id, name: r.name, emoji: r.emoji, ...(r.prog ? { prog: r.prog } : {}), ex: (r.ex || []).map(cleanEx)
   }))
-  const usedIds = new Set(routines.flatMap(r => r.ex.map(e => e.id)))
+  const usedIds = new Set(routines.flatMap(r => exItems(r.ex).map(e => e.id)))
   const customEx = (S.customEx || [])
     .filter(c => usedIds.has(c.id))
     .map(c => ({ id: c.id, n: c.n, bp: c.bp, ...(c.desc ? { desc: c.desc } : {}) }))
@@ -84,6 +86,7 @@ export function parsePlan(raw) {
   const routines = data.routines.filter(r => r && Array.isArray(r.ex)).map(r => ({
     ...r,
     ex: r.ex.filter(e => {
+      if (isSection(e)) return true
       const ok = !!e && (known.has(e.id) || !!EXIDX[e.id])
       if (!ok) dropped++
       return ok
@@ -96,7 +99,7 @@ export function parsePlan(raw) {
     customEx,
     dropped,
     routineCount: routines.length,
-    exerciseCount: routines.reduce((n, r) => n + r.ex.length, 0),
+    exerciseCount: routines.reduce((n, r) => n + exItems(r.ex).length, 0),
     scheduledDays: WEEK_ORDER.filter(d => data.week?.[d]).length
   }
 }
@@ -171,7 +174,7 @@ function units(ex) {
 }
 
 function routineHTML(r, unit) {
-  const rows = units(r.ex).map(u => {
+  const groupHTML = rows => units(rows.map(x => x.e)).map(u => {
     const items = u.map(e => {
       const ex = EXIDX[e.id]
       const name = ex ? nameFor(ex) : t('Unknown exercise')
@@ -182,7 +185,14 @@ function routineHTML(r, unit) {
       ? `<div class="ss"><div class="ss-tag">${esc(t('Superset'))}</div><div class="ss-items">${items}</div></div>`
       : items
   }).join('')
-  const count = exCount(r.ex.length)
+
+  const groups = sectionsOf(r.ex)
+  const rows = groups.length
+    ? groups.map(g =>
+        (g.name !== null ? `<h3 class="rt-section">${esc(g.name)}</h3>` : '') + groupHTML(g.rows)
+      ).join('')
+    : ''
+  const count = exCount(exItems(r.ex).length)
   return `<section class="routine">
     <div class="r-head"><h2>${esc(r.name)}</h2><span class="r-count">${esc(count)}</span></div>
     <div class="ex-list">${rows || `<div class="ex empty">${esc(t('No exercises yet.'))}</div>`}</div>
@@ -201,7 +211,7 @@ function weekHTML(S) {
 /** Full self-contained HTML for the print/PDF view. */
 export function planPrintHTML(S, owner) {
   const unit = S.unit || 'kg'
-  const routines = (S.routines || []).filter(r => r.ex && r.ex.length)
+  const routines = (S.routines || []).filter(r => exItems(r.ex).length)
   const body = routines.length
     ? routines.map(r => routineHTML(r, unit)).join('')
     : `<p class="none">${esc(t('No routines yet.'))}</p>`
@@ -248,6 +258,9 @@ export function planPrintHTML(S, owner) {
   .ss { break-inside: avoid; page-break-inside: avoid; border-left: 3px solid #cfe08a; padding-left: 12px; margin: 4px 0; }
   .ss-tag { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: #6a7a3a; font-weight: 700; padding-top: 4px; }
   .ss .ex:first-of-type { padding-top: 2px; }
+
+  h3.rt-section { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #8a90a0; font-weight: 700; margin: 12px 0 4px; padding-top: 8px; border-top: 1px solid #eef0f4; }
+  .ex-list > h3.rt-section:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
 
   footer { margin-top: 26px; padding-top: 10px; border-top: 1px solid #eef0f4; color: #a2a8b6; font-size: 11px; text-align: center; }
 </style></head>
