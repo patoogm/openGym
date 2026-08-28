@@ -27,4 +27,10 @@ describe('DEF', () => {
     const merged = Object.assign(JSON.parse(JSON.stringify(DEF)), { routines: [] })
     expect(merged.exNamesEn).toBe(false)
   })
+
+  it('a pre-sections routine is unchanged after merge onto DEF', () => {
+    const old = { routines: [{ id: 'r1', name: 'A', ex: [{ id: '0025', sets: 3, reps: 8 }] }] }
+    const merged = Object.assign(JSON.parse(JSON.stringify(DEF)), old)
+    expect(merged.routines[0].ex).toEqual([{ id: '0025', sets: 3, reps: 8 }])
+  })
 })
