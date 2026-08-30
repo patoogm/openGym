@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { isSection, exItems, countEx, sectionsOf, sectionAt } from './routine.js'
+import { isSection, exItems, countEx, sectionsOf, sectionAt, sectionEnd } from './routine.js'
 
 const SEC = n => ({ section: n })
 const EX = id => ({ id, sets: 3, reps: 10 })
@@ -58,6 +58,23 @@ describe('sectionsOf', () => {
   it('returns [] for an empty list', () => {
     expect(sectionsOf([])).toEqual([])
     expect(sectionsOf(undefined)).toEqual([])
+  })
+})
+
+describe('sectionEnd', () => {
+  it('gives the splice index that appends to the end of a section', () => {
+    const list = [SEC('A'), EX('1'), EX('2'), SEC('B'), EX('3')]
+    expect(sectionEnd(list, 0)).toBe(3) // just before marker B
+    expect(sectionEnd(list, 3)).toBe(5) // last section → end of list
+  })
+
+  it('handles the leading group with marker index -1', () => {
+    expect(sectionEnd([EX('0'), SEC('A'), EX('1')], -1)).toBe(1)
+    expect(sectionEnd([EX('0'), EX('1')], -1)).toBe(2)
+  })
+
+  it('appends right after the marker for an empty section', () => {
+    expect(sectionEnd([SEC('A'), SEC('B'), EX('1')], 0)).toBe(1)
   })
 })
 

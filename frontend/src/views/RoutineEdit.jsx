@@ -13,7 +13,7 @@ import { Button, SelectRow } from '../components/ui.jsx'
 import { POLICIES_FOR, POLICY_NAME, POLICY_DESC } from '../lib/progression.js'
 import BodyMap from '../components/BodyMap.jsx'
 import { loadOfRoutine, rankOf, MUSCLE_NAME } from '../lib/muscles.js'
-import { sectionsOf, isSection, countEx } from '../lib/routine.js'
+import { sectionsOf, isSection, countEx, sectionEnd } from '../lib/routine.js'
 
 function SectionHeader({ name, onRename, onMove, onDelete }) {
   return (
@@ -45,6 +45,11 @@ export default function RoutineEdit() {
     else { const gid = prev.sg || ('sg' + uid()); prev.sg = gid; cur.sg = gid }
     cleanupSg(ex)
   })
+
+  // Add an exercise, placing it at the splice index `at(list)` returns (computed at
+  // edit time so it stays correct if the list shifted since render).
+  const addEx = at => exercisePicker(ex => exConfigSheet(ex, null,
+    cfg => edit(x => { x.splice(at(x), 0, { id: ex.id, ...cfg }) }), null, r))
 
   const units = supersetUnits(r.ex)
   const unitFirst = new Set(units.filter(u => u.length > 1).map(u => u[0]))
@@ -80,10 +85,10 @@ export default function RoutineEdit() {
 
     {countEx(r.ex) || r.ex.some(isSection)
       ? <div className="list">
-        {(() => { const groups = sectionsOf(r.ex); const leadingOffset = groups[0] && groups[0].name === null ? 1 : 0; return groups.map((g, gi) => <div key={gi}>
-          {g.name !== null && (() => {
-            const mi = sectionMarkerIndex(gi - leadingOffset)
-            return <SectionHeader name={g.name}
+        {(() => { const groups = sectionsOf(r.ex); const leadingOffset = groups[0] && groups[0].name === null ? 1 : 0; const hasSections = r.ex.some(isSection); return groups.map((g, gi) => {
+          const mi = g.name === null ? -1 : sectionMarkerIndex(gi - leadingOffset)
+          return <div key={gi}>
+          {g.name !== null && <SectionHeader name={g.name}
               onRename={v => { if (mi < 0) return; update(s => { s.routines.find(x => x.id === id).ex[mi].section = v.trim() || t('New section') }) }}
               onMove={dir => { if (mi < 0) return; move(mi, dir) }}
               onDelete={() => {
@@ -98,8 +103,7 @@ export default function RoutineEdit() {
                   confirmText: t('Delete'), danger: true,
                   onConfirm: () => edit(ex => { ex.splice(mi, g.rows.length + 1); cleanupSg(ex) })
                 })
-              }} />
-          })()}
+              }} />}
           {g.rows.map(({ e, i }) => {
             const ex = exOr(e.id)
             const linkedPrev = i > 0 && e.sg && r.ex[i - 1] && r.ex[i - 1].sg === e.sg
@@ -120,7 +124,11 @@ export default function RoutineEdit() {
               </div>
             </div>
           })}
-        </div>) })()}
+          {hasSections && <button className="sect-add" onClick={() => addEx(x => sectionEnd(x, mi))}>
+            <Icon name="plus" />{g.name === null ? t('Add exercise') : t('Add to {0}', g.name)}
+          </button>}
+        </div>
+        }) })()}
       </div>
       : <div className="empty"><div className="ico"><Icon name="dumbbell" /></div>{t('No exercises yet — add your first one.')}</div>}
 
