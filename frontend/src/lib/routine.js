@@ -24,6 +24,17 @@ export function sectionsOf(list) {
   return groups
 }
 
+// The splice index that appends a new exercise to the end of the section opened by
+// the marker at `mi` (pass -1 for the leading, unnamed group): the next marker after
+// `mi`, or the end of the list.
+export function sectionEnd(list, mi) {
+  const src = list || []
+  for (let j = mi + 1; j < src.length; j++) {
+    if (isSection(src[j])) return j
+  }
+  return src.length
+}
+
 // The section name the entry at index `i` belongs to (nearest preceding marker), or null.
 export function sectionAt(list, i) {
   const src = list || []

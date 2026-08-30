@@ -878,6 +878,14 @@ h4.sec{
 .item.in-ss{box-shadow:inset 3px 0 0 var(--acc)}
 .sect-hdr{display:flex;align-items:center;gap:4px;margin:14px 2px 6px}
 .sect-hdr .sect-name{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--label-2);padding:6px 8px;flex:1}
+.sect-add{
+  display:flex;align-items:center;gap:6px;width:100%;
+  margin:6px 0 2px;padding:9px 10px;
+  font-size:13px;font-weight:600;color:var(--label-2);
+  background:transparent;border:1.5px dashed var(--acc-line);border-radius:var(--r-lg);
+}
+.sect-add .icn{font-size:14px}
+.sect-add:active{background:var(--surface)}
 .ss-card{
   border-radius:var(--r-lg);padding:14px;
   background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--acc-line);
