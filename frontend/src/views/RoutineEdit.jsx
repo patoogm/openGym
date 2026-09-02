@@ -20,9 +20,9 @@ function SectionHeader({ name, onRename, onMove, onDelete }) {
     <div className="sect-hdr">
       <input className="input sect-name" defaultValue={name}
         onChange={e => onRename(e.target.value)} />
-      <button className="iconbtn" aria-label="Move section up" style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={() => onMove(-1)}><Icon name="chevronUp" /></button>
-      <button className="iconbtn" aria-label="Move section down" style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={() => onMove(1)}><Icon name="chevronDown" /></button>
-      <button className="iconbtn" aria-label="Delete section" style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={onDelete}><Icon name="trash" /></button>
+      <button className="iconbtn" aria-label={t('Move section up')} style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={() => onMove(-1)}><Icon name="chevronUp" /></button>
+      <button className="iconbtn" aria-label={t('Move section down')} style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={() => onMove(1)}><Icon name="chevronDown" /></button>
+      <button className="iconbtn" aria-label={t('Delete section')} style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={onDelete}><Icon name="trash" /></button>
     </div>
   )
 }
@@ -117,8 +117,8 @@ export default function RoutineEdit() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: 'none', alignItems: 'center' }}>
                   {i > 0 && <button className={'iconbtn' + (linkedPrev ? ' on-ss' : '')} title={t('Superset with exercise above')} style={{ width: 32, height: 28, borderRadius: 8, fontSize: 15 }} onClick={ev => { ev.stopPropagation(); toggleLink(i) }}><Icon name="link" /></button>}
                   <div style={{ display: 'flex', gap: 2 }}>
-                    <button className="iconbtn" aria-label="Move up" style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={ev => { ev.stopPropagation(); move(i, -1) }}><Icon name="chevronUp" /></button>
-                    <button className="iconbtn" aria-label="Move down" style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={ev => { ev.stopPropagation(); move(i, 1) }}><Icon name="chevronDown" /></button>
+                    <button className="iconbtn" aria-label={t('Move up')} style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={ev => { ev.stopPropagation(); move(i, -1) }}><Icon name="chevronUp" /></button>
+                    <button className="iconbtn" aria-label={t('Move down')} style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={ev => { ev.stopPropagation(); move(i, 1) }}><Icon name="chevronDown" /></button>
                   </div>
                 </div>
               </div>
