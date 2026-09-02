@@ -25,6 +25,12 @@ cd frontend && npm install && npm run dev
 cd frontend && npm test
 ```
 
+Or, without Docker, `npm run dev` from the repo root runs all three at once
+(`scripts/dev.mjs`, no dependencies): the API on `:3000`, a static server for
+`media/` on `:8888`, and Vite on `:5173` — open the last one. `Ctrl+C` stops
+them all. Passkey login still needs everything on one origin, so use the Docker
+setup above for anything auth-related.
+
 ## Guidelines
 
 - **Keep it dependency-light.** The frontend uses React + Router + Zustand and nothing else;
