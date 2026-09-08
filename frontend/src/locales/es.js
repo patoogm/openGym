@@ -366,6 +366,7 @@ export default {
   'This app is invite-only — enter the code you were given.': 'Esta app es solo por invitación: introduce el código que te dieron.',
   'An invite code is required': 'Se requiere un código de invitación',
   'Admin dashboard': 'Panel de administración',
+  'Coach dashboard': 'Panel de coach',
   // --- muscle map ---
   'Muscle balance': 'Equilibrio muscular',
   'by sets worked': 'por series trabajadas',
