@@ -154,7 +154,12 @@ All via `.env` (see `.env.example`):
 | `WEB_PORT`    | Host port for the web UI                             | `8080`                  |
 | `RP_NAME`     | Name shown in the passkey prompt                     | `openGym`               |
 | `ADMIN_UIDS`  | User ids that get the admin dashboard (comma-separated) | *(none)*             |
+| `COACH_UIDS`  | User ids that can act as coaches (comma-separated)   | *(none)*             |
 | `INVITE_ONLY` | Require an invite code to create a profile           | *(off)*                 |
+
+### Coach mode (optional)
+
+Set `COACH_UIDS` to a comma-separated list of user ids (same format as `ADMIN_UIDS`) and run the instance with `INVITE_ONLY=1`. A coach generates invite codes from the dashboard; anyone who registers with a coach's code is linked to that coach. The coach can then assign routines — their own routines, delivered read-only to the student — and follow each student's progress at `/coach`. A student can send an adjustment request from an assigned routine; the coach edits the routine in their own editor and the change reaches the student on their next sync.
 
 Push notification keys are generated on first run and saved to `./data/vapid.json` — nothing to set.
 
