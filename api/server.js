@@ -607,6 +607,36 @@ const routes = {
     if (!detail) return json(res, 404, { error: 'no such student' });
     json(res, 200, detail);
   }
+  ,
+
+  'POST /api/coaching/change-request': async (req, res) => {
+    const user = readSession(req);
+    if (!user) return json(res, 401, { error: 'not signed in' });
+    const body = await readBody(req);
+    const a = db.assignments.find(x => x.id === body.assignmentId);
+    if (!a) return json(res, 404, { error: 'no such assignment' });
+    if (a.studentId !== user.id) return json(res, 403, { error: 'forbidden' });
+    const note = String(body.note || '').trim().slice(0, 500);
+    if (!note) return json(res, 400, { error: 'note required' });
+    const request = { id: crypto.randomBytes(8).toString('hex'), assignmentId: a.id,
+      studentId: user.id, note, createdAt: new Date().toISOString() };
+    db.changeRequests.push(request);
+    saveDb();
+    sendPush(a.coachId, { title: 'Pedido de ajuste', body: `${user.name}: ${note.split('\n')[0].slice(0, 80)}`, tag: 'change-request' });
+    json(res, 200, { request });
+  },
+
+  'POST /api/coaching/change-request/resolve': async (req, res) => {
+    const coach = requireCoach(req, res); if (!coach) return;
+    const body = await readBody(req);
+    const q = db.changeRequests.find(x => x.id === body.id);
+    if (!q) return json(res, 404, { error: 'no such request' });
+    const a = db.assignments.find(x => x.id === q.assignmentId);
+    if (!a || a.coachId !== coach.id) return json(res, 403, { error: 'forbidden' });
+    q.resolvedAt = new Date().toISOString();
+    saveDb();
+    json(res, 200, { ok: true });
+  }
 };
 
 http.createServer(async (req, res) => {

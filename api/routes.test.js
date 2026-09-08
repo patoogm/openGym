@@ -86,3 +86,31 @@ test('GET /api/coaching/assigned resolves the body from the coach state', async 
     assert.equal(r.json.routines[0].assignmentId, 'a1');
   } finally { await srv.stop(); fs.rmSync(dir, { recursive: true, force: true }); }
 });
+
+test('change-request: student creates, non-student is 403, coach resolves', async () => {
+  const dir = tmpDir();
+  seedData(dir, {
+    db: {
+      users: [{ id: 'c1', name: 'C' }, { id: 's1', name: 'S', coachId: 'c1' }, { id: 'x', name: 'X' }],
+      assignments: [{ id: 'a1', coachId: 'c1', studentId: 's1', routineId: 'r1', createdAt: 'x' }]
+    },
+    states: { c1: { routines: [{ id: 'r1', name: 'A', emoji: '💪', ex: [] }] } }
+  });
+  const srv = await startServer({ dataDir: dir, env: { COACH_UIDS: 'c1' } });
+  try {
+    const bad = await jfetch(srv.base, '/api/coaching/change-request', { cookie: cookieFor(dir, 'x'), method: 'POST', body: { assignmentId: 'a1', note: 'hi' } });
+    assert.equal(bad.status, 403);
+    const ok = await jfetch(srv.base, '/api/coaching/change-request', { cookie: cookieFor(dir, 's1'), method: 'POST', body: { assignmentId: 'a1', note: 'knee hurts' } });
+    assert.equal(ok.status, 200);
+    const id = ok.json.request.id;
+    const db = JSON.parse(fs.readFileSync(path.join(dir, 'db.json'), 'utf8'));
+    assert.equal(db.changeRequests.length, 1);
+    assert.equal(db.changeRequests[0].note, 'knee hurts');
+    const notMine = await jfetch(srv.base, '/api/coaching/change-request/resolve', { cookie: cookieFor(dir, 's1'), method: 'POST', body: { id } });
+    assert.equal(notMine.status, 403);
+    const res = await jfetch(srv.base, '/api/coaching/change-request/resolve', { cookie: cookieFor(dir, 'c1'), method: 'POST', body: { id } });
+    assert.equal(res.status, 200);
+    const db2 = JSON.parse(fs.readFileSync(path.join(dir, 'db.json'), 'utf8'));
+    assert.ok(db2.changeRequests[0].resolvedAt);
+  } finally { await srv.stop(); fs.rmSync(dir, { recursive: true, force: true }); }
+});
