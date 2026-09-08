@@ -64,6 +64,25 @@ changeRequests[]  { id, assignmentId, studentId, note, createdAt, resolvedAt?: s
 - `isCoach(user)` = `!!user && (user.coach === true || COACH_UIDS.includes(user.id))`, mirroring `isAdmin`.
 - `COACH_UIDS` parsed from `process.env.COACH_UIDS` exactly like `ADMIN_UIDS`.
 
+### New module: `api/coaching.js`
+
+`server.js` runs its HTTP listener on import, so it is not unit-testable in
+process. All coach logic that can be pure lives in a new `api/coaching.js`
+(ESM, no dependencies), imported by `server.js`. It exports:
+
+```
+isCoach(user, coachUids)                         -> boolean
+coachIdForInvite(invite, users, coachUids)       -> string | undefined
+resolveAssigned(db, studentId, readState, users) -> [{ ...routine, coachAssigned, assignmentId, coachName }]
+studentRows(db, coachId, readState, livePresence, subs)   -> [{ id, name, workouts, ... }]
+studentDetail(db, coachId, studentId, readState)         -> { user, workouts, bodyweight, assigned, requests } | null
+pruneOrphanAssignments(db, readState)            -> mutates db.assignments, returns removed count
+```
+
+`server.js` keeps only the thin HTTP wiring (parse request, call a `coaching.js`
+function, `json(res, …)`), `requireCoach` (needs `readSession`), the DB writes
+(`saveDb`), and `sendPush`.
+
 ---
 
 ## 3. Student→coach linking
@@ -93,10 +112,12 @@ Reuses the existing invite system (`invites[]`, each with `createdBy`).
 ### 4.2 Student side
 
 - New endpoint `GET /api/coaching/assigned`: for each `assignment` with `studentId === session user`, read `state-<coachId>.json`, find the routine by `routineId`, and return `{ ...routine, coachAssigned: true, assignmentId, coachName }`. Assignments whose routine no longer exists in the coach's state are **omitted** from the response (and MAY be pruned from `db.assignments` opportunistically).
+- **Merge/strip helpers:** pure functions in a new `frontend/src/lib/coaching.js` (`mergeAssigned`, `stripAssigned`, `isAssigned` — signatures in §6).
 - **Store integration (`useStore.js`):**
-  - `boot()` and every `pullState()` also call `/api/coaching/assigned`.
-  - Assigned routines are injected **in memory** into `S.routines`, each carrying `coachAssigned: true`.
-  - `pushState()` filters them out before the PUT: `state.routines = S.routines.filter(r => !r.coachAssigned)`. They never enter the student's blob, so last-write-wins never touches them.
+  - `boot()` and every `pullState()` also call `/api/coaching/assigned`; on success the result is merged with `mergeAssigned(S.routines, assigned)` before `persist`.
+  - Assigned routines live **in memory** in `S.routines`, each carrying `coachAssigned: true`.
+  - Both the `localStorage` write and the `pushState()` PUT body use `stripAssigned(...)` — assigned routines exist only in the live in-memory `S`, never in the persisted blob on either side. So last-write-wins never touches them and a stale copy can't linger in `localStorage`.
+  - A `/api/coaching/assigned` failure (offline, or the user isn't a student) leaves `S.routines` as-is — assigned routines are simply absent that session.
   - localStorage may keep them (harmless, refreshed each pull); only the server PUT must exclude them.
 - **Every existing consumer works unchanged** because the assigned routine sits in `S.routines` keyed by `id` (the coach's routine id): Plan list, Home "today", `startFlow(id)`, weekly schedule `S.week`, history. If the student schedules an assigned routine on a weekday, that `S.week` reference *is* student data and persists in the blob; the routine body does not.
 - **UI:**
@@ -151,22 +172,65 @@ All coach endpoints check ownership by `coachId` server-side, not just in the UI
 
 ## 6. Testing
 
-### Backend (`*.test.js` runner)
+### Backend (`node --test` — the api has no test setup today)
 
-- `isCoach` / `requireCoach`: 403 without flag, ok with `COACH_UIDS`, ok with `user.coach === true`.
-- `POST /api/coaching/assign` / `unassign`: creates/removes a row; rejects a student that isn't mine; rejects a `routineId` absent from my state; idempotent per pair.
-- `GET /api/coaching/assigned`: resolves the routine body from the coach's state file; omits an assignment whose routine was deleted; returns `coachAssigned: true` + `assignmentId` + `coachName`.
-- Isolation: coach A cannot read, assign to, or resolve requests for coach B's students.
-- `POST /api/register/verify` with a coach-created invite sets `user.coachId`; with a non-coach creator does not.
-- `change-request` create (student-authed, rejects non-student caller) and `resolve` (coach-authed, sets `resolvedAt`).
-- `GET /api/me` and the auth-verify responses include `coach`.
+The api package currently has no tests and no runner. This feature adds one:
+`"test": "node --test"` in `api/package.json`, using built-in `node:test` +
+`node:assert` (no new dependency).
 
-### Frontend (`useStore.test.js` + view tests)
+**Primary: unit tests of `api/coaching.js`** (`api/coaching.test.js`, in-process
+import — `server.js` is never loaded). `readState` / `livePresence` are passed in
+as plain function args, so tests hand them stubs backed by fixture objects.
 
-- After a pull, `coachAssigned` routines from `/api/coaching/assigned` appear in `S.routines`.
-- `pushState()` excludes `coachAssigned` routines from the PUT body; the persisted blob contains none.
-- An assigned routine scheduled in `S.week` keeps its id reference through a push/pull cycle.
-- `RoutineEdit` renders read-only for a `coachAssigned` routine (no save path).
+- `isCoach(user, coachUids)`: false for undefined/plain user; true for `user.coach === true`; true when `coachUids` includes the id.
+- `coachIdForInvite(invite, users, coachUids)`: returns the creator id when the creator is a coach; `undefined` for a non-coach creator, a missing creator, or a null invite.
+- `resolveAssigned`: returns one entry per assignment for the student, each with the routine body from the (stubbed) coach state, `coachAssigned: true`, `assignmentId`, `coachName`; **omits** an assignment whose `routineId` is absent from the coach state; ignores assignments for other students.
+- `studentRows`: only users with `coachId === coachId` arg; counts `assignments` and unresolved `changeRequests` per student; reads `workouts` / `lastSync` / `live` from stubs.
+- `studentDetail`: `null` when the student's `coachId` ≠ the arg (isolation); otherwise history + bodyweight + `assigned` + `requests`.
+- `pruneOrphanAssignments`: drops assignments whose routine no longer exists; leaves valid ones; returns the count removed.
+
+**Secondary: HTTP integration tests** (`api/routes.test.js`) for the wiring that
+unit tests can't reach. A helper (`api/test-helpers.js`) spawns `server.js` as a
+child process with a throwaway `DATA_DIR`, a free `PORT`, and per-case env
+(`ADMIN_UIDS` / `COACH_UIDS` / `INVITE_ONLY`); fixtures (`secret`, `db.json` with
+seeded `users`, `state-<uid>.json`) are written to `DATA_DIR` before boot;
+session cookies are minted in-test by re-deriving `sign()` (HMAC-SHA256 over
+`<uid>:<exp>:0` with the known secret).
+
+- `requireCoach`: 401 no cookie, 403 signed-in non-coach, 200 for a coach.
+- `POST /api/coaching/assign` / `unassign`: row created / removed in `db.json`; 400 for a student that isn't mine; 400 for a `routineId` absent from my state; assigning the same pair twice leaves one row.
+- `GET /api/coaching/assigned` as a student: body resolved from the coach's `state-<coachId>.json`.
+- `GET /api/coaching/student` isolation: coach B gets 404 for coach A's student.
+- `POST /api/coaching/change-request`: 403 when caller isn't `assignment.studentId`; on success a `changeRequest` row exists; `/resolve` sets `resolvedAt` and 403s a non-owning coach.
+- `GET /api/me` returns `coach: true` for a `COACH_UIDS` user, `false` otherwise.
+
+`POST /api/register/verify`'s `coachId` wiring is covered by the `coachIdForInvite`
+unit tests plus a one-line assertion in code review that the verify handler calls
+it (a full WebAuthn registration can't be driven from a test).
+
+### Frontend
+
+The merge/strip logic is pure and lives in a new `frontend/src/lib/coaching.js`,
+tested in `frontend/src/lib/coaching.test.js` (vitest, matching the existing
+`lib/*.test.js` style):
+
+```
+mergeAssigned(routines, assigned) -> routines with coachAssigned entries appended
+                                     (assigned wins on id collision; input not mutated)
+stripAssigned(routines)           -> routines.filter(r => !r.coachAssigned)
+isAssigned(routine)               -> !!routine?.coachAssigned
+```
+
+- `mergeAssigned`: appends assigned routines flagged `coachAssigned`; if an assigned id equals a local id, the assigned one replaces it; original arrays not mutated; empty `assigned` returns an equivalent list.
+- `stripAssigned`: removes every `coachAssigned` routine; leaves local ones (and their order) intact.
+- Round-trip: `stripAssigned(mergeAssigned(local, assigned))` deep-equals `local`.
+
+Store wiring is covered by extending `useStore.test.js` where it stays pure, and
+otherwise verified in the manual pass:
+
+- `pushState` builds its PUT body via `stripAssigned` — assert the body has no `coachAssigned` routine (mock `api`).
+- An assigned routine scheduled in `S.week` keeps its id reference through a strip/merge cycle.
+- `RoutineEdit` renders read-only for a `coachAssigned` routine (no save path) — manual pass.
 
 ### Manual (local instance, `npm run dev`, `INVITE_ONLY=1`)
 
