@@ -9,7 +9,7 @@ import {
   generateAuthenticationOptions, verifyAuthenticationResponse
 } from '@simplewebauthn/server';
 import webpush from 'web-push';
-import { isCoach, coachIdForInvite, resolveAssigned, pruneOrphanAssignments, validateAssign } from './coaching.js';
+import { isCoach, coachIdForInvite, resolveAssigned, pruneOrphanAssignments, validateAssign, studentRows, studentDetail } from './coaching.js';
 
 const PORT = +(process.env.PORT || 3000);
 const DATA = process.env.DATA_DIR || '/data';
@@ -592,6 +592,20 @@ const routes = {
     const removed = pruneOrphanAssignments(db, readState);
     if (removed) saveDb();
     json(res, 200, { routines: resolveAssigned(db, user.id, readState, db.users) });
+  }
+  ,
+
+  'GET /api/coaching/students': async (req, res) => {
+    const coach = requireCoach(req, res); if (!coach) return;
+    json(res, 200, { students: studentRows(db, coach.id, readState, livePresence), now: Date.now() });
+  },
+
+  'GET /api/coaching/student': async (req, res) => {
+    const coach = requireCoach(req, res); if (!coach) return;
+    const id = new URL(req.url, 'http://x').searchParams.get('id');
+    const detail = studentDetail(db, coach.id, id, readState);
+    if (!detail) return json(res, 404, { error: 'no such student' });
+    json(res, 200, detail);
   }
 };
 

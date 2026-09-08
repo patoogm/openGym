@@ -7,6 +7,20 @@ import { startServer, seedData, cookieFor, jfetch } from './test-helpers.js';
 
 function tmpDir() { return fs.mkdtempSync(path.join(os.tmpdir(), 'gym-coach-')); }
 
+test('GET /api/coaching/student: 404 across coaches', async () => {
+  const dir = tmpDir()
+  seedData(dir, { db: { users: [
+    { id: 'c1', name: 'C1' }, { id: 'c2', name: 'C2' }, { id: 's1', name: 'S', coachId: 'c1' }
+  ] } })
+  const srv = await startServer({ dataDir: dir, env: { COACH_UIDS: 'c1,c2' } })
+  try {
+    const mine = await jfetch(srv.base, '/api/coaching/student?id=s1', { cookie: cookieFor(dir, 'c1') })
+    assert.equal(mine.status, 200)
+    const notMine = await jfetch(srv.base, '/api/coaching/student?id=s1', { cookie: cookieFor(dir, 'c2') })
+    assert.equal(notMine.status, 404)
+  } finally { await srv.stop(); fs.rmSync(dir, { recursive: true, force: true }) }
+})
+
 test('GET /api/me reports coach for a COACH_UIDS user, not for others', async () => {
   const dir = tmpDir();
   seedData(dir, { db: { users: [{ id: 'c1', name: 'Coach' }, { id: 's1', name: 'Stu' }] } });

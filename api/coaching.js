@@ -41,3 +41,47 @@ export function validateAssign(db, coachId, studentId, routineId, readState) {
   if (!routineId || !routineIn(readState(coachId), routineId)) return { ok: false, error: 'routine not found' }
   return { ok: true }
 }
+
+const countEx = ex => (ex || []).filter(e => !(e && e.section != null && e.id == null)).length
+
+export function studentRows(db, coachId, readState, livePresence) {
+  return (db.users || []).filter(u => u.coachId === coachId).map(u => {
+    const S = readState(u.id) || {}
+    const workouts = S.workouts || []
+    const last = workouts[workouts.length - 1]
+    return {
+      id: u.id, name: u.name, created: u.created || null,
+      workouts: workouts.length,
+      lastWorkout: last ? last.d : null,
+      lastSync: S._ts || null,
+      live: livePresence(u.id),
+      assignmentCount: (db.assignments || []).filter(a => a.studentId === u.id && a.coachId === coachId).length,
+      pendingRequests: (db.changeRequests || []).filter(q => q.studentId === u.id && !q.resolvedAt).length
+    }
+  })
+}
+
+export function studentDetail(db, coachId, studentId, readState) {
+  const u = (db.users || []).find(x => x.id === studentId)
+  if (!u || u.coachId !== coachId) return null
+  const S = readState(u.id) || {}
+  const myAssignments = (db.assignments || []).filter(a => a.studentId === u.id && a.coachId === coachId)
+  const coachRoutines = (readState(coachId) || {}).routines || []
+  return {
+    user: { id: u.id, name: u.name, created: u.created || null },
+    unit: S.unit || 'kg',
+    lastSync: S._ts || null,
+    routines: (S.routines || []).map(r => ({ id: r.id, name: r.name, emoji: r.emoji, count: countEx(r.ex) })),
+    bodyweight: S.bodyweight || [],
+    workouts: (S.workouts || []).slice().reverse(),
+    assigned: myAssignments.map(a => {
+      const r = coachRoutines.find(x => x.id === a.routineId)
+      return { assignmentId: a.id, routineId: a.routineId,
+        name: r ? r.name : '(deleted)', emoji: r ? r.emoji : '❓', count: r ? countEx(r.ex) : 0 }
+    }),
+    requests: (db.changeRequests || [])
+      .filter(q => myAssignments.some(a => a.id === q.assignmentId))
+      .slice().sort((x, y) => String(y.createdAt).localeCompare(String(x.createdAt)))
+      .map(q => ({ id: q.id, note: q.note, createdAt: q.createdAt, resolvedAt: q.resolvedAt || null }))
+  }
+}
