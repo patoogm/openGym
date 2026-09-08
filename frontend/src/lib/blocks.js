@@ -38,7 +38,7 @@ export function materializeBlock(s, blockId) {
   const cloned = (block.routines || []).map(r => {
     const nid = uid()
     idMap[r.id] = nid
-    return { ...deepClone(r), id: nid }
+    return { ...deepClone(r), id: nid, coachAssigned: undefined, assignmentId: undefined }
   })
 
   s.routines = cloned
@@ -64,7 +64,7 @@ export function materializeBlock(s, blockId) {
 export function snapshotActiveBlock(s) {
   const block = activeBlock(s)
   if (!block) return
-  block.routines = deepClone(s.routines || [])
+  block.routines = deepClone((s.routines || []).filter(r => !r.coachAssigned))
   block.week = deepClone(s.week || {})
 }
 

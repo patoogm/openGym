@@ -54,7 +54,7 @@ function cleanEx(e) {
 
 /** Build the shareable bundle: every routine, the week schedule, referenced customs. */
 export function buildPlanBundle(S, name) {
-  const routines = (S.routines || []).map(r => ({
+  const routines = (S.routines || []).filter(r => !r.coachAssigned).map(r => ({
     id: r.id, name: r.name, emoji: r.emoji, ...(r.prog ? { prog: r.prog } : {}), ex: (r.ex || []).map(cleanEx)
   }))
   const usedIds = new Set(routines.flatMap(r => exItems(r.ex).map(e => e.id)))

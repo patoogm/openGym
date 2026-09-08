@@ -1,7 +1,11 @@
 // @vitest-environment jsdom
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { DEF } from './useStore.js'
 import { stripAssigned } from '../lib/coaching.js'
+
+const { apiMock } = vi.hoisted(() => ({ apiMock: vi.fn(() => Promise.resolve({})) }))
+vi.mock('../lib/api.js', () => ({ api: apiMock }))
+vi.mock('../lib/coachApi.js', () => ({ fetchAssigned: vi.fn(() => Promise.resolve([])) }))
 
 describe('assigned routines never reach the persisted blob', () => {
   it('stripAssigned removes coach routines from a merged list before PUT', () => {
@@ -10,6 +14,37 @@ describe('assigned routines never reach the persisted blob', () => {
       { id: 'c1', name: 'Coach', ex: [], coachAssigned: true }
     ]
     expect(stripAssigned(merged)).toEqual([{ id: 'l1', name: 'Mine', ex: [] }])
+  })
+
+  it('pushState() PUTs a state whose routines carry no coachAssigned entry', async () => {
+    const { useStore } = await import('./useStore.js')
+    apiMock.mockClear()
+    useStore.getState().setUser({ uid: 'u1', name: 'Stu' })
+    useStore.getState().update(s => {
+      s.routines = [
+        { id: 'l1', name: 'Mine', ex: [] },
+        { id: 'c1', name: 'Coach', ex: [], coachAssigned: true, assignmentId: 'a1' }
+      ]
+    }, false)
+    await useStore.getState().pushState()
+    const put = apiMock.mock.calls.find(c => c[0] === '/api/data' && c[1] && c[1].method === 'PUT')
+    expect(put).toBeTruthy()
+    const body = JSON.parse(put[1].body)
+    expect(body.state.routines.some(r => r.coachAssigned)).toBe(false)
+    expect(body.state.routines).toHaveLength(1)
+    expect(body.state.routines[0].id).toBe('l1')
+  })
+
+  it('persist() writes localStorage without coachAssigned routines', async () => {
+    const { useStore } = await import('./useStore.js')
+    useStore.getState().update(s => {
+      s.routines = [
+        { id: 'l2', name: 'Mine', ex: [] },
+        { id: 'c2', name: 'Coach', ex: [], coachAssigned: true }
+      ]
+    }, false)
+    const raw = JSON.parse(localStorage.getItem('gym_state_v1'))
+    expect(raw.routines.some(r => r.coachAssigned)).toBe(false)
   })
 })
 

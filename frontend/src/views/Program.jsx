@@ -50,7 +50,7 @@ export default function Program() {
     if (!block.routines?.length && live.length > 0) {
       update(s => {
         const b = s.program.blocks.find(x => x.id === id)
-        b.routines = clone(s.routines)
+        b.routines = clone((s.routines || []).filter(r => !r.coachAssigned))
         b.week = clone(s.week)
         snapshotActiveBlock(s)
         materializeBlock(s, id)
