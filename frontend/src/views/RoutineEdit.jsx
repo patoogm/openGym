@@ -1,6 +1,9 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useStore } from '../store/useStore.js'
+import { useUI } from '../store/useUI.js'
+import { isAssigned } from '../lib/coaching.js'
+import { requestAdjustment } from '../lib/coachApi.js'
 import { exOr } from '../lib/exercises.js'
 import { uid } from '../lib/format.js'
 import { t, nameFor } from '../lib/i18n.js'
@@ -27,6 +30,53 @@ function SectionHeader({ name, onRename, onMove, onDelete }) {
   )
 }
 
+function AdjustSheet({ r, close }) {
+  const toast = useUI(s => s.toast)
+  const [note, setNote] = useState('')
+  return <>
+    <h3>{t('Request a change')}</h3>
+    <p className="muted small">{t('Tell your coach what you want to change about this routine.')}</p>
+    <textarea className="input" rows={4} value={note} onChange={e => setNote(e.target.value)} />
+    <Button variant="primary" style={{ marginTop: 10 }} disabled={!note.trim()}
+      onClick={() => requestAdjustment(r.assignmentId, note.trim())
+        .then(() => { toast(t('Sent to your coach')); close() })
+        .catch(e => toast(e.message))}>{t('Send')}</Button>
+  </>
+}
+
+function AssignedRoutineView({ r }) {
+  const nav = useNavigate()
+  const openSheet = useUI(s => s.openSheet)
+  const S = useStore(s => s.S)
+  const groups = sectionsOf(r.ex)
+  return <div className="narrow">
+    <div className="hdr">
+      <button className="iconbtn" onClick={() => nav('/plan')} aria-label={t('Plan')}><Icon name="chevronLeft" /></button>
+      <div style={{ flex: 1, margin: '0 12px' }}>
+        <div style={{ fontWeight: 600, fontSize: 20, letterSpacing: '-.021em' }}>{r.name}</div>
+      </div>
+      <span className="tag acc">{t('from your coach')}</span>
+    </div>
+
+    <div style={{ margin: '4px 0 16px' }}>
+      <Button variant="tinted" icon="pencil" onClick={() => openSheet(close => <AdjustSheet r={r} close={close} />)}>{t('Request a change')}</Button>
+    </div>
+
+    <div className="list">
+      {groups.map((g, gi) => <div key={gi}>
+        {g.name !== null && <div className="sec" style={{ margin: '12px 2px 6px', fontWeight: 600 }}>{g.name}</div>}
+        {g.rows.map(({ e, i }) => {
+          const ex = exOr(e.id)
+          return <div key={i} className="item">
+            <Thumb ex={ex} />
+            <div className="grow"><div className="tt cap1">{nameFor(ex)}</div><div className="ss">{exLine(e, S.unit)}</div></div>
+          </div>
+        })}
+      </div>)}
+    </div>
+  </div>
+}
+
 export default function RoutineEdit() {
   const nav = useNavigate()
   const { id } = useParams()
@@ -35,6 +85,7 @@ export default function RoutineEdit() {
   const r = S.routines.find(x => x.id === id)
   useEffect(() => { if (!r) nav('/plan') }, [!!r])
   if (!r) return null
+  if (isAssigned(r)) return <AssignedRoutineView r={r} />
 
   const edit = fn => update(s => { fn(s.routines.find(x => x.id === id).ex) })
   const move = (i, dir) => edit(ex => { const j = i + dir; if (j < 0 || j >= ex.length) return;[ex[i], ex[j]] = [ex[j], ex[i]]; cleanupSg(ex) })

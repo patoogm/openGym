@@ -367,6 +367,11 @@ export default {
   'An invite code is required': 'Se requiere un código de invitación',
   'Admin dashboard': 'Panel de administración',
   'Coach dashboard': 'Panel de coach',
+  'from your coach': 'de tu coach',
+  'Request a change': 'Pedir un ajuste',
+  'Tell your coach what you want to change about this routine.': 'Contale a tu coach qué querés cambiar de esta rutina.',
+  'Sent to your coach': 'Enviado a tu coach',
+  'Send': 'Enviar',
   // --- muscle map ---
   'Muscle balance': 'Equilibrio muscular',
   'by sets worked': 'por series trabajadas',
