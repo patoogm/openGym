@@ -208,6 +208,13 @@ function requireCoach(req, res) {
   if (!coachOf(user)) { json(res, 403, { error: 'forbidden' }); return null; }
   return user;
 }
+// admin OR coach. Returns the user, or null after writing 401/403.
+function requireAdminOrCoach(req, res) {
+  const user = readSession(req);
+  if (!user) { json(res, 401, { error: 'not signed in' }); return null; }
+  if (!isAdmin(user) && !coachOf(user)) { json(res, 403, { error: 'forbidden' }); return null; }
+  return user;
+}
 function sessionCookie(user) {
   return `gymsid=${makeSession(user)}; Path=/; Max-Age=${SESSION_DAYS * 86400}; HttpOnly;${SECURE} SameSite=Lax`;
 }
@@ -523,16 +530,17 @@ const routes = {
   },
 
   'GET /api/admin/invites': async (req, res) => {
-    if (!requireAdmin(req, res)) return;
-    // resolve usedBy uid → name for display
-    const invites = db.invites.map(i => ({
-      ...i, usedByName: i.usedBy ? (db.users.find(u => u.id === i.usedBy) || {}).name || null : null
+    const u = requireAdminOrCoach(req, res); if (!u) return;
+    // resolve usedBy uid → name for display; a coach sees only invites they created
+    const mine = isAdmin(u) ? db.invites : db.invites.filter(i => i.createdBy === u.id);
+    const invites = mine.map(i => ({
+      ...i, usedByName: i.usedBy ? (db.users.find(x => x.id === i.usedBy) || {}).name || null : null
     }));
     json(res, 200, { invites, invite_only: INVITE_ONLY });
   },
 
   'POST /api/admin/invites/new': async (req, res) => {
-    const admin = requireAdmin(req, res); if (!admin) return;
+    const admin = requireAdminOrCoach(req, res); if (!admin) return;
     const body = await readBody(req);
     let code;
     // 16 hex chars = 64 bits, up from 8 chars / 32 bits. The app has no rate limiting by design
@@ -547,9 +555,10 @@ const routes = {
   },
 
   'POST /api/admin/invites/revoke': async (req, res) => {
-    if (!requireAdmin(req, res)) return;
+    const u = requireAdminOrCoach(req, res); if (!u) return;
     const body = await readBody(req);
-    const inv = db.invites.find(i => i.code === String(body.code || '').toUpperCase());
+    const inv = db.invites.find(i => i.code === String(body.code || '').toUpperCase()
+      && (isAdmin(u) || i.createdBy === u.id));
     if (!inv) return json(res, 404, { error: 'no such code' });
     if (inv.usedBy) return json(res, 400, { error: 'already used — cannot revoke' });
     db.invites = db.invites.filter(i => i.code !== inv.code);

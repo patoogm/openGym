@@ -114,3 +114,43 @@ test('change-request: student creates, non-student is 403, coach resolves', asyn
     assert.ok(db2.changeRequests[0].resolvedAt);
   } finally { await srv.stop(); fs.rmSync(dir, { recursive: true, force: true }); }
 });
+
+test('a coach can create an invite and sees only their own', async () => {
+  const dir = tmpDir();
+  seedData(dir, {
+    db: {
+      users: [{ id: 'c1', name: 'C1' }, { id: 'c2', name: 'C2' }],
+      invites: [{ code: 'OTHER', createdBy: 'c2', created: 'x' }]
+    }
+  });
+  const srv = await startServer({ dataDir: dir, env: { COACH_UIDS: 'c1,c2', INVITE_ONLY: '1' } });
+  const ck = cookieFor(dir, 'c1');
+  try {
+    const made = await jfetch(srv.base, '/api/admin/invites/new', { cookie: ck, method: 'POST', body: { note: 'ana' } });
+    assert.equal(made.status, 200);
+    const list = await jfetch(srv.base, '/api/admin/invites', { cookie: ck });
+    assert.equal(list.status, 200);
+    assert.ok(list.json.invites.every(i => i.createdBy === 'c1'));
+    const revokeOther = await jfetch(srv.base, '/api/admin/invites/revoke', { cookie: ck, method: 'POST', body: { code: 'OTHER' } });
+    assert.equal(revokeOther.status, 404);
+  } finally { await srv.stop(); fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
+test('an admin sees all invites and can revoke any unused code', async () => {
+  const dir = tmpDir();
+  seedData(dir, {
+    db: {
+      users: [{ id: 'a1', name: 'A1', admin: true }, { id: 'c2', name: 'C2' }],
+      invites: [{ code: 'OTHER', createdBy: 'c2', created: 'x' }]
+    }
+  });
+  const srv = await startServer({ dataDir: dir, env: { COACH_UIDS: 'c2', INVITE_ONLY: '1' } });
+  const ck = cookieFor(dir, 'a1');
+  try {
+    const list = await jfetch(srv.base, '/api/admin/invites', { cookie: ck });
+    assert.equal(list.status, 200);
+    assert.ok(list.json.invites.some(i => i.code === 'OTHER'));
+    const revoke = await jfetch(srv.base, '/api/admin/invites/revoke', { cookie: ck, method: 'POST', body: { code: 'OTHER' } });
+    assert.equal(revoke.status, 200);
+  } finally { await srv.stop(); fs.rmSync(dir, { recursive: true, force: true }); }
+});
