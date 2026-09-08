@@ -1305,14 +1305,20 @@ to:
 
 - [ ] **Step 6: Wire `pullState` to merge**
 
-Add a store action (in the returned object, near `pullState`):
+Add a store action (in the returned object, near `pullState`). It must NOT call
+`persist()` — `persist` stamps a fresh `S._ts`, which on every boot would make
+this device look newer than the server and could clobber another device's real
+change. Update `S.routines` in memory and mirror the STRIPPED routines to
+localStorage, without touching `_ts` and without scheduling a push:
 ```js
     async syncAssigned() {
       const assigned = await fetchAssigned()
-      const S = get().S
-      // stripAssigned first so a second run is idempotent. `false` = don't push:
-      // assigned routines never sync, and persist() strips them from localStorage.
-      persist({ ...S, routines: mergeAssigned(stripAssigned(S.routines), assigned) }, false)
+      set(st => {
+        const routines = mergeAssigned(stripAssigned(st.S.routines), assigned)
+        const S = { ...st.S, routines }
+        try { localStorage.setItem(KEY, JSON.stringify({ ...S, routines: stripAssigned(routines) })) } catch (e) { /* ignore */ }
+        return { S }
+      })
     },
 ```
 `pullState()` is the single call site (it already runs on `boot()`). At the very end of `pullState()`'s `try` block, after the `if / else if` that calls `persist` / `pushState`, add:
