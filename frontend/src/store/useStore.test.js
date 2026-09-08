@@ -1,6 +1,17 @@
 // @vitest-environment jsdom
 import { describe, it, expect } from 'vitest'
 import { DEF } from './useStore.js'
+import { stripAssigned } from '../lib/coaching.js'
+
+describe('assigned routines never reach the persisted blob', () => {
+  it('stripAssigned removes coach routines from a merged list before PUT', () => {
+    const merged = [
+      { id: 'l1', name: 'Mine', ex: [] },
+      { id: 'c1', name: 'Coach', ex: [], coachAssigned: true }
+    ]
+    expect(stripAssigned(merged)).toEqual([{ id: 'l1', name: 'Mine', ex: [] }])
+  })
+})
 
 describe('DEF', () => {
   it('has an empty training profile', () => {

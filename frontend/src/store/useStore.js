@@ -4,6 +4,8 @@ import { localTZ } from '../lib/format.js'
 import { registerCustom } from '../lib/exercises.js'
 import { DEMO, DEMO_SEEDED } from '../lib/demo.js'
 import { MOBILE, nativeLoad, nativeSave, syncReminder } from '../lib/mobile.js'
+import { mergeAssigned, stripAssigned } from '../lib/coaching.js'
+import { fetchAssigned } from '../lib/coachApi.js'
 
 const KEY = 'gym_state_v1'
 export const DEF = {
@@ -52,7 +54,7 @@ export const useStore = create((set, get) => {
   const persist = (S, push = true) => {
     S._ts = Date.now()
     registerCustom(S.customEx)
-    localStorage.setItem(KEY, JSON.stringify(S))
+    localStorage.setItem(KEY, JSON.stringify({ ...S, routines: stripAssigned(S.routines) }))
     set({ S })
     if (MOBILE) nativePersist()
     if (push && get().user) {
@@ -113,7 +115,12 @@ export const useStore = create((set, get) => {
     async pushState() {
       if (!get().user) return
       clearTimeout(pushTm)
-      try { await api('/api/data', { method: 'PUT', body: JSON.stringify({ state: get().S }) }); localStorage.removeItem('gym_dirty') }
+      try {
+        const S = get().S
+        const state = { ...S, routines: stripAssigned(S.routines) }
+        await api('/api/data', { method: 'PUT', body: JSON.stringify({ state }) })
+        localStorage.removeItem('gym_dirty')
+      }
       catch (e) { localStorage.setItem('gym_dirty', '1') }
     },
     async pullState() {
@@ -127,7 +134,20 @@ export const useStore = create((set, get) => {
           if (active) next.active = active
           persist(next, false)
         } else if (hasData(S)) { await get().pushState() }
+        await get().syncAssigned()
       } catch (e) { /* offline — keep local */ }
+    },
+    // Merge the coach's assigned routines into S.routines for display only. This must NOT
+    // touch S._ts or schedule a push: assigned routines are display-only and the coach's
+    // copy is the source of truth. stripAssigned runs first so a second call is idempotent.
+    async syncAssigned() {
+      const assigned = await fetchAssigned()
+      set(st => {
+        const routines = mergeAssigned(stripAssigned(st.S.routines), assigned)
+        const S = { ...st.S, routines }
+        try { localStorage.setItem(KEY, JSON.stringify({ ...S, routines: stripAssigned(routines) })) } catch (e) { /* ignore */ }
+        return { S }
+      })
     },
 
     async signOut() {
