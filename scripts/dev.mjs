@@ -11,13 +11,29 @@
 
 import { spawn } from 'node:child_process'
 import { createServer } from 'node:http'
-import { createReadStream, existsSync, statSync } from 'node:fs'
+import { createReadStream, existsSync, statSync, readFileSync } from 'node:fs'
 import { extname, join, normalize, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = resolve(fileURLToPath(new URL('.', import.meta.url)), '..')
 const MEDIA_DIR = join(ROOT, 'media')
 const MEDIA_PORT = 8888
+
+// Load repo-root .env (same file docker compose uses) so things like ADMIN_UIDS work here
+// too, without pulling in a dotenv dependency. Values already in the shell env win.
+const envFile = join(ROOT, '.env')
+if (existsSync(envFile)) {
+  for (const line of readFileSync(envFile, 'utf8').split('\n')) {
+    const m = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/)
+    if (!m || line.trim().startsWith('#')) continue
+    const key = m[1]
+    let val = (m[2] || '').trim()
+    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+      val = val.slice(1, -1)
+    }
+    if (!(key in process.env)) process.env[key] = val
+  }
+}
 const isWin = process.platform === 'win32'
 
 const COLORS = { api: '\x1b[36m', media: '\x1b[33m', web: '\x1b[32m' }
@@ -60,8 +76,8 @@ const media = createServer((req, res) => {
 
 // ---- child processes -----------------------------------------------------
 const children = []
-function start(name, command, args, cwd) {
-  const child = spawn(command, args, { cwd: join(ROOT, cwd), shell: isWin })
+function start(name, command, args, cwd, env) {
+  const child = spawn(command, args, { cwd: join(ROOT, cwd), shell: isWin, env })
   child.on('error', err => {
     process.stdout.write(tag(name) + `failed to start: ${err.message}\n`)
     shutdown(1)
@@ -103,7 +119,18 @@ media.listen(MEDIA_PORT, () => {
   process.stdout.write(tag('media') + `serving ./media on http://localhost:${MEDIA_PORT}\n`)
 })
 
-start('api', 'node', ['server.js'], 'api')
+// The api defaults ORIGIN to :8080 (docker's single-origin setup) and DATA_DIR to /data
+// (the docker volume mount). Neither applies here: Vite serves on :5173, and there's no
+// volume — so passkeys would fail on an origin mismatch and data would land outside the
+// repo. Point both at this dev setup instead; either stays overridable via a real env var
+// or the repo-root .env (e.g. to set ADMIN_UIDS), which is passed through untouched.
+const apiEnv = {
+  ...process.env,
+  ORIGIN: process.env.ORIGIN || 'http://localhost:5173',
+  DATA_DIR: process.env.DATA_DIR || join(ROOT, 'data')
+}
+
+start('api', 'node', ['server.js'], 'api', apiEnv)
 start('web', isWin ? 'npm.cmd' : 'npm', ['run', 'dev'], 'frontend')
 
 process.stdout.write(tag('web') + 'starting Vite — open the URL it prints below\n')
