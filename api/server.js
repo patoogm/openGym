@@ -9,7 +9,7 @@ import {
   generateAuthenticationOptions, verifyAuthenticationResponse
 } from '@simplewebauthn/server';
 import webpush from 'web-push';
-import { isCoach } from './coaching.js';
+import { isCoach, coachIdForInvite } from './coaching.js';
 
 const PORT = +(process.env.PORT || 3000);
 const DATA = process.env.DATA_DIR || '/data';
@@ -320,7 +320,11 @@ const routes = {
       if (!invite) return json(res, 403, { error: 'invite code is no longer valid — ask for a new one' });
     }
     const user = { id: c.uid, name: c.name, created: new Date().toISOString() };
-    if (invite) { user.invitedBy = invite.code; invite.usedBy = user.id; invite.usedAt = user.created; }
+    if (invite) {
+      user.invitedBy = invite.code; invite.usedBy = user.id; invite.usedAt = user.created;
+      const cid = coachIdForInvite(invite, db.users, COACH_UIDS);
+      if (cid) user.coachId = cid;
+    }
     db.users.push(user);
     db.creds.push({
       id: credential.id, userId: user.id,
