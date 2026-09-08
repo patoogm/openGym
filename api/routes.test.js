@@ -52,3 +52,23 @@ test('assign: 403 for a non-coach', async () => {
     assert.equal(r.status, 403)
   } finally { await srv.stop(); fs.rmSync(dir, { recursive: true, force: true }) }
 })
+
+test('GET /api/coaching/assigned resolves the body from the coach state', async () => {
+  const dir = tmpDir();
+  seedData(dir, {
+    db: {
+      users: [{ id: 'c1', name: 'Coach' }, { id: 's1', name: 'S', coachId: 'c1' }],
+      assignments: [{ id: 'a1', coachId: 'c1', studentId: 's1', routineId: 'r1', createdAt: 'x' }]
+    },
+    states: { c1: { routines: [{ id: 'r1', name: 'Full body', emoji: '💪', ex: [{ id: '0025', sets: 3, reps: 8 }] }] } }
+  });
+  const srv = await startServer({ dataDir: dir, env: { COACH_UIDS: 'c1' } });
+  try {
+    const r = await jfetch(srv.base, '/api/coaching/assigned', { cookie: cookieFor(dir, 's1') });
+    assert.equal(r.status, 200);
+    assert.equal(r.json.routines.length, 1);
+    assert.equal(r.json.routines[0].name, 'Full body');
+    assert.equal(r.json.routines[0].coachAssigned, true);
+    assert.equal(r.json.routines[0].assignmentId, 'a1');
+  } finally { await srv.stop(); fs.rmSync(dir, { recursive: true, force: true }); }
+});

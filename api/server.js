@@ -584,6 +584,15 @@ const routes = {
     saveDb();
     json(res, 200, { ok: true });
   }
+  ,
+
+  'GET /api/coaching/assigned': async (req, res) => {
+    const user = readSession(req);
+    if (!user) return json(res, 401, { error: 'not signed in' });
+    const removed = pruneOrphanAssignments(db, readState);
+    if (removed) saveDb();
+    json(res, 200, { routines: resolveAssigned(db, user.id, readState, db.users) });
+  }
 };
 
 http.createServer(async (req, res) => {
