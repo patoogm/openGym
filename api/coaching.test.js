@@ -77,6 +77,41 @@ test('pruneOrphanAssignments: drops only the ones with a missing routine', () =>
   assert.deepEqual(db.assignments.map(a => a.id), ['a1', 'a3'])
 })
 
+test('pruneOrphanAssignments: keeps an assignment whose coach state is unreadable (null)', () => {
+  const db = {
+    users: [{ id: 'c9', name: 'C' }, { id: 's1' }],
+    assignments: [{ id: 'a9', coachId: 'c9', studentId: 's1', routineId: 'r1', createdAt: 'x' }],
+    changeRequests: []
+  }
+  const removed = pruneOrphanAssignments(db, () => null)
+  assert.equal(removed, 0)
+  assert.deepEqual(db.assignments.map(a => a.id), ['a9'])
+})
+
+test('pruneOrphanAssignments: scoped to one student leaves other students untouched', () => {
+  const { db, readState } = fixture()
+  // a2 (s1) is orphaned, a3 (s2) points at a live routine. Prune only s2 -> nothing removed.
+  const removed = pruneOrphanAssignments(db, readState, 's2')
+  assert.equal(removed, 0)
+  assert.deepEqual(db.assignments.map(a => a.id), ['a1', 'a2', 'a3'])
+})
+
+test('resolveAssigned: skips a coach who no longer qualifies when coachUids is passed', () => {
+  const { db, readState, users } = fixture()
+  assert.equal(resolveAssigned(db, 's1', readState, users, ['c1']).length, 1)
+  assert.equal(resolveAssigned(db, 's1', readState, users, []).length, 0)
+})
+
+test('resolveAssigned: skips a self-coach assignment', () => {
+  const db = {
+    users: [{ id: 's1', name: 'Ana' }],
+    assignments: [{ id: 'a1', coachId: 's1', studentId: 's1', routineId: 'r1', createdAt: 'x' }],
+    changeRequests: []
+  }
+  const readState = () => ({ routines: [R('r1', 'Full body')] })
+  assert.equal(resolveAssigned(db, 's1', readState, db.users).length, 0)
+})
+
 import { validateAssign } from './coaching.js'
 
 test('validateAssign: ok when student is mine and routine exists', () => {
@@ -94,6 +129,12 @@ test('validateAssign: rejects a student that is not mine', () => {
 test('validateAssign: rejects a routine absent from my state', () => {
   const db = { users: [{ id: 's1', coachId: 'c1' }], assignments: [] }
   const r = validateAssign(db, 'c1', 's1', 'nope', () => ({ routines: [{ id: 'r1' }] }))
+  assert.equal(r.ok, false)
+})
+
+test('validateAssign: rejects assigning to yourself', () => {
+  const db = { users: [{ id: 'c1', coachId: 'c1' }], assignments: [] }
+  const r = validateAssign(db, 'c1', 'c1', 'r1', () => ({ routines: [{ id: 'r1' }] }))
   assert.equal(r.ok, false)
 })
 
@@ -128,6 +169,13 @@ test('studentRows: only my students, with counts', () => {
   assert.equal(rows[0].workouts, 1)
   assert.equal(rows[0].assignmentCount, 1)
   assert.equal(rows[0].pendingRequests, 1)   // q2 is resolved
+})
+
+test('studentRows: pendingRequests is 0 after the assignment is unassigned (orphan requests ignored)', () => {
+  const { db, readState, livePresence } = coachFixture()
+  db.assignments = db.assignments.filter(a => a.id !== 'a1')   // unassign, requests left orphaned
+  const rows = studentRows(db, 'c1', readState, livePresence)
+  assert.equal(rows[0].pendingRequests, 0)
 })
 
 test('studentDetail: null for a student that is not mine', () => {

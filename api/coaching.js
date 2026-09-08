@@ -17,25 +17,33 @@ function routineIn(state, routineId) {
   return ((state && state.routines) || []).find(r => r.id === routineId) || null
 }
 
-export function resolveAssigned(db, studentId, readState, users) {
+export function resolveAssigned(db, studentId, readState, users, coachUids) {
   const out = []
   for (const a of db.assignments || []) {
     if (a.studentId !== studentId) continue
+    if (a.coachId === studentId) continue
+    const coach = (users || []).find(u => u.id === a.coachId)
+    if (coachUids !== undefined && !isCoach(coach, coachUids)) continue
     const routine = routineIn(readState(a.coachId), a.routineId)
     if (!routine) continue
-    const coach = (users || []).find(u => u.id === a.coachId)
     out.push({ ...routine, coachAssigned: true, assignmentId: a.id, coachName: (coach && coach.name) || 'coach' })
   }
   return out
 }
 
-export function pruneOrphanAssignments(db, readState) {
+export function pruneOrphanAssignments(db, readState, studentId) {
   const before = (db.assignments || []).length
-  db.assignments = (db.assignments || []).filter(a => routineIn(readState(a.coachId), a.routineId))
+  db.assignments = (db.assignments || []).filter(a => {
+    if (studentId != null && a.studentId !== studentId) return true
+    const st = readState(a.coachId)
+    if (!st) return true            // unreadable ≠ deleted — keep
+    return !!routineIn(st, a.routineId)
+  })
   return before - db.assignments.length
 }
 
 export function validateAssign(db, coachId, studentId, routineId, readState) {
+  if (studentId === coachId) return { ok: false, error: 'cannot assign to yourself' }
   const student = (db.users || []).find(u => u.id === studentId)
   if (!student || student.coachId !== coachId) return { ok: false, error: 'not your student' }
   if (!routineId || !routineIn(readState(coachId), routineId)) return { ok: false, error: 'routine not found' }
@@ -56,7 +64,10 @@ export function studentRows(db, coachId, readState, livePresence) {
       lastSync: S._ts || null,
       live: livePresence(u.id),
       assignmentCount: (db.assignments || []).filter(a => a.studentId === u.id && a.coachId === coachId).length,
-      pendingRequests: (db.changeRequests || []).filter(q => q.studentId === u.id && !q.resolvedAt).length
+      pendingRequests: (() => {
+        const myAssignmentIds = new Set((db.assignments || []).filter(a => a.coachId === coachId && a.studentId === u.id).map(a => a.id))
+        return (db.changeRequests || []).filter(q => myAssignmentIds.has(q.assignmentId) && !q.resolvedAt).length
+      })()
     }
   })
 }

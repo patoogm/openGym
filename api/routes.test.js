@@ -115,6 +115,46 @@ test('change-request: student creates, non-student is 403, coach resolves', asyn
   } finally { await srv.stop(); fs.rmSync(dir, { recursive: true, force: true }); }
 });
 
+test('unassign drops the assignment\'s change requests and clears pendingRequests', async () => {
+  const dir = tmpDir();
+  seedData(dir, {
+    db: {
+      users: [{ id: 'c1', name: 'C' }, { id: 's1', name: 'S', coachId: 'c1' }],
+      assignments: [{ id: 'a1', coachId: 'c1', studentId: 's1', routineId: 'r1', createdAt: 'x' }]
+    },
+    states: { c1: { routines: [{ id: 'r1', name: 'A', emoji: '💪', ex: [] }] } }
+  });
+  const srv = await startServer({ dataDir: dir, env: { COACH_UIDS: 'c1' } });
+  try {
+    const cr = await jfetch(srv.base, '/api/coaching/change-request', { cookie: cookieFor(dir, 's1'), method: 'POST', body: { assignmentId: 'a1', note: 'too heavy' } });
+    assert.equal(cr.status, 200);
+    const u = await jfetch(srv.base, '/api/coaching/unassign', { cookie: cookieFor(dir, 'c1'), method: 'POST', body: { assignmentId: 'a1' } });
+    assert.equal(u.status, 200);
+    const db = JSON.parse(fs.readFileSync(path.join(dir, 'db.json'), 'utf8'));
+    assert.equal(db.changeRequests.length, 0);
+    const students = await jfetch(srv.base, '/api/coaching/students', { cookie: cookieFor(dir, 'c1') });
+    assert.equal(students.status, 200);
+    assert.equal(students.json.students.find(s => s.id === 's1').pendingRequests, 0);
+  } finally { await srv.stop(); fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
+test('PUT /api/data strips coachAssigned routines before persisting', async () => {
+  const dir = tmpDir();
+  seedData(dir, { db: { users: [{ id: 's1', name: 'S' }] } });
+  const srv = await startServer({ dataDir: dir });
+  try {
+    const put = await jfetch(srv.base, '/api/data', { cookie: cookieFor(dir, 's1'), method: 'PUT', body: { state: { _ts: 1, routines: [
+      { id: 'l1', name: 'Mine', ex: [] },
+      { id: 'c1', name: 'Coach', ex: [], coachAssigned: true }
+    ] } } });
+    assert.equal(put.status, 200);
+    const got = await jfetch(srv.base, '/api/data', { cookie: cookieFor(dir, 's1') });
+    assert.equal(got.json.state.routines.length, 1);
+    assert.equal(got.json.state.routines[0].id, 'l1');
+    assert.ok(!got.json.state.routines.some(r => r.coachAssigned));
+  } finally { await srv.stop(); fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
 test('a coach can create an invite and sees only their own', async () => {
   const dir = tmpDir();
   seedData(dir, {

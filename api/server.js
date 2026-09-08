@@ -411,6 +411,7 @@ const routes = {
     const body = await readBody(req);
     if (!body.state || typeof body.state !== 'object') return json(res, 400, { error: 'state required' });
     delete body.state.active;              // in-progress workouts stay device-local
+    if (Array.isArray(body.state.routines)) body.state.routines = body.state.routines.filter(r => !r || !r.coachAssigned);
     atomicWrite(stateFile(user.id), JSON.stringify(body.state));
     json(res, 200, { ok: true, ts: body.state._ts || null });
   },
@@ -590,6 +591,7 @@ const routes = {
     const a = db.assignments.find(x => x.id === body.assignmentId && x.coachId === coach.id);
     if (!a) return json(res, 404, { error: 'no such assignment' });
     db.assignments = db.assignments.filter(x => x.id !== a.id);
+    db.changeRequests = db.changeRequests.filter(q => q.assignmentId !== a.id);
     saveDb();
     json(res, 200, { ok: true });
   }
@@ -598,9 +600,9 @@ const routes = {
   'GET /api/coaching/assigned': async (req, res) => {
     const user = readSession(req);
     if (!user) return json(res, 401, { error: 'not signed in' });
-    const removed = pruneOrphanAssignments(db, readState);
+    const removed = pruneOrphanAssignments(db, readState, user.id);
     if (removed) saveDb();
-    json(res, 200, { routines: resolveAssigned(db, user.id, readState, db.users) });
+    json(res, 200, { routines: resolveAssigned(db, user.id, readState, db.users, COACH_UIDS) });
   }
   ,
 
