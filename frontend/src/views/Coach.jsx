@@ -7,6 +7,7 @@ import Icon from '../components/Icon.jsx'
 import { Button } from '../components/ui.jsx'
 import { confirmSheet } from '../sheets.jsx'
 import { StatTiles, TrainingNow, WorkoutHistory, StudentRow, rel } from '../components/ProgressViews.jsx'
+import InvitesCard from '../components/InvitesCard.jsx'
 import { listStudents, getStudent, assignRoutine, unassignRoutine, resolveRequest } from '../lib/coachApi.js'
 
 // Coach-only dashboard (backend adds `coach` to the user; guarded again server-side).
@@ -107,7 +108,9 @@ export default function Coach() {
     <div className="list">
       {list.map(u => <StudentRow key={u.id} u={u} onOpen={open}
         extra={u.pendingRequests ? <span className="tag" style={{ marginLeft: 4, color: 'var(--orange)' }}>{u.pendingRequests}</span> : null} />)}
-      {students && !list.length && <div className="empty">Todavía no tenés alumnos. Generá un código de invitación desde el panel de admin.</div>}
+      {students && !list.length && <div className="empty">Todavía no tenés alumnos. Generá un código de invitación abajo y compartilo con tu alumno.</div>}
     </div>
+
+    <InvitesCard />
   </div>
 }
