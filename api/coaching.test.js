@@ -76,3 +76,23 @@ test('pruneOrphanAssignments: drops only the ones with a missing routine', () =>
   assert.equal(removed, 1)
   assert.deepEqual(db.assignments.map(a => a.id), ['a1', 'a3'])
 })
+
+import { validateAssign } from './coaching.js'
+
+test('validateAssign: ok when student is mine and routine exists', () => {
+  const db = { users: [{ id: 's1', coachId: 'c1' }], assignments: [] }
+  const readState = () => ({ routines: [{ id: 'r1' }] })
+  assert.deepEqual(validateAssign(db, 'c1', 's1', 'r1', readState), { ok: true })
+})
+
+test('validateAssign: rejects a student that is not mine', () => {
+  const db = { users: [{ id: 's1', coachId: 'other' }], assignments: [] }
+  const r = validateAssign(db, 'c1', 's1', 'r1', () => ({ routines: [{ id: 'r1' }] }))
+  assert.equal(r.ok, false)
+})
+
+test('validateAssign: rejects a routine absent from my state', () => {
+  const db = { users: [{ id: 's1', coachId: 'c1' }], assignments: [] }
+  const r = validateAssign(db, 'c1', 's1', 'nope', () => ({ routines: [{ id: 'r1' }] }))
+  assert.equal(r.ok, false)
+})

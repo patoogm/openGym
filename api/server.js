@@ -9,7 +9,7 @@ import {
   generateAuthenticationOptions, verifyAuthenticationResponse
 } from '@simplewebauthn/server';
 import webpush from 'web-push';
-import { isCoach, coachIdForInvite } from './coaching.js';
+import { isCoach, coachIdForInvite, resolveAssigned, pruneOrphanAssignments, validateAssign } from './coaching.js';
 
 const PORT = +(process.env.PORT || 3000);
 const DATA = process.env.DATA_DIR || '/data';
@@ -553,6 +553,34 @@ const routes = {
     if (!inv) return json(res, 404, { error: 'no such code' });
     if (inv.usedBy) return json(res, 400, { error: 'already used — cannot revoke' });
     db.invites = db.invites.filter(i => i.code !== inv.code);
+    saveDb();
+    json(res, 200, { ok: true });
+  }
+  ,
+
+  /* ---------- coach dashboard ---------- */
+  'POST /api/coaching/assign': async (req, res) => {
+    const coach = requireCoach(req, res); if (!coach) return;
+    const body = await readBody(req);
+    const v = validateAssign(db, coach.id, body.studentId, body.routineId, readState);
+    if (!v.ok) return json(res, 400, { error: v.error });
+    let existing = db.assignments.find(a =>
+      a.coachId === coach.id && a.studentId === body.studentId && a.routineId === body.routineId);
+    if (!existing) {
+      existing = { id: crypto.randomBytes(8).toString('hex'), coachId: coach.id,
+        studentId: body.studentId, routineId: body.routineId, createdAt: new Date().toISOString() };
+      db.assignments.push(existing);
+      saveDb();
+    }
+    json(res, 200, { assignment: existing });
+  },
+
+  'POST /api/coaching/unassign': async (req, res) => {
+    const coach = requireCoach(req, res); if (!coach) return;
+    const body = await readBody(req);
+    const a = db.assignments.find(x => x.id === body.assignmentId && x.coachId === coach.id);
+    if (!a) return json(res, 404, { error: 'no such assignment' });
+    db.assignments = db.assignments.filter(x => x.id !== a.id);
     saveDb();
     json(res, 200, { ok: true });
   }

@@ -34,3 +34,10 @@ export function pruneOrphanAssignments(db, readState) {
   db.assignments = (db.assignments || []).filter(a => routineIn(readState(a.coachId), a.routineId))
   return before - db.assignments.length
 }
+
+export function validateAssign(db, coachId, studentId, routineId, readState) {
+  const student = (db.users || []).find(u => u.id === studentId)
+  if (!student || student.coachId !== coachId) return { ok: false, error: 'not your student' }
+  if (!routineId || !routineIn(readState(coachId), routineId)) return { ok: false, error: 'routine not found' }
+  return { ok: true }
+}

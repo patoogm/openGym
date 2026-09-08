@@ -18,3 +18,37 @@ test('GET /api/me reports coach for a COACH_UIDS user, not for others', async ()
     assert.equal(asStu.json.user.coach, false);
   } finally { await srv.stop(); fs.rmSync(dir, { recursive: true, force: true }); }
 });
+
+test('assign / unassign: creates one row, idempotent, then removes it', async () => {
+  const dir = tmpDir()
+  seedData(dir, {
+    db: { users: [{ id: 'c1', name: 'C' }, { id: 's1', name: 'S', coachId: 'c1' }] },
+    states: { c1: { routines: [{ id: 'r1', name: 'A', emoji: '💪', ex: [] }] } }
+  })
+  const srv = await startServer({ dataDir: dir, env: { COACH_UIDS: 'c1' } })
+  const ck = cookieFor(dir, 'c1')
+  try {
+    const a = await jfetch(srv.base, '/api/coaching/assign', { cookie: ck, method: 'POST', body: { studentId: 's1', routineId: 'r1' } })
+    assert.equal(a.status, 200)
+    const again = await jfetch(srv.base, '/api/coaching/assign', { cookie: ck, method: 'POST', body: { studentId: 's1', routineId: 'r1' } })
+    assert.equal(again.json.assignment.id, a.json.assignment.id)
+    const db = JSON.parse(fs.readFileSync(path.join(dir, 'db.json'), 'utf8'))
+    assert.equal(db.assignments.length, 1)
+    const bad = await jfetch(srv.base, '/api/coaching/assign', { cookie: ck, method: 'POST', body: { studentId: 's1', routineId: 'ghost' } })
+    assert.equal(bad.status, 400)
+    const u = await jfetch(srv.base, '/api/coaching/unassign', { cookie: ck, method: 'POST', body: { assignmentId: a.json.assignment.id } })
+    assert.equal(u.status, 200)
+    const db2 = JSON.parse(fs.readFileSync(path.join(dir, 'db.json'), 'utf8'))
+    assert.equal(db2.assignments.length, 0)
+  } finally { await srv.stop(); fs.rmSync(dir, { recursive: true, force: true }) }
+})
+
+test('assign: 403 for a non-coach', async () => {
+  const dir = tmpDir()
+  seedData(dir, { db: { users: [{ id: 's1', name: 'S' }] } })
+  const srv = await startServer({ dataDir: dir })
+  try {
+    const r = await jfetch(srv.base, '/api/coaching/assign', { cookie: cookieFor(dir, 's1'), method: 'POST', body: {} })
+    assert.equal(r.status, 403)
+  } finally { await srv.stop(); fs.rmSync(dir, { recursive: true, force: true }) }
+})
