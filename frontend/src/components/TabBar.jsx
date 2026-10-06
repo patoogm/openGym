@@ -4,6 +4,8 @@ import { effectiveRoutine } from '../lib/history.js'
 import { todayISO } from '../lib/format.js'
 import { countEx } from '../lib/routine.js'
 import { t } from '../lib/i18n.js'
+import { COACH_TABS, activeCoachTab, isCoachPath } from '../lib/coachShell.js'
+import { openAssignSheet } from './AssignSheet.jsx'
 import Icon from './Icon.jsx'
 
 export default function TabBar({ onStart }) {
@@ -29,8 +31,33 @@ export default function TabBar({ onStart }) {
     </button>
   )
 
+  const coachMode = !!user?.coach && isCoachPath(loc.pathname)
+  const activeCoach = activeCoachTab(loc.pathname)
+
+  if (coachMode) {
+    const CT = ({ k, icon, to, label, dot }) => (
+      <button className={activeCoach === k ? 'on' : ''} onClick={() => nav(to)}
+        aria-label={dot ? label + ', entrenamiento en curso' : undefined}>
+        <Icon name={icon} />{dot && <i className="tab-dot" aria-hidden="true" />}<span>{label}</span>
+      </button>
+    )
+    const [alumnos, rutinas, actividad] = COACH_TABS
+    return (
+      <nav id="tabbar">
+        <CT {...alumnos} />
+        <CT {...rutinas} />
+        <button className="start" onClick={() => openAssignSheet()}>
+          <span className="cir"><Icon name="plus" /></span><span>Asignar</span>
+        </button>
+        <CT {...actividad} />
+        <CT k="yo" icon="dumbbell" to="/home" label="Yo" dot={!!S.active} />
+      </nav>
+    )
+  }
+
   return (
     <nav id="tabbar">
+      {user?.coach && <button onClick={() => nav('/coach')}><Icon name="chevronLeft" /><span>Coach</span></button>}
       <Tab k="home" icon="house" to="/home" label={t('Home')} />
       <Tab k="plan" icon="calendar" to="/plan" label={t('Plan')} />
       <button className={'start' + (S.active ? ' rec' : '')} onClick={startWorkout}>

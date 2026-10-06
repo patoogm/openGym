@@ -27,6 +27,10 @@ import Profile from './views/Profile.jsx'
 import Program from './views/Program.jsx'
 import Admin from './views/Admin.jsx'
 import Coach from './views/Coach.jsx'
+import CoachStudent from './views/CoachStudent.jsx'
+import CoachRoutines from './views/CoachRoutines.jsx'
+import CoachActivity from './views/CoachActivity.jsx'
+import { homePathFor } from './lib/coachShell.js'
 
 bindUI(useUI)   // lets the shared controls open sheets without importing the store at module scope
 
@@ -63,6 +67,8 @@ function Shell() {
     </div>
   )
 
+  const coachOnly = el => (user?.coach ? el : <Navigate to="/home" replace />)
+
   return (
     <>
       {/* keyed on the route: a view that throws is contained, and switching tabs
@@ -82,8 +88,11 @@ function Shell() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/program" element={<Program />} />
               <Route path="/admin" element={user?.admin ? <Admin /> : <Navigate to="/home" replace />} />
-              <Route path="/coach" element={user?.coach ? <Coach /> : <Navigate to="/home" replace />} />
-              <Route path="*" element={<Navigate to="/home" replace />} />
+              <Route path="/coach" element={coachOnly(<Coach />)} />
+              <Route path="/coach/rutinas" element={coachOnly(<CoachRoutines />)} />
+              <Route path="/coach/actividad" element={coachOnly(<CoachActivity />)} />
+              <Route path="/coach/alumno/:id" element={coachOnly(<CoachStudent />)} />
+              <Route path="*" element={<Navigate to={homePathFor(user)} replace />} />
             </Routes>
           )}
         </ErrorBoundary>
