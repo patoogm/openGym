@@ -28,11 +28,11 @@ function AssignSheet({ routineId: rid0 = null, studentId = null, onDone, close }
   if (!rid) return <>
     <h3>Asignar rutina</h3>
     {mine.length ? <div className="list">
-      {mine.map(r => <div key={r.id} className="item" onClick={() => setRid(r.id)}>
+      {mine.map(r => <button type="button" key={r.id} className="item" onClick={() => setRid(r.id)}>
         <span className="lrow-i"><Icon name={glyphOf(r.emoji)} /></span>
         <div className="grow"><div className="tt">{r.name}</div></div>
         <Icon name="chevronRight" className="chev" />
-      </div>)}
+      </button>)}
     </div> : <>
       <div className="empty small">Todavía no tenés rutinas para asignar.</div>
       <Button variant="primary" icon="plus" onClick={() => { close(); nav('/coach/rutinas') }}>Crear rutina</Button>
