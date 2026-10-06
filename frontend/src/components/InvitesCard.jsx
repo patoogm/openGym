@@ -3,6 +3,7 @@ import { useUI } from '../store/useUI.js'
 import { api } from '../lib/api.js'
 import Icon from './Icon.jsx'
 import { Button } from './ui.jsx'
+import { id } from './ProgressViews.jsx'
 
 // Invite-code manager, shared by the admin dashboard and the coach dashboard.
 // The /api/admin/invites* endpoints are scoped admin-OR-coach server-side (a coach
@@ -13,7 +14,6 @@ import { Button } from './ui.jsx'
 // Uncontrolled use (Coach): pass nothing and the card loads/refreshes itself.
 // `t` is optional — admin renders English-only (identity fallback), coach passes the translator.
 // `heading` is the in-card title; pass null when the parent already renders a section header.
-const id = s => s
 export default function InvitesCard({ invites, reload, t = id, heading }) {
   const title = heading === undefined ? t('Invite codes') : heading
   const toast = useUI(s => s.toast)

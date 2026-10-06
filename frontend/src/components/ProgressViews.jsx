@@ -4,7 +4,7 @@ import { workoutVolume, setsDone } from '../lib/history.js'
 
 // `t` is optional: the admin dashboard renders these components English-only and passes
 // nothing (identity fallback), the coach dashboard passes the real translator.
-const id = s => s
+export const id = (s, ...a) => s.replace(/\{(\d+)\}/g, (m, i) => i < a.length ? a[i] : m)
 export const rel = (ts, t = id) => {
   if (!ts) return t('never')
   const s = Math.max(0, (Date.now() - ts) / 1000)
