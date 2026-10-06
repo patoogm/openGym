@@ -62,6 +62,10 @@ export function studentRows(db, coachId, readState, livePresence) {
       workouts: workouts.length,
       lastWorkout: last ? last.d : null,
       lastSync: S._ts || null,
+      workoutDates: [...new Set(workouts.map(w => w.d))].slice(-60),
+      plannedWeekdays: Object.keys(S.week || {}).filter(k => S.week[k]).map(Number).sort((a, b) => a - b),
+      recent: workouts.slice(-5).reverse().map(w => ({ d: w.d, name: w.name || '' })),
+      assignedRoutineIds: (db.assignments || []).filter(a => a.studentId === u.id && a.coachId === coachId).map(a => a.routineId),
       live: livePresence(u.id),
       assignmentCount: (db.assignments || []).filter(a => a.studentId === u.id && a.coachId === coachId).length,
       pendingRequests: (() => {

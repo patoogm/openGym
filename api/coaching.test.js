@@ -156,6 +156,7 @@ function coachFixture() {
   const states = {
     c1: { routines: [{ id: 'r1', name: 'Full body', emoji: '💪', ex: [{ id: '0025' }, { id: '0026' }] }] },
     s1: { unit: 'kg', _ts: 123, bodyweight: [{ d: '2026-02-01', kg: 70 }],
+          week: { 1: 'r9', 3: 'r9', 5: null },
           workouts: [{ id: 'w1', d: '2026-02-02', name: 'Full body' }], routines: [] }
   }
   return { db, readState: uid => states[uid] || null, livePresence: () => null }
@@ -169,6 +170,35 @@ test('studentRows: only my students, with counts', () => {
   assert.equal(rows[0].workouts, 1)
   assert.equal(rows[0].assignmentCount, 1)
   assert.equal(rows[0].pendingRequests, 1)   // q2 is resolved
+})
+
+test('studentRows: adherence fields', () => {
+  const { db, readState, livePresence } = coachFixture()
+  const [row] = studentRows(db, 'c1', readState, livePresence)
+  assert.deepEqual(row.workoutDates, ['2026-02-02'])
+  assert.deepEqual(row.plannedWeekdays, [1, 3])          // key 5 is null → rest day
+  assert.deepEqual(row.recent, [{ d: '2026-02-02', name: 'Full body' }])
+  assert.deepEqual(row.assignedRoutineIds, ['r1'])
+})
+
+test('studentRows: no weekly plan and no workouts → empty arrays, not undefined', () => {
+  const { db, readState, livePresence } = coachFixture()
+  const bare = { ...readState('s1'), week: undefined, workouts: undefined }
+  const rows = studentRows(db, 'c1', uid => (uid === 's1' ? bare : readState(uid)), livePresence)
+  assert.deepEqual(rows[0].workoutDates, [])
+  assert.deepEqual(rows[0].plannedWeekdays, [])
+  assert.deepEqual(rows[0].recent, [])
+})
+
+test('studentRows: workoutDates dedupes same-day workouts and caps at 60', () => {
+  const { db, readState, livePresence } = coachFixture()
+  const st = { ...readState('s1'), workouts: [{ id: 'a', d: '2026-03-01', name: 'A' }, { id: 'b', d: '2026-03-01', name: 'B' }] }
+  let rows = studentRows(db, 'c1', uid => (uid === 's1' ? st : readState(uid)), livePresence)
+  assert.deepEqual(rows[0].workoutDates, ['2026-03-01'])
+  const big = { ...readState('s1'), workouts: Array.from({ length: 80 }, (_, i) => ({ id: 'w' + i, d: '2026-01-01T' + i, name: 'x' })) }
+  rows = studentRows(db, 'c1', uid => (uid === 's1' ? big : readState(uid)), livePresence)
+  assert.equal(rows[0].workoutDates.length, 60)
+  assert.equal(rows[0].workoutDates[59], '2026-01-01T79')
 })
 
 test('studentRows: pendingRequests is 0 after the assignment is unassigned (orphan requests ignored)', () => {
