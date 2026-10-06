@@ -101,3 +101,29 @@ existente), métricas agregadas de todos los alumnos, endpoint batch de asignaci
 
 - Una rutina asignada se refiere a la rutina del coach por id (el detalle lee `coachRoutines`), por lo que editar la
   plantilla podría reflejarse en los alumnos. Verificar el comportamiento real antes de mostrar copy sobre esto.
+
+## 10. Ajustes al implementar
+
+### Cambios de backend respecto al diseño original
+
+- El API devuelve `workoutDates`, `plannedWeekdays`, `recent`, `assignedRoutineIds` (no `weekDays`/`plannedDays`);
+  la semana se calcula en el cliente con la fecha local del coach.
+- Rutinas es una vista nueva y delgada (`CoachRoutines`), no una reutilización de `Plan.jsx`; "Yo" es `/home`
+  (no `/yo`).
+- Actividad se agrupa por día: los workouts no tienen hora.
+- Detalle de alumno: tiles + gráfico de peso + historial (sin PRs/1RM; requeriría datos nuevos).
+- El indicador de workout en curso es un punto en el tab "Yo" (sin chip "Resume").
+- `dayPlan` (overrides por fecha) del alumno se ignora en la tira; solo cuenta `S.week`.
+
+### Cambios de componentes respecto al diseño original
+
+- El sheet de asignación (paso 2, filas de alumnos): los estudiantes que ya tienen la rutina asignada usan
+  la clase `.item.off` e inert. Las filas "Todos"/estudiantes sin asignar son div + onClick; las rutinas del paso 1
+  son botones reales.
+- Componentes compartidos orientados a coach (`ProgressViews`, `InvitesCard`) aceptan un prop opcional `t` cuyo
+  fallback en inglés interpola placeholders `{n}` (exportados como `id` desde `ProgressViews.jsx`).
+- El script `check-locales.mjs` ya fallaba antes de este trabajo (34 keys faltantes en 11 locales no-español),
+  remanente de shares-components WIP; una sincronización de locales es un follow-up pendiente.
+- El recorrido manual en navegador (§7) es un paso humano pendiente: requiere login de coach con passkey.
+- Nuevos componentes: `AssignSheet.jsx` (sheet de dos pasos), `WeekMini.jsx` (mini-tira de 7 días).
+- Nueva librería: `lib/coachShell.js` (lógica de orden de lista, criterios de atención, tabs según rol).
