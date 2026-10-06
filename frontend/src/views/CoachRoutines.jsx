@@ -17,7 +17,7 @@ export default function CoachRoutines() {
   const add = () => {
     const r = { id: uid(), name: 'Nueva rutina', emoji: DEFAULT_GLYPH, ex: [] }
     update(s => { s.routines.push(r) })
-    nav('/plan/r/' + r.id)
+    nav('/coach/rutinas/' + r.id)
   }
 
   return <div className="narrow">
@@ -27,7 +27,7 @@ export default function CoachRoutines() {
     </div>
     {mine.length ? <div className="list">{mine.map(r => <div key={r.id} className="item">
       <span className="lrow-i"><Icon name={glyphOf(r.emoji)} /></span>
-      <div className="grow" onClick={() => nav('/plan/r/' + r.id)}>
+      <div className="grow" onClick={() => nav('/coach/rutinas/' + r.id)}>
         <div className="tt">{r.name}</div><div className="ss">{exCount(countEx(r.ex))}</div></div>
       <Button size="xs" variant="tinted" onClick={() => openAssignSheet({ routineId: r.id })}>Asignar</Button>
     </div>)}</div>

@@ -90,6 +90,7 @@ function Shell() {
               <Route path="/admin" element={user?.admin ? <Admin /> : <Navigate to="/home" replace />} />
               <Route path="/coach" element={coachOnly(<Coach />)} />
               <Route path="/coach/rutinas" element={coachOnly(<CoachRoutines />)} />
+              <Route path="/coach/rutinas/:id" element={coachOnly(<RoutineEdit />)} />
               <Route path="/coach/actividad" element={coachOnly(<CoachActivity />)} />
               <Route path="/coach/alumno/:id" element={coachOnly(<CoachStudent />)} />
               <Route path="*" element={<Navigate to={homePathFor(user)} replace />} />

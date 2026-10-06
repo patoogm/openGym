@@ -1,9 +1,8 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useStore } from '../store/useStore.js'
 import { useUI } from '../store/useUI.js'
 import { isAssigned } from '../lib/coaching.js'
-import { routinesPathFor } from '../lib/coachShell.js'
 import { requestAdjustment } from '../lib/coachApi.js'
 import { exOr } from '../lib/exercises.js'
 import { uid } from '../lib/format.js'
@@ -83,8 +82,8 @@ export default function RoutineEdit() {
   const { id } = useParams()
   const S = useStore(s => s.S)
   const update = useStore(s => s.update)
-  const user = useStore(s => s.user)
-  const back = routinesPathFor(user)
+  const inCoach = useLocation().pathname.startsWith('/coach/')
+  const back = inCoach ? '/coach/rutinas' : '/plan'
   const r = S.routines.find(x => x.id === id)
   useEffect(() => { if (!r) nav(back) }, [!!r])
   if (!r) return null
@@ -120,7 +119,7 @@ export default function RoutineEdit() {
 
   return <div className="narrow">
     <div className="hdr">
-      <button className="iconbtn" onClick={() => nav(back)} aria-label={t('Plan')}><Icon name="chevronLeft" /></button>
+      <button className="iconbtn" onClick={() => nav(back)} aria-label={inCoach ? 'Rutinas' : t('Plan')}><Icon name="chevronLeft" /></button>
       <div style={{ flex: 1, margin: '0 12px' }}>
         <input className="input" defaultValue={r.name} style={{ fontWeight: 600, fontSize: 20, letterSpacing: '-.021em' }}
           onChange={e => update(s => { s.routines.find(x => x.id === id).name = e.target.value.trim() || t('Routine') })} />

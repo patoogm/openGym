@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store/useStore.js'
 import { useUI } from '../store/useUI.js'
@@ -24,7 +24,9 @@ export default function Coach() {
   const [students, setStudents] = useState(null)
   const [q, setQ] = useState('')
 
-  const load = () => listStudents().then(r => setStudents(r.students)).catch(e => toast(e.message || 'Error'))
+  const loaded = useRef(false)
+  // toast only if the first load fails; later poll failures (offline / expired session) stay silent
+  const load = () => listStudents().then(r => { loaded.current = true; setStudents(r.students) }).catch(e => { if (!loaded.current) toast(e.message || 'Error') })
   // poll every 15s so "entrenando ahora" stays live without a manual refresh
   useEffect(() => { if (!user?.coach) return; load(); const iv = setInterval(load, 15000); return () => clearInterval(iv) }, [])
   if (!user?.coach) return null

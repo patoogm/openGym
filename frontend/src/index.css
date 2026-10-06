@@ -337,7 +337,7 @@ h4.sec{
 .wk-mini .d.today{outline:1.5px solid var(--label-2);outline-offset:2px}
 .attn{display:flex;align-items:center;gap:8px;padding:10px 12px;margin-bottom:12px;border-radius:var(--r);
   background:color-mix(in srgb,var(--orange) 12%,transparent);color:var(--label)}
-.attn .icn{color:var(--orange);flex:none}
+.attn > .icn:first-child{color:var(--orange);flex:none}
 .attn{cursor:pointer}
 .attn .grow{min-width:0}
 .live-dot{font-size:9px;color:var(--green);display:inline-block;margin-right:5px}

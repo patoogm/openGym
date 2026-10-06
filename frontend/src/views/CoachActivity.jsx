@@ -15,7 +15,7 @@ export default function CoachActivity() {
   const [feed, setFeed] = useState(null)
   useEffect(() => {
     if (!user?.coach) return
-    listStudents().then(r => setFeed(activityFeed(r.students))).catch(e => toast(e.message || 'Error'))
+    listStudents().then(r => setFeed(activityFeed(r.students))).catch(e => { setFeed([]); toast(e.message || 'Error') })
   }, [user?.coach, toast])
   if (!user?.coach) return null
   return <div className="narrow">
@@ -24,7 +24,7 @@ export default function CoachActivity() {
       : !feed.length ? <div className="empty"><div className="ico"><Icon name="history" /></div>Todavía no hay entrenos para mostrar.</div>
       : feed.map(g => <div key={g.d}>
         <div className="feed-day">{fmtDate(g.d, true)}</div>
-        <div className="list">{g.items.map(i => <div key={i.studentId + g.d + i.workout} className="item" onClick={() => nav('/coach/alumno/' + i.studentId)}>
+        <div className="list">{g.items.map((i, n) => <div key={i.studentId + g.d + i.workout + n} className="item" onClick={() => nav('/coach/alumno/' + i.studentId)}>
           <div className="grow"><div className="tt">{i.name}</div><div className="ss">terminó {i.workout || 'un entreno'}</div></div>
           <Icon name="chevronRight" className="chev" />
         </div>)}</div>

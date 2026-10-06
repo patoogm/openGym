@@ -11,6 +11,7 @@ describe('paths and tabs', () => {
   it('isCoachPath only matches the coach area', () => {
     expect(isCoachPath('/coach')).toBe(true)
     expect(isCoachPath('/coach/rutinas')).toBe(true)
+    expect(isCoachPath('/coach/rutinas/r1')).toBe(true)
     expect(isCoachPath('/coachxyz')).toBe(false)
     expect(isCoachPath('/home')).toBe(false)
   })
@@ -25,6 +26,7 @@ describe('paths and tabs', () => {
     expect(activeCoachTab('/coach')).toBe('alumnos')
     expect(activeCoachTab('/coach/alumno/s1')).toBe('alumnos')
     expect(activeCoachTab('/coach/rutinas')).toBe('rutinas')
+    expect(activeCoachTab('/coach/rutinas/r1')).toBe('rutinas')
     expect(activeCoachTab('/coach/actividad')).toBe('actividad')
     expect(activeCoachTab('/home')).toBe(null)
   })

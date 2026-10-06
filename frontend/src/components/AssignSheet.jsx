@@ -52,6 +52,7 @@ function AssignSheet({ routineId: rid0 = null, studentId = null, onDone, close }
     const res = await assignMany(assignRoutine, rid, chosen)
     setBusy(false)
     toast(assignSummary(res))
+    if (res.okIds.length) setStudents(p => p.map(s => res.okIds.includes(s.id) ? { ...s, assignedRoutineIds: [...(s.assignedRoutineIds || []), rid] } : s))
     if (res.okIds.length) onDone && onDone()
     if (!res.failed.length) close()
     else setSel(new Set(res.failed.map(f => f.id))) // keep only the failures selected so a retry is one tap
@@ -64,7 +65,10 @@ function AssignSheet({ routineId: rid0 = null, studentId = null, onDone, close }
   return <>
     <h3>Asignar “{routine ? routine.name : '…'}”</h3>
     {!students ? <div className="muted small">Cargando…</div>
-      : !students.length ? <div className="empty small">Todavía no tenés alumnos. Invitá a alguien desde la pantalla Alumnos.</div>
+      : !students.length ? <>
+        <div className="empty small">Todavía no tenés alumnos. Invitá a alguien desde la pantalla Alumnos.</div>
+        <Button variant="primary" onClick={() => { close(); nav('/coach') }}>Ir a Alumnos</Button>
+      </>
       : <>
         {eligible.length > 1 && <div className="item" onClick={toggleAll}>
           <div className="grow"><div className="tt">Todos</div></div>
