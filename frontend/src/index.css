@@ -191,6 +191,7 @@ body.resting #app{padding-bottom:calc(250px + var(--sab))}
 }
 .iconbtn:active{background:var(--surface-2);transform:scale(.92)}
 .iconbtn.on-ss{background:var(--acc-soft);color:var(--acc)}
+.iconbtn.danger{color:var(--red)}
 
 h4.sec{
   font-size:13px;font-weight:400;letter-spacing:-.004em;color:var(--label-2);
@@ -337,6 +338,9 @@ h4.sec{
 .attn{display:flex;align-items:center;gap:8px;padding:10px 12px;margin-bottom:12px;border-radius:var(--r);
   background:color-mix(in srgb,var(--orange) 12%,transparent);color:var(--label)}
 .attn .icn{color:var(--orange);flex:none}
+.attn{cursor:pointer}
+.attn .grow{min-width:0}
+.live-dot{font-size:9px;color:var(--green);display:inline-block;margin-right:5px}
 .feed-day{margin:16px 2px 6px;font-size:13px;color:var(--label-2);text-transform:capitalize}
 
 /* ------------------------------------------------------------ week strip -- */
@@ -382,7 +386,7 @@ h4.sec{
   font-weight:500;text-transform:capitalize;
 }
 .tag.acc{background:var(--acc-soft);color:var(--acc)}
-.tag.warn{background:color-mix(in srgb,var(--orange) 16%,transparent);color:var(--orange)}
+.tag.warn{background:color-mix(in srgb,var(--orange) 16%,transparent);color:var(--orange);margin-left:6px}
 
 /* ---------------------------------------------------------------- chips -- */
 .chips{
