@@ -994,7 +994,7 @@ h4.sec{
   .cdetail{padding:22px 28px calc(40px + var(--sab));min-width:0}
   #app .cmaster .list,#app .cdetail .list{display:flex;flex-direction:column}
   .cmaster .item.sel{background:var(--surface-2);box-shadow:inset 3px 0 0 var(--acc)}
-  .cmaster .tag.warn{margin:4px 0 0}
+  .cmaster .tag.warn{margin:4px 0 0;text-transform:none}
   .cdetail .tiles{grid-template-columns:repeat(3,1fr)}
   .ccols{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
   .ccols>*{min-width:0}

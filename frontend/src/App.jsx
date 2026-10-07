@@ -27,7 +27,6 @@ import Profile from './views/Profile.jsx'
 import Program from './views/Program.jsx'
 import Admin from './views/Admin.jsx'
 import Coach from './views/Coach.jsx'
-import CoachStudent from './views/CoachStudent.jsx'
 import CoachRoutines from './views/CoachRoutines.jsx'
 import CoachActivity from './views/CoachActivity.jsx'
 import CoachShell from './views/CoachShell.jsx'
@@ -96,7 +95,7 @@ function Shell() {
               <Route path="/admin" element={user?.admin ? <Admin /> : <Navigate to="/home" replace />} />
               <Route element={coachOnly(<CoachShell />)}>
                 <Route path="/coach" element={<Coach />} />
-                <Route path="/coach/alumno/:id" element={<CoachStudent />} />
+                <Route path="/coach/alumno/:id" element={<Coach />} />
                 <Route path="/coach/rutinas" element={<CoachRoutines />} />
                 <Route path="/coach/rutinas/:id" element={<RoutineEdit />} />
                 <Route path="/coach/actividad" element={<CoachActivity />} />
