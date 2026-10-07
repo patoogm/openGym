@@ -7,6 +7,7 @@ import Icon from '../components/Icon.jsx'
 import InvitesCard from '../components/InvitesCard.jsx'
 import StudentList from '../components/StudentList.jsx'
 import StudentDetail from '../components/StudentDetail.jsx'
+import ErrorBoundary from '../components/ErrorBoundary.jsx'
 
 // Alumnos. Mobile: the list, or one student's detail when the URL has an id (as before).
 // Desktop: list on the left, selected student's detail on the right.
@@ -29,7 +30,9 @@ export default function Coach() {
       <StudentList compact students={students} selectedId={id} onOpen={open} onInvite={invite} />
     </section>
     <section className="cdetail">
-      {detail || <div className="empty"><div className="ico"><Icon name="person" /></div>Elegí un alumno para ver su progreso.</div>}
+      <ErrorBoundary key={id || 'none'}>
+        {detail || <div className="empty"><div className="ico"><Icon name="person" /></div>Elegí un alumno para ver su progreso.</div>}
+      </ErrorBoundary>
     </section>
   </div>
 }

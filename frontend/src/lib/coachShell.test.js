@@ -6,7 +6,7 @@ import {
 } from './coachShell.js'
 import {
   routinePath, routineEditPath, eligibleStudents, eligibleRoutines,
-  attentionTexts, assignRoutines, assignRoutinesSummary
+  attentionTexts, assignRoutines, assignRoutinesSummary, shellBoundaryKey
 } from './coachShell.js'
 
 const TODAY = '2026-10-07'   // Wednesday
@@ -250,5 +250,21 @@ describe('assignRoutines (student → routines)', () => {
     expect(assignRoutinesSummary({ okIds: ['r1', 'r2'], failed: [] })).toBe('2 rutinas asignadas')
     expect(assignRoutinesSummary({ okIds: ['r1'], failed: [{ id: 'r2', name: 'B', message: 'boom' }] }))
       .toBe('1 de 2 asignadas; falló B: boom')
+  })
+})
+
+describe('shellBoundaryKey', () => {
+  it('desktop keeps one key per section so the master list is not remounted on selection', () => {
+    expect(shellBoundaryKey('/coach', true)).toBe(shellBoundaryKey('/coach/alumno/s1', true))
+    expect(shellBoundaryKey('/coach/alumno/s1', true)).toBe(shellBoundaryKey('/coach/alumno/s2', true))
+    expect(shellBoundaryKey('/coach/rutinas/r1', true)).toBe(shellBoundaryKey('/coach/rutinas/r2', true))
+    // the editor is its own boundary: leaving it (back, or the Rutinas sidebar item) clears an editor crash
+    expect(shellBoundaryKey('/coach/rutinas/r1/editar', true)).not.toBe(shellBoundaryKey('/coach/rutinas/r1', true))
+    expect(shellBoundaryKey('/coach/rutinas/r1/editar', true)).not.toBe(shellBoundaryKey('/coach/rutinas', true))
+    expect(shellBoundaryKey('/coach/alumno/s1', true)).not.toBe(shellBoundaryKey('/coach/rutinas', true))
+  })
+  it('mobile keys per route (as before)', () => {
+    expect(shellBoundaryKey('/coach/alumno/s1', false)).toBe('/coach/alumno/s1')
+    expect(shellBoundaryKey('/coach/alumno/s2', false)).not.toBe(shellBoundaryKey('/coach/alumno/s1', false))
   })
 })

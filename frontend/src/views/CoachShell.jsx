@@ -4,6 +4,7 @@ import { useStore } from '../store/useStore.js'
 import { useUI } from '../store/useUI.js'
 import { listStudents } from '../lib/coachApi.js'
 import { useIsDesktop } from '../lib/useIsDesktop.js'
+import { shellBoundaryKey } from '../lib/coachShell.js'
 import ErrorBoundary from '../components/ErrorBoundary.jsx'
 import CoachSidebar from '../components/CoachSidebar.jsx'
 
@@ -30,8 +31,9 @@ export default function CoachShell() {
     return () => clearInterval(iv)
   }, [user?.coach, reload])
 
-  // keyed on the route so a screen that throws is contained and the sidebar stays a way out
-  const body = <ErrorBoundary key={pathname}><Outlet context={{ students, reload }} /></ErrorBoundary>
+  // a screen that throws is contained and the sidebar stays a way out; the key is per route on
+  // mobile and per section on desktop (see shellBoundaryKey)
+  const body = <ErrorBoundary key={shellBoundaryKey(pathname, desktop)}><Outlet context={{ students, reload }} /></ErrorBoundary>
   if (!desktop) return body
   return <div className="cshell">
     <CoachSidebar students={students} />

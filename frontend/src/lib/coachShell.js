@@ -135,3 +135,9 @@ export function assignRoutinesSummary({ okIds, failed }) {
   const total = okIds.length + failed.length
   return okIds.length + ' de ' + total + ' asignadas; falló ' + failed.map(f => f.name).join(', ') + ': ' + failed[0].message
 }
+
+// ErrorBoundary key for the coach outlet. Mobile: per route (as before). Desktop: per section, so
+// picking a student/routine does not remount the master list (its search text and scroll position).
+// The detail pane has its own boundary keyed on the selection, so one bad student still recovers.
+export const shellBoundaryKey = (pathname, desktop) =>
+  desktop ? (activeCoachTab(pathname) || pathname) + (pathname.endsWith('/editar') ? ':editar' : '') : pathname

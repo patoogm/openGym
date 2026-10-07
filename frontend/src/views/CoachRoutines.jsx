@@ -11,6 +11,7 @@ import { Button } from '../components/ui.jsx'
 import { glyphOf, DEFAULT_GLYPH } from '../lib/glyphs.js'
 import { openAssignSheet } from '../components/AssignSheet.jsx'
 import RoutinePanel from '../components/RoutinePanel.jsx'
+import ErrorBoundary from '../components/ErrorBoundary.jsx'
 
 // The coach's own templates (the same S.routines the athlete Plan edits).
 // Mobile: list; a row opens the editor and "assign" is one tap away (sheet).
@@ -52,9 +53,11 @@ export default function CoachRoutines() {
   return <div className="cgrid">
     <section className="cmaster" aria-label="Rutinas">{head}{list}</section>
     <section className="cdetail">
-      {selected
-        ? <RoutinePanel key={selected.id} r={selected} students={students} onChanged={reload} />
-        : <div className="empty"><div className="ico"><Icon name="clipboard" /></div>Elegí una rutina para ver a quién se la asignaste o asignarla.</div>}
+      <ErrorBoundary key={id || 'none'}>
+        {selected
+          ? <RoutinePanel key={selected.id} r={selected} students={students} onChanged={reload} />
+          : <div className="empty"><div className="ico"><Icon name="clipboard" /></div>Elegí una rutina para ver a quién se la asignaste o asignarla.</div>}
+      </ErrorBoundary>
     </section>
   </div>
 }
