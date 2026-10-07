@@ -54,7 +54,7 @@ export default function Coach() {
         <Icon name="bell" />
         <span className="grow">{s.name}: {attentionReasons(s, today).map(r => r === 'request'
           ? s.pendingRequests + (s.pendingRequests === 1 ? ' pedido de cambio' : ' pedidos de cambio')
-          : 'sin entrenar (' + lastLabel(s, today) + ')').join(' · ')}</span>
+          : s.lastWorkout ? 'sin entrenar (' + lastLabel(s, today) + ')' : 'sin entrenos todavía').join(' · ')}</span>
         <Icon name="chevronRight" className="chev" />
       </div>)}
     </>}
