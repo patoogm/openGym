@@ -29,3 +29,6 @@ Thumbs.db
 frontend/android/app/build/
 frontend/ios/App/build/
 frontend/ios/App/Pods/
+
+# brainstorming visual companion
+.superpowers/
