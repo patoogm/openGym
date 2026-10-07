@@ -30,7 +30,9 @@ import Coach from './views/Coach.jsx'
 import CoachStudent from './views/CoachStudent.jsx'
 import CoachRoutines from './views/CoachRoutines.jsx'
 import CoachActivity from './views/CoachActivity.jsx'
-import { homePathFor } from './lib/coachShell.js'
+import CoachShell from './views/CoachShell.jsx'
+import { useIsDesktop } from './lib/useIsDesktop.js'
+import { homePathFor, isCoachPath } from './lib/coachShell.js'
 
 bindUI(useUI)   // lets the shared controls open sheets without importing the store at module scope
 
@@ -48,6 +50,7 @@ function Shell() {
   const { S, user, ready } = useStore()
   const isGuest = useStore(s => s.isGuest())
   const langV = useLang()   // re-renders the whole shell when the language (pack) changes
+  const desktop = useIsDesktop()
   useEffect(() => { setNav(navigate) }, [navigate])
   useEffect(() => { applyPrefs(S.theme, S.accent) }, [S.theme, S.accent])
   useEffect(() => { setLang(S.lang || 'es') }, [S.lang])
@@ -68,12 +71,15 @@ function Shell() {
   )
 
   const coachOnly = el => (user?.coach ? el : <Navigate to="/home" replace />)
+  // On desktop the coach area is one persistent shell: a stable key keeps it (and its student
+  // polling) mounted while navigating between coach screens. Elsewhere #app re-keys per route.
+  const coachDesk = desktop && !!user?.coach && isCoachPath(loc.pathname)
 
   return (
     <>
       {/* keyed on the route: a view that throws is contained, and switching tabs
           re-mounts the boundary, so the tab bar is always a way out */}
-      <div id="app" className="vfade" key={loc.pathname}>
+      <div id="app" className={'vfade' + (coachDesk ? ' cdesk' : '')} key={coachDesk ? 'coach-desktop' : loc.pathname}>
         <ErrorBoundary>
           {!authed ? <Login /> : (
             <Routes>
@@ -88,11 +94,13 @@ function Shell() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/program" element={<Program />} />
               <Route path="/admin" element={user?.admin ? <Admin /> : <Navigate to="/home" replace />} />
-              <Route path="/coach" element={coachOnly(<Coach />)} />
-              <Route path="/coach/rutinas" element={coachOnly(<CoachRoutines />)} />
-              <Route path="/coach/rutinas/:id" element={coachOnly(<RoutineEdit />)} />
-              <Route path="/coach/actividad" element={coachOnly(<CoachActivity />)} />
-              <Route path="/coach/alumno/:id" element={coachOnly(<CoachStudent />)} />
+              <Route element={coachOnly(<CoachShell />)}>
+                <Route path="/coach" element={<Coach />} />
+                <Route path="/coach/alumno/:id" element={<CoachStudent />} />
+                <Route path="/coach/rutinas" element={<CoachRoutines />} />
+                <Route path="/coach/rutinas/:id" element={<RoutineEdit />} />
+                <Route path="/coach/actividad" element={<CoachActivity />} />
+              </Route>
               <Route path="*" element={<Navigate to={homePathFor(user)} replace />} />
             </Routes>
           )}

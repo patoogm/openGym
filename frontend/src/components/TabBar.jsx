@@ -5,6 +5,7 @@ import { todayISO } from '../lib/format.js'
 import { countEx } from '../lib/routine.js'
 import { t } from '../lib/i18n.js'
 import { COACH_TABS, activeCoachTab, isCoachPath } from '../lib/coachShell.js'
+import { useIsDesktop } from '../lib/useIsDesktop.js'
 import { openAssignSheet } from './AssignSheet.jsx'
 import Icon from './Icon.jsx'
 
@@ -14,6 +15,7 @@ export default function TabBar({ onStart }) {
   const S = useStore(s => s.S)
   const user = useStore(s => s.user)
   const isGuest = useStore(s => s.isGuest())
+  const desktop = useIsDesktop()
   if (!user && !isGuest) return null
   const cur = loc.pathname.split('/')[1] || 'home'
   const on = k => cur === k || (cur === 'history' && k === 'stats') || (cur === 'settings' && k === 'home')
@@ -33,6 +35,7 @@ export default function TabBar({ onStart }) {
 
   const coachMode = !!user?.coach && isCoachPath(loc.pathname)
   const activeCoach = activeCoachTab(loc.pathname)
+  if (coachMode && desktop) return null   // CoachSidebar replaces the bar
 
   if (coachMode) {
     const CT = ({ k, icon, to, label, dot }) => (
