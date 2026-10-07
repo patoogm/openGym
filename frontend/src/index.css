@@ -995,6 +995,8 @@ h4.sec{
   #app .cmaster .list,#app .cdetail .list{display:flex;flex-direction:column}
   .cmaster .item.sel{background:var(--surface-2);box-shadow:inset 3px 0 0 var(--acc)}
   .cmaster .tag.warn{margin:4px 0 0;text-transform:none}
+  .cdetail .item+.list{margin-top:8px}
+  .cdetail .list+.btn{margin-top:12px}
   .cdetail .tiles{grid-template-columns:repeat(3,1fr)}
   .ccols{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
   .ccols>*{min-width:0}

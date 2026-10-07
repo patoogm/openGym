@@ -11,12 +11,13 @@ import { Button } from './ui.jsx'
 import { confirmSheet } from '../sheets.jsx'
 import { StatTiles, WorkoutHistory, rel } from './ProgressViews.jsx'
 import { openAssignSheet } from './AssignSheet.jsx'
+import AssignPanel from './AssignPanel.jsx'
 import { getStudent, unassignRoutine, resolveRequest } from '../lib/coachApi.js'
 import { weekSummary } from '../lib/coachShell.js'
 
 // Student detail for the coach. Copy is Spanish-literal; shared components get `t`.
 // `onChanged` runs after any mutation so the shell can refresh the student list too.
-export default function StudentDetail({ id, onChanged }) {
+export default function StudentDetail({ id, students, onChanged }) {
   const nav = useNavigate()
   const toast = useUI(s => s.toast)
   const desktop = useIsDesktop()
@@ -42,7 +43,7 @@ export default function StudentDetail({ id, onChanged }) {
 
   const routines = <>
     <div className="row between"><h4 className="sec">Rutinas asignadas</h4>
-      <Button size="sm" variant="primary" icon="plus" onClick={() => openAssignSheet({ studentId: id, onDone: changed })}>Asignar</Button></div>
+      {!desktop && <Button size="sm" variant="primary" icon="plus" onClick={() => openAssignSheet({ studentId: id, onDone: changed })}>Asignar</Button>}</div>
     {d.assigned.length ? <div className="list">{d.assigned.map(a => <div key={a.assignmentId} className="item">
       <span className="lrow-i"><Icon name={glyphOf(a.emoji)} /></span>
       <div className="grow"><div className="tt">{a.name}</div><div className="ss">{a.count} ej.</div></div>
@@ -61,6 +62,11 @@ export default function StudentDetail({ id, onChanged }) {
           <Button size="sm" variant="tinted" onClick={() => resolveRequest(q.id).then(changed).catch(e => toast(e.message))}>Marcar resuelto</Button>
         </div>
       </div>)}
+    </>}
+
+    {desktop && <>
+      <h4 className="sec">Asignar rutinas</h4>
+      <AssignPanel studentId={id} students={students} onDone={changed} />
     </>}
   </>
 

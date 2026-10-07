@@ -18,7 +18,7 @@ export default function Coach() {
   const { students, reload } = useCoachData()
   const open = sid => nav('/coach/alumno/' + sid)
   const invite = () => openSheet(() => <><h3>Invitaciones</h3><InvitesCard t={t} heading={null} /></>)
-  const detail = id ? <StudentDetail key={id} id={id} onChanged={reload} /> : null
+  const detail = id ? <StudentDetail key={id} id={id} students={students} onChanged={reload} /> : null
 
   if (!desktop) return <div className="narrow">
     {detail || <StudentList students={students} onOpen={open} onInvite={invite} />}
