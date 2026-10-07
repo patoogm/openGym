@@ -105,3 +105,33 @@ export function assignSummary({ okIds, failed }) {
   const total = okIds.length + failed.length
   return okIds.length + ' de ' + total + ' asignadas; falló ' + failed.map(f => f.name).join(', ') + ': ' + failed[0].message
 }
+
+export const routinePath = id => '/coach/rutinas/' + id
+export const routineEditPath = id => '/coach/rutinas/' + id + '/editar'
+
+// Students who can still receive `routineId` (older API rows may lack assignedRoutineIds).
+export const eligibleStudents = (students, routineId) =>
+  (students || []).filter(s => !(s.assignedRoutineIds || []).includes(routineId))
+
+// Routines `student` does not have yet.
+export const eligibleRoutines = (routines, student) => {
+  const has = (student && student.assignedRoutineIds) || []
+  return (routines || []).filter(r => !has.includes(r.id))
+}
+
+// Same wording as the "Requiere atención" banner, one string per reason.
+export function attentionTexts(row, today) {
+  return attentionReasons(row, today).map(r => r === 'request'
+    ? row.pendingRequests + (row.pendingRequests === 1 ? ' pedido de cambio' : ' pedidos de cambio')
+    : row.lastWorkout ? 'sin entrenar (' + lastLabel(row, today) + ')' : 'sin entrenos todavía')
+}
+
+// One student, many routines. Reuses assignMany by swapping roles, so okIds/failed carry ROUTINE ids.
+export const assignRoutines = (assignFn, studentId, routines) =>
+  assignMany((routineId, sid) => assignFn(sid, routineId), studentId, routines)
+
+export function assignRoutinesSummary({ okIds, failed }) {
+  if (!failed.length) return okIds.length === 1 ? 'Rutina asignada' : okIds.length + ' rutinas asignadas'
+  const total = okIds.length + failed.length
+  return okIds.length + ' de ' + total + ' asignadas; falló ' + failed.map(f => f.name).join(', ') + ': ' + failed[0].message
+}

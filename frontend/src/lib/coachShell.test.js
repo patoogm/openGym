@@ -4,6 +4,10 @@ import {
   weekStrip, weekSummary, daysSince, attentionReasons, sortStudents, lastLabel,
   activityFeed, assignMany, assignSummary
 } from './coachShell.js'
+import {
+  routinePath, routineEditPath, eligibleStudents, eligibleRoutines,
+  attentionTexts, assignRoutines, assignRoutinesSummary
+} from './coachShell.js'
 
 const TODAY = '2026-10-07'   // Wednesday
 
@@ -179,5 +183,72 @@ describe('assignMany / assignSummary', () => {
     const fn = vi.fn()
     expect(await assignMany(fn, 'r1', [])).toEqual({ okIds: [], failed: [] })
     expect(fn).not.toHaveBeenCalled()
+  })
+})
+
+describe('desktop routes', () => {
+  it('builds routine summary and editor paths', () => {
+    expect(routinePath('r1')).toBe('/coach/rutinas/r1')
+    expect(routineEditPath('r1')).toBe('/coach/rutinas/r1/editar')
+  })
+  it('keeps the editor under the Rutinas tab', () => {
+    expect(activeCoachTab('/coach/rutinas/r1/editar')).toBe('rutinas')
+    expect(isCoachPath('/coach/rutinas/r1/editar')).toBe(true)
+  })
+})
+
+describe('assign eligibility', () => {
+  const students = [
+    { id: 's1', name: 'Ana', assignedRoutineIds: ['r1'] },
+    { id: 's2', name: 'Luis', assignedRoutineIds: [] },
+    { id: 's3', name: 'Old' }               // older API rows had no assignedRoutineIds
+  ]
+  it('eligibleStudents drops students who already have the routine', () => {
+    expect(eligibleStudents(students, 'r1').map(s => s.id)).toEqual(['s2', 's3'])
+    expect(eligibleStudents(students, 'r9').map(s => s.id)).toEqual(['s1', 's2', 's3'])
+  })
+  it('eligibleStudents tolerates a null list', () => {
+    expect(eligibleStudents(null, 'r1')).toEqual([])
+  })
+  it('eligibleRoutines drops routines the student already has', () => {
+    const routines = [{ id: 'r1' }, { id: 'r2' }]
+    expect(eligibleRoutines(routines, students[0]).map(r => r.id)).toEqual(['r2'])
+    expect(eligibleRoutines(routines, students[2]).map(r => r.id)).toEqual(['r1', 'r2'])
+    expect(eligibleRoutines(routines, undefined).map(r => r.id)).toEqual(['r1', 'r2'])
+    expect(eligibleRoutines(null, students[0])).toEqual([])
+  })
+})
+
+describe('attentionTexts', () => {
+  const base = { live: null, assignmentCount: 1, pendingRequests: 0, lastWorkout: '2026-10-01' }
+  it('returns one text per reason, in the banner wording', () => {
+    expect(attentionTexts({ ...base, pendingRequests: 1 }, TODAY)).toEqual(['1 pedido de cambio', 'sin entrenar (hace 6 d)'])
+    expect(attentionTexts({ ...base, pendingRequests: 3, lastWorkout: '2026-10-06' }, TODAY)).toEqual(['3 pedidos de cambio'])
+    expect(attentionTexts({ ...base, lastWorkout: null }, TODAY)).toEqual(['sin entrenos todavía'])
+  })
+  it('is empty when nothing needs attention', () => {
+    expect(attentionTexts({ ...base, lastWorkout: '2026-10-06' }, TODAY)).toEqual([])
+  })
+})
+
+describe('assignRoutines (student → routines)', () => {
+  it('calls assignFn(studentId, routineId) once per routine and reports routine ids', async () => {
+    const fn = vi.fn().mockResolvedValue({})
+    const res = await assignRoutines(fn, 's1', [{ id: 'r1', name: 'A' }, { id: 'r2', name: 'B' }])
+    expect(fn).toHaveBeenCalledWith('s1', 'r1')
+    expect(fn).toHaveBeenCalledWith('s1', 'r2')
+    expect(res).toEqual({ okIds: ['r1', 'r2'], failed: [] })
+  })
+  it('keeps going when one fails', async () => {
+    const fn = vi.fn().mockImplementation((s, r) => r === 'r2' ? Promise.reject(new Error('boom')) : Promise.resolve({}))
+    const res = await assignRoutines(fn, 's1', [{ id: 'r1', name: 'A' }, { id: 'r2', name: 'B' }])
+    expect(res.okIds).toEqual(['r1'])
+    expect(res.failed).toEqual([{ id: 'r2', name: 'B', message: 'boom' }])
+  })
+  it('assignRoutinesSummary words singular, plural and partial failure', () => {
+    expect(assignRoutinesSummary({ okIds: ['r1'], failed: [] })).toBe('Rutina asignada')
+    expect(assignRoutinesSummary({ okIds: ['r1', 'r2'], failed: [] })).toBe('2 rutinas asignadas')
+    expect(assignRoutinesSummary({ okIds: ['r1'], failed: [{ id: 'r2', name: 'B', message: 'boom' }] }))
+      .toBe('1 de 2 asignadas; falló B: boom')
   })
 })
