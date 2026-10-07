@@ -17,6 +17,8 @@ import { POLICIES_FOR, POLICY_NAME, POLICY_DESC } from '../lib/progression.js'
 import BodyMap from '../components/BodyMap.jsx'
 import { loadOfRoutine, rankOf, MUSCLE_NAME } from '../lib/muscles.js'
 import { sectionsOf, isSection, countEx, sectionEnd } from '../lib/routine.js'
+import { useIsDesktop } from '../lib/useIsDesktop.js'
+import { routinePath } from '../lib/coachShell.js'
 
 function SectionHeader({ name, onRename, onMove, onDelete }) {
   return (
@@ -83,7 +85,8 @@ export default function RoutineEdit() {
   const S = useStore(s => s.S)
   const update = useStore(s => s.update)
   const inCoach = useLocation().pathname.startsWith('/coach/')
-  const back = inCoach ? '/coach/rutinas' : '/plan'
+  const desktop = useIsDesktop()
+  const back = inCoach ? (desktop ? routinePath(id) : '/coach/rutinas') : '/plan'
   const r = S.routines.find(x => x.id === id)
   useEffect(() => { if (!r) nav(back) }, [!!r])
   if (!r) return null
