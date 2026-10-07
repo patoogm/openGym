@@ -59,6 +59,7 @@ frontend/src/
     RestTimer.jsx     timer flotante (descanso / serie cronometrada)
     AssignSheet.jsx   sheet de dos pasos para asignar rutinas a alumnos
     WeekMini.jsx      mini-tira de 7 días para adherencia semanal
+    CoachSidebar.jsx  sidebar fija del coach (≥1000px); StudentList / StudentDetail / AssignPanel / RoutinePanel: piezas del panel coach desktop
     LineChart, Heatmap, BodyMap, Media (gif/img de ejercicios), ProgressViews, InvitesCard, BlockPreview, Toast
   views/              una por ruta (ver §6)
   store/useStore.js   estado persistido del usuario (S), sync con API, localStorage
@@ -185,9 +186,13 @@ Si un diseño necesita un ícono nuevo, se agrega como path SVG en `Icon.jsx` co
 | `/coach` | `views/Coach.jsx` | home del coach: lista de alumnos con adherencia semanal + badge de atención (copy en español literal) | Media |
 | `/coach/rutinas` | `views/CoachRoutines.jsx` | lista de rutinas plantilla del coach, asignar desde la fila | Media |
 | `/coach/actividad` | `views/CoachActivity.jsx` | feed de actividad agrupado por día (workouts completados, cambios solicitados) | Media |
-| `/coach/alumno/:id` | `views/CoachStudent.jsx` | detalle de alumno: rutinas asignadas, progreso (tiles + gráfico peso + historial) | Media |
+| `/coach/alumno/:id` | `views/Coach.jsx` + `components/StudentDetail.jsx` | detalle de alumno: rutinas asignadas, progreso (tiles + gráfico peso + historial) | Media |
+| `/coach/rutinas/:id` | `views/CoachRoutines.jsx` + `components/RoutinePanel.jsx` | resumen de rutina + asignación inline (desktop); en mobile redirige al editor | Media |
+| `/coach/rutinas/:id/editar` | `views/RoutineEdit.jsx` | editor de rutina dentro del shell coach | Media |
 | `/admin` | `views/Admin.jsx` | dashboard operador (solo inglés, a propósito) | Baja |
 | — | `views/Login.jsx` | passkey / crear perfil / invitado | Media |
+
+> **Coach desktop (≥1000px):** `views/CoachShell.jsx` es la ruta layout de `/coach/*`: dueño único de `listStudents()` + polling 15 s (comparte `{students, reload}` por `useCoachData`) y, en desktop, renderiza `CoachSidebar` + master–detalle (`.cshell/.cside/.cgrid/.cmaster/.cdetail` en `index.css`). Mobile sin cambios. Spec: `docs/superpowers/specs/2026-10-07-coach-desktop-panel-design.md`.
 
 Sheets principales (`sheets.jsx`): registrar peso, objetivo, detalle de ejercicio, picker de ejercicios,
 config de ejercicio en rutina, reprogramar día, calendario, detalle de workout, workout completado (center), confirmaciones, import/export de plan.

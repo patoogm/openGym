@@ -21,7 +21,7 @@ Mobile (<1000px) is unchanged.
 - Assignment: **inline panel**, no modal, reachable from Rutinas (pick a routine → check students) and from a student's detail (pick routines).
 - Routine editing: the existing `RoutineEdit` stays a **full page** inside the shell. Embedding it in the panel is a possible later phase.
 - Implementation: **nested layout route + shared components** (approach A).
-- Defaults: Actividad is a wide single column and clicking an event opens that student in Alumnos; "Yo" links to `/settings`; the sidebar replaces the tab bar only on `/coach/*` at ≥1000px.
+- Defaults: Actividad is a wide single column and clicking an event opens that student in Alumnos; "Yo" links to `/home` (the coach's own training, same as the mobile tab) and shows the orange dot while a workout is active; the sidebar replaces the tab bar only on `/coach/*` at ≥1000px.
 
 ## Routes
 
