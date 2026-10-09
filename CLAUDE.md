@@ -60,6 +60,7 @@ frontend/src/
     AssignSheet.jsx   sheet de dos pasos para asignar rutinas a alumnos
     WeekMini.jsx      mini-tira de 7 días para adherencia semanal
     AthleteSidebar.jsx sidebar fija del atleta (≥1000px, mismas clases `.cside*` que el coach); `useStartWorkout.js`: acción Start/Resume compartida con TabBar
+    SessionRail.jsx   rail derecha del Workout en desktop (reloj, progreso, esquema con salto, timer inline, terminar/descartar); `Elapsed.jsx`: reloj de la sesión
     CoachSidebar.jsx  sidebar fija del coach (≥1000px); StudentList / StudentDetail / AssignPanel / RoutinePanel: piezas del panel coach desktop
     LineChart, Heatmap, BodyMap, Media (gif/img de ejercicios), ProgressViews, InvitesCard, BlockPreview, Toast
   views/              una por ruta (ver §6)
@@ -68,6 +69,7 @@ frontend/src/
   lib/
     lógica pura + tests (progression, onerm, history, effort, blocks, i18n, format…)
     athleteShell.js   items del sidebar del atleta, tab activa por ruta, cuándo se muestra el shell (+ test)
+    sessionOutline.js esquema de la sesión activa para el rail del Workout: superset = una fila, secciones, estado por ejercicio (+ test)
     coachShell.js     lógica de tabs según rol, orden de lista, criterios de atención
   locales/*.js        traducciones UI (la key es el string en inglés)
   instr/*.js, names/  instrucciones y nombres de ejercicios por idioma (lazy-load, enormes: no abrir)
@@ -154,7 +156,7 @@ Utilidades: `.muted` (label-2), `.dim` (label-3), `.accent`, `.cap1` (solo prime
 | Tab bar | `#tabbar`: Home · Plan · **Start** (círculo acento, elevado) · Stats · Exercises | blur translúcido; en desktop flota como píldora de 520px |
 | Sheets | `.sheet` (bottom, swipe-down), `.center` (diálogo), `.mback` backdrop | se abren con `useUI().openSheet(render, {kind})` |
 | Timer | `#timer`, `#timer.rest` (2 filas), `#timer.working` (borde acento) | flota sobre el tab bar |
-| Workout | `.setrow`, `.sethead`, `.stp.w/.r/.eff`, `.setgo`, `.progline`, `.exmedia`, `.wprog` | la pantalla más crítica |
+| Workout | `.setrow`, `.sethead`, `.stp.w/.r/.eff`, `.setgo`, `.progline`, `.exmedia`, `.wprog`; desktop: `.wdesk` > `.wmain` + `.wrail` (`.wout`, `.wout-i`), `.exblock`/`.exbody`, `.timer-inline`, `.wchoose` | la pantalla más crítica |
 | Semana | `.week` > `.wday` (+ `.dot.plan/.ovr/.done`, `.today`), `.today-row` | Home |
 | Datos | `.chart`, `.ctip`, `.hm-*` (heatmap), `.bodymap`/`.bm-*`, `.tiles`/`.tile`, `.mrow`, `.pr` | |
 | Coach | `.wk-mini` (mini-tira 7 días), `.attn` (banner de atención), `.feed-day` (encabezado de día en actividad), `.item.off` (alumno ya tiene rutina, inert) | |
@@ -179,7 +181,7 @@ Si un diseño necesita un ícono nuevo, se agrega como path SVG en `Icon.jsx` co
 | Ruta | Archivo | Contenido | Prioridad de diseño |
 |---|---|---|---|
 | `/home` | `views/Home.jsx` | saludo + fecha, CTA de setup, tira semanal + "Hoy", card peso corporal (gráfico + objetivo), racha, etc. | Alta |
-| `/workout` | `views/Workout.jsx` | selector de rutina y **sesión en curso**: media del ejercicio, filas de series (peso × reps × esfuerzo), progresión, supersets, timers | **Máxima** |
+| `/workout` | `views/Workout.jsx` | selector de rutina y **sesión en curso**: media del ejercicio, filas de series (peso × reps × esfuerzo), progresión, supersets, timers. Desktop ≥1000px: ejercicio actual (media al lado de las series si hay ancho) + rail de sesión; el selector de rutina va en dos zonas | **Máxima** |
 | `/plan` | `views/Plan.jsx` | semana + lista de rutinas | Alta |
 | `/plan/r/:id` | `views/RoutineEdit.jsx` | editor de rutina, secciones, supersets, preview de músculos | Media |
 | `/stats` | `views/Stats.jsx` | heatmap anual, body map, gráficos, PRs, 1RM, esfuerzo | Alta |
