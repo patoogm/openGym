@@ -16,7 +16,9 @@ import {
   hasEffort, displayScale, scaleName, toScale, avgRir, effortSummary, effortWeeks,
   effortHistogram, isHardSet, HARD_RIR
 } from '../lib/effort.js'
-import { Button, Segmented, SelectRow } from '../components/ui.jsx'
+import { Button, Segmented, SelectRow, SearchField } from '../components/ui.jsx'
+import { useIsDesktop } from '../lib/useIsDesktop.js'
+import { filterByQuery } from '../lib/statsPanes.js'
 
 // Which muscles the training in a window actually hit — and, the point of the card,
 // which ones it keeps missing. Shading is relative within the window (lib/muscles.js).
@@ -132,7 +134,9 @@ function EffortCard({ S }) {
 // Stats = the analytics hub: all charts, progress and history live here.
 export default function Stats() {
   const nav = useNavigate()
+  const desktop = useIsDesktop()
   const S = useStore(s => s.S)
+  const [q, setQ] = useState('')
   const [range, setRange] = useState(90)
   const [exId, setExId] = useState(null)
   const [exMetric, setExMetric] = useState('top')
@@ -148,6 +152,7 @@ export default function Stats() {
   const monthW = S.workouts.filter(w => w.d.slice(0, 7) === todayISO().slice(0, 7)).length
 
   const exHist = [...new Set(S.workouts.flatMap(w => w.entries.map(e => e.id)))].filter(id => EXIDX[id]).sort((a, b) => nameFor(EXIDX[a]) < nameFor(EXIDX[b]) ? -1 : 1)
+  const shown = filterByQuery(exHist, q, id => nameFor(EXIDX[id]))
   const curEx = exId && exHist.includes(exId) ? exId : exHist[0] || null
   // How this exercise was logged most recently decides what the curve means: top weight,
   // longest hold or top speed. Sets logged in another mode lack the field and score 0, so a
@@ -203,74 +208,109 @@ export default function Stats() {
   if (showE1) exOpts.push({ value: 'e1rm', label: t('Est. 1RM') })
   if (showEff) exOpts.push({ value: 'effort', label: t('Effort') })
 
-  return <>
-    <div className="hdr"><div><h1>{t('Stats')}</h1><div className="sub">{t('Progress & history')}</div></div>
-      <button className="iconbtn" onClick={() => nav('/history')} aria-label={t('History')}><Icon name="history" /></button></div>
+  const hdr = <div className="hdr"><div><h1>{t('Stats')}</h1><div className="sub">{t('Progress & history')}</div></div>
+    <button className="iconbtn" onClick={() => nav('/history')} aria-label={t('History')}><Icon name="history" /></button></div>
 
-    <div className="tiles">
-      <div className="tile"><div className="l"><Icon name="dumbbell" />{t('Workouts')}</div><div className="v">{S.workouts.length}</div></div>
-      <div className="tile"><div className="l"><Icon name="calendar" />{t('This month')}</div><div className="v">{monthW}</div></div>
-      <div className="tile"><div className="l"><Icon name="flame" />{t('Week streak')}</div><div className="v">{streakWeeks(S)}</div></div>
-      <div className="tile"><div className="l"><Icon name="scale" />{t('Weight 30d')}</div><div className="v" style={{ fontSize: 22, color: bwDelta30 === null ? 'inherit' : bwDeltaColor(bwDelta30, (lastBW(S) || {}).w || 0) }}>{bwDelta30 === null ? '—' : (bwDelta30 > 0 ? '+' : '') + fmtNum(bwDelta30) + ' ' + S.unit}</div></div>
+  const tiles = <div className="tiles">
+    <div className="tile"><div className="l"><Icon name="dumbbell" />{t('Workouts')}</div><div className="v">{S.workouts.length}</div></div>
+    <div className="tile"><div className="l"><Icon name="calendar" />{t('This month')}</div><div className="v">{monthW}</div></div>
+    <div className="tile"><div className="l"><Icon name="flame" />{t('Week streak')}</div><div className="v">{streakWeeks(S)}</div></div>
+    <div className="tile"><div className="l"><Icon name="scale" />{t('Weight 30d')}</div><div className="v" style={{ fontSize: 22, color: bwDelta30 === null ? 'inherit' : bwDeltaColor(bwDelta30, (lastBW(S) || {}).w || 0) }}>{bwDelta30 === null ? '—' : (bwDelta30 > 0 ? '+' : '') + fmtNum(bwDelta30) + ' ' + S.unit}</div></div>
+  </div>
+
+  const heat = <div className="card">
+    <h2>{t('Activity — last 12 months')} <span className="dim" style={{ textTransform: 'none', letterSpacing: 0 }}>· {t('by time trained')}</span></h2>
+    <Heatmap S={S} onDay={iso => { const ws = S.workouts.filter(w => w.d === iso); if (ws.length === 1) openWorkout(ws[0]); else if (ws.length) calendarSheet(iso) }} />
+  </div>
+
+  const muscle = S.workouts.length > 0 ? <MuscleBalance S={S} /> : null
+  const effort = anyEffort ? <EffortCard S={S} /> : null
+
+  const bwCard = <div className="card">
+    <div className="row between" style={{ marginBottom: 8 }}>
+      <h2 style={{ margin: 0 }}>{t('Body weight')}</h2>
+      <div className="row" style={{ gap: 8 }}>
+        <Button size="sm" icon="target" style={S.targetW ? { color: 'var(--yellow)' } : undefined} onClick={goalSheet}>{S.targetW ? fmtNum(S.targetW) : t('Goal')}</Button>
+        <Button size="sm" icon="plus" onClick={() => bwSheet()}>{t('Log')}</Button>
+      </div>
     </div>
+    <Segmented className="seg-range" value={range} onChange={setRange}
+      options={[{ value: 30, label: '1M' }, { value: 90, label: '3M' }, { value: 365, label: '1Y' }, { value: 0, label: t('All') }]} />
+    <div className="chart"><LineChart points={bwPts} h={160} unit={S.unit} goal={S.targetW} /></div>
+  </div>
 
-    <div className="card">
-      <h2>{t('Activity — last 12 months')} <span className="dim" style={{ textTransform: 'none', letterSpacing: 0 }}>· {t('by time trained')}</span></h2>
-      <Heatmap S={S} onDay={iso => { const ws = S.workouts.filter(w => w.d === iso); if (ws.length === 1) openWorkout(ws[0]); else if (ws.length) calendarSheet(iso) }} />
+  // the chart, the last sessions and the captions: the same on both layouts
+  const exBody = <>
+    {exOpts.length > 1 && <Segmented className="seg-range" value={onEff ? 'effort' : onE1 ? 'e1rm' : 'top'} onChange={setExMetric} options={exOpts} />}
+    <div className="chart">
+      {onEff
+        ? <LineChart points={effPts} h={150} unit={hd} color="var(--yellow)" invert={kind === 'rir'} />
+        : <LineChart points={onE1 ? e1Pts.map(p => ({ t: p.t, y: p.y, d: p.d })) : topPts} h={150} unit={exUnit} color="var(--blue)" />}
     </div>
+    <div style={{ marginTop: 8 }}>{exList.map((p, i) => <div key={i} className="row between small" style={{ padding: '6px 0', borderBottom: 'var(--hair) solid var(--sep)' }}>
+      <span className="muted">{fmtDate(p.d, true)}</span><span>{p.sets.map(s => setLabel(curEx, s, p.target)).join('  ')}</span></div>)}</div>
+    <div className="small dim" style={{ marginTop: 8 }}>
+      {onEff ? t('Average effort per workout') : onE1 ? t('Estimated 1RM per workout') : curCardio ? t('Top speed per workout') : curTimed ? t('Longest hold per workout') : t('Best set weight per workout')}
+      {onEff ? '' : <> · {t('Best:')}{' '}<b className="accent">{fmtNum(onE1 ? e1Best.est : exBest)} {onE1 ? S.unit : exUnit}</b></>}
+    </div>
+    {onE1 && <div className="small dim" style={{ marginTop: 4 }}>
+      {t('Best estimate from {0} on {1} — an estimate, not a tested max.', fmtNum(e1Best.w) + ' ' + S.unit + ' × ' + e1Best.r, fmtDate(e1Best.d, true))}
+    </div>}
+    {!onEff && !onE1 && showEff && <div className="small dim" style={{ marginTop: 4 }}>
+      {t('A fuller dot means less left in the tank — the same weight at a lower {0} is progress the line alone does not show.', hd)}
+    </div>}
+  </>
 
-    {S.workouts.length > 0 && <MuscleBalance S={S} />}
-    {anyEffort && <EffortCard S={S} />}
-
-    <div className="cols">
-      <div className="card">
-        <div className="row between" style={{ marginBottom: 8 }}>
-          <h2 style={{ margin: 0 }}>{t('Body weight')}</h2>
-          <div className="row" style={{ gap: 8 }}>
-            <Button size="sm" icon="target" style={S.targetW ? { color: 'var(--yellow)' } : undefined} onClick={goalSheet}>{S.targetW ? fmtNum(S.targetW) : t('Goal')}</Button>
-            <Button size="sm" icon="plus" onClick={() => bwSheet()}>{t('Log')}</Button>
+  // mobile picks the exercise in a sheet; desktop has a searchable list beside the chart
+  // (typing never changes the selection, so the chart keeps showing the current exercise)
+  const exCard = <div className="card">
+    <h2>{t('Exercise progress')}</h2>
+    {exHist.length ? (desktop
+      ? <div className="xprog">
+        <div className="xprog-list">
+          <SearchField value={q} onChange={e => setQ(e.target.value)} onClear={() => setQ('')} placeholder={t('Search…')} />
+          <div className="xprog-opts" role="listbox" aria-label={t('Exercise progress')}>
+            {shown.length ? shown.map(id => <button key={id} role="option" aria-selected={id === curEx}
+              className={'xprog-opt cap1' + (id === curEx ? ' sel' : '')} onClick={() => setExId(id)}>{nameFor(EXIDX[id])}</button>)
+              : <div className="muted small">{t('No match')}</div>}
           </div>
         </div>
-        <Segmented className="seg-range" value={range} onChange={setRange}
-          options={[{ value: 30, label: '1M' }, { value: 90, label: '3M' }, { value: 365, label: '1Y' }, { value: 0, label: t('All') }]} />
-        <div className="chart"><LineChart points={bwPts} h={160} unit={S.unit} goal={S.targetW} /></div>
+        <div className="xprog-main">{exBody}</div>
       </div>
+      : <>
+        <div className="sect-b" style={{ marginBottom: 10 }}>
+          <SelectRow title={t('Exercise')} sheetTitle={t('Exercise progress')} value={curEx} onChange={setExId}
+            options={exHist.map(id => ({ value: id, label: nameFor(EXIDX[id]) }))} />
+        </div>
+        {exBody}
+      </>) : <div className="muted small">{t('Finish your first workout to see progress curves here.')}</div>}
+  </div>
 
-      <div className="card">
-        <h2>{t('Exercise progress')}</h2>
-        {exHist.length ? <>
-          <div className="sect-b" style={{ marginBottom: 10 }}>
-            <SelectRow title={t('Exercise')} sheetTitle={t('Exercise progress')} value={curEx} onChange={setExId}
-              options={exHist.map(id => ({ value: id, label: nameFor(EXIDX[id]) }))} />
-          </div>
-          {exOpts.length > 1 && <Segmented className="seg-range" value={onEff ? 'effort' : onE1 ? 'e1rm' : 'top'} onChange={setExMetric} options={exOpts} />}
-          <div className="chart">
-            {onEff
-              ? <LineChart points={effPts} h={150} unit={hd} color="var(--yellow)" invert={kind === 'rir'} />
-              : <LineChart points={onE1 ? e1Pts.map(p => ({ t: p.t, y: p.y, d: p.d })) : topPts} h={150} unit={exUnit} color="var(--blue)" />}
-          </div>
-          <div style={{ marginTop: 8 }}>{exList.map((p, i) => <div key={i} className="row between small" style={{ padding: '6px 0', borderBottom: 'var(--hair) solid var(--sep)' }}>
-            <span className="muted">{fmtDate(p.d, true)}</span><span>{p.sets.map(s => setLabel(curEx, s, p.target)).join('  ')}</span></div>)}</div>
-          <div className="small dim" style={{ marginTop: 8 }}>
-            {onEff ? t('Average effort per workout') : onE1 ? t('Estimated 1RM per workout') : curCardio ? t('Top speed per workout') : curTimed ? t('Longest hold per workout') : t('Best set weight per workout')}
-            {onEff ? '' : <> · {t('Best:')}{' '}<b className="accent">{fmtNum(onE1 ? e1Best.est : exBest)} {onE1 ? S.unit : exUnit}</b></>}
-          </div>
-          {onE1 && <div className="small dim" style={{ marginTop: 4 }}>
-            {t('Best estimate from {0} on {1} — an estimate, not a tested max.', fmtNum(e1Best.w) + ' ' + S.unit + ' × ' + e1Best.r, fmtDate(e1Best.d, true))}
-          </div>}
-          {!onEff && !onE1 && showEff && <div className="small dim" style={{ marginTop: 4 }}>
-            {t('A fuller dot means less left in the tank — the same weight at a lower {0} is progress the line alone does not show.', hd)}
-          </div>}
-        </> : <div className="muted small">{t('Finish your first workout to see progress curves here.')}</div>}
-      </div>
+  const recentRows = [...S.workouts].reverse().slice(0, 6).map(w => <WorkoutRow key={w.id} w={w} onClick={() => openWorkout(w)} />)
+  const allBtn = <Button size="sm" variant="ghost" trailingIcon="chevronRight" onClick={() => nav('/history')}>{t('All')} {S.workouts.length}</Button>
+  const recent = S.workouts.length > 0 ? <>
+    <div className="row between" style={{ marginBottom: 10 }}>
+      <h4 className="sec" style={{ margin: 0 }}>{t('Recent workouts')}</h4>{allBtn}
     </div>
+    <div className="list">{recentRows}</div>
+  </> : null
+  const recentCard = S.workouts.length > 0 ? <div className="card">
+    <div className="row between" style={{ marginBottom: 8 }}>
+      <h2 style={{ margin: 0 }}>{t('Recent workouts')}</h2>{allBtn}
+    </div>
+    <div className="list">{recentRows}</div>
+  </div> : null
 
-    {S.workouts.length > 0 && <>
-      <div className="row between" style={{ marginBottom: 10 }}>
-        <h4 className="sec" style={{ margin: 0 }}>{t('Recent workouts')}</h4>
-        <Button size="sm" variant="ghost" trailingIcon="chevronRight" onClick={() => nav('/history')}>{t('All')} {S.workouts.length}</Button>
-      </div>
-      <div className="list">{[...S.workouts].reverse().slice(0, 6).map(w => <WorkoutRow key={w.id} w={w} onClick={() => openWorkout(w)} />)}</div>
-    </>}
+  if (!desktop) return <>
+    {hdr}{tiles}{heat}{muscle}{effort}
+    <div className="cols">{bwCard}{exCard}</div>
+    {recent}
+  </>
+
+  return <>
+    {hdr}{tiles}{heat}
+    {(muscle || effort) && <div className="cols">{muscle}{effort}</div>}
+    <div className="cols">{bwCard}{recentCard}</div>
+    {exCard}
   </>
 }

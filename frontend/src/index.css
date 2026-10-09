@@ -1174,3 +1174,22 @@ h4.sec{
 @container (min-width:640px){
   .rsum{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
 }
+
+/* ------------------------------------------------ history + stats (desktop) --- */
+@media (min-width:1000px){
+  .pane-detail h3{margin-top:0}
+  .pane-detail .row .tt{overflow-wrap:anywhere}
+  /* Stats: Exercise progress is a full-width card — a searchable list beside the chart */
+  .xprog{display:grid;grid-template-columns:240px minmax(0,1fr);column-gap:var(--sp-5);align-items:start}
+  .xprog-list{display:flex;flex-direction:column;gap:var(--sp-2);min-width:0}
+  .xprog-opts{display:flex;flex-direction:column;gap:2px;max-height:360px;overflow-y:auto;padding:2px}
+  .xprog-opt{
+    min-height:44px;padding:var(--sp-2) var(--sp-3);border-radius:var(--r);text-align:left;
+    color:var(--label-2);font-size:15px;overflow-wrap:anywhere;
+    transition:background var(--fast),color var(--fast);
+  }
+  .xprog-opt:hover{background:var(--surface-2)}
+  .xprog-opt.sel{background:var(--surface-2);color:var(--label);box-shadow:inset 3px 0 0 var(--acc)}
+  .xprog-main{min-width:0}
+  #app .card .list{display:flex;flex-direction:column}
+}
