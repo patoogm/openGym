@@ -1037,3 +1037,26 @@ h4.sec{
   /* leave room under the last sidebar item so the timer never covers it */
   body.resting .cside{padding-bottom:calc(180px + var(--sab))}
 }
+
+/* ------------------------------------------------------ inline timer (rail) --- */
+/* The session rail's copy of the rest/work timer. Same inner markup as #timer, but a normal
+   block in the layout instead of a fixed bar. Mirrors the `#timer …` rules above. */
+.timer-inline{
+  background:var(--surface);border-radius:var(--r-lg);padding:12px 14px;
+  display:flex;align-items:center;gap:12px;
+}
+.timer-inline .t{font-size:26px;font-weight:600;letter-spacing:-.026em;font-variant-numeric:tabular-nums;min-width:66px}
+.timer-inline .bar{flex:1;height:4px;background:var(--surface-3);border-radius:99px;overflow:hidden}
+.timer-inline .bar i{display:block;height:100%;background:var(--acc);transition:width 1s linear}
+.timer-inline.rest{flex-direction:column;align-items:stretch;gap:10px}
+.timer-inline.rest .head{display:flex;align-items:center;gap:12px}
+.timer-inline.rest .acts{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.timer-inline.rest .acts .btn{padding-top:11px;padding-bottom:11px}   /* sweaty hands, mid-set */
+.timer-inline.rest .acts .skip{flex:1 1 100%;margin-left:0}
+.timer-inline.working{border:var(--hair) solid var(--acc);flex-wrap:wrap}
+.timer-inline.working .t{color:var(--acc)}
+.timer-inline.working .grow{flex:1 1 100%;order:3;min-width:0}
+.timer-inline.working .lbl{
+  font-size:12px;color:var(--label-2);margin-bottom:5px;text-transform:capitalize;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}

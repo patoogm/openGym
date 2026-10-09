@@ -1,5 +1,8 @@
 import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useUI } from '../store/useUI.js'
+import { useStore } from '../store/useStore.js'
+import { useIsDesktop } from '../lib/useIsDesktop.js'
 import { t } from '../lib/i18n.js'
 import { Button } from './ui.jsx'
 
@@ -9,22 +12,35 @@ const clock = sec => Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '
 // timed set (issue #16). They are mutually exclusive by construction — startWork() stops any
 // running rest — so the bar can never have to show both, and a work set gets its own colour
 // plus a "Done" that logs the time actually held.
-export default function RestTimer() {
+//
+// Two placements: the global one (floating above the tab bar on mobile, docked in the sidebar
+// on desktop) and `inline`, rendered by the desktop session rail. On the Workout screen at
+// ≥1000px the rail shows the timer, so the global one steps aside.
+export default function RestTimer({ inline }) {
   const timer = useUI(s => s.timer)
   const work = useUI(s => s.work)
   const { addRest, stopRest, finishWorkEarly, stopWork } = useUI()
+  const desktop = useIsDesktop()
+  const { pathname } = useLocation()
+  const training = useStore(s => !!s.S.active)
   const on = work || timer
+  const hidden = !inline && desktop && training && pathname === '/workout'
+  const shown = !!on && !hidden && !inline
   // The bar is fixed above the tab bar and floats over whatever is beneath it — during a
   // rest that was the next set's row. Extra bottom padding lets the page scroll clear.
+  // Only the visible global instance owns this class; the inline one is part of the layout.
   useEffect(() => {
-    document.body.classList.toggle('resting', !!on)
+    if (inline) return undefined
+    document.body.classList.toggle('resting', shown)
     return () => document.body.classList.remove('resting')
-  }, [!!on])
-  if (!on) return null
+  }, [shown, inline])
+  if (!on || hidden) return null
   const pct = (on.left / on.total) * 100
+  const id = inline ? undefined : 'timer'
+  const cls = v => (inline ? 'timer-inline ' + v : v)
 
   if (work) return (
-    <div id="timer" className="working">
+    <div id={id} className={cls('working')}>
       <div className="t">{clock(work.left)}</div>
       <div className="grow">
         {work.label && <div className="lbl">{work.label}</div>}
@@ -39,7 +55,7 @@ export default function RestTimer() {
   // read at a glance, controls get their own row. −15 and +15 sit together in number-line
   // order; Skip is pushed to the far edge, away from the button you tap to buy more time.
   return (
-    <div id="timer" className="rest">
+    <div id={id} className={cls('rest')}>
       <div className="head">
         <div className="t">{clock(timer.left)}</div>
         <div className="bar"><i style={{ width: pct + '%' }} /></div>
