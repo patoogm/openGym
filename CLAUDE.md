@@ -146,8 +146,8 @@ Utilidades: `.muted` (label-2), `.dim` (label-3), `.accent`, `.cap1` (solo prime
 
 | Patrón | Clases / componente | Notas |
 |---|---|---|
-| Header de pantalla | `.hdr` > `h1` + `.sub`, `.iconbtn` a la derecha | large title estilo iOS |
-| Card | `.card`, `.card h2` (label de sección 13px), `.card .big` (número 30/600) | |
+| Header de pantalla | `.hdr` > `h1` + `.sub`, `.iconbtn` a la derecha (variante `.iconbtn.sm`, 30px) | large title estilo iOS |
+| Card | `.card`, `.card h2` (label de sección 13px), `.card .big` (número 30/600; variante `.big.sm`, 22px) | |
 | Lista agrupada | `<Section>` + `<Row>` → `.sect`, `.sect-t`, `.sect-b`, `.sect-f`, `.lrow`, `.lrow-i` (ícono en cuadrado de color, `--tint`), `.lrow-t/-s/-v`, chevron/check | **primitivo estructural principal** (Settings, pickers) |
 | Lista de items | `.list` > `.item` (+ `.thumb`, `.tt`, `.ss`, `.chev`) | ejercicios, rutinas |
 | Botones | `<Button variant size icon>` → `.btn` + `primary` / `tinted` / `danger` / `ghost` / `plain`, tamaños `sm` / `xs` | `.btn` es full-width por defecto |
@@ -157,6 +157,7 @@ Utilidades: `.muted` (label-2), `.dim` (label-3), `.accent`, `.cap1` (solo prime
 | Sheets | `.sheet` (bottom, swipe-down), `.center` (diálogo), `.mback` backdrop | se abren con `useUI().openSheet(render, {kind})` |
 | Timer | `#timer`, `#timer.rest` (2 filas), `#timer.working` (borde acento) | flota sobre el tab bar |
 | Workout | `.setrow`, `.sethead`, `.stp.w/.r/.eff`, `.setgo`, `.progline`, `.exmedia`, `.wprog`; desktop: `.wdesk` > `.wmain` + `.wrail` (`.wout`, `.wout-i`), `.exblock`/`.exbody`, `.timer-inline`, `.wchoose` | la pantalla más crítica |
+| Home | `.hdesk` > `.hmain` + `.haside` (dashboard desktop), `.today-row` con `.lrow-i.live/.plan/.rest` y `.tag.warn` | primera pantalla |
 | Semana | `.week` > `.wday` (+ `.dot.plan/.ovr/.done`, `.today`), `.today-row` | Home |
 | Datos | `.chart`, `.ctip`, `.hm-*` (heatmap), `.bodymap`/`.bm-*`, `.tiles`/`.tile`, `.mrow`, `.pr` | |
 | Coach | `.wk-mini` (mini-tira 7 días), `.attn` (banner de atención), `.feed-day` (encabezado de día en actividad), `.item.off` (alumno ya tiene rutina, inert) | |
@@ -180,7 +181,7 @@ Si un diseño necesita un ícono nuevo, se agrega como path SVG en `Icon.jsx` co
 
 | Ruta | Archivo | Contenido | Prioridad de diseño |
 |---|---|---|---|
-| `/home` | `views/Home.jsx` | saludo + fecha, CTA de setup, tira semanal + "Hoy", card peso corporal (gráfico + objetivo), racha, etc. | Alta |
+| `/home` | `views/Home.jsx` | saludo + fecha, CTA de setup, tira semanal + "Hoy", card peso corporal (gráfico + objetivo), racha, etc. Desktop ≥1000px: dashboard 2:1 (semana + Hoy + peso a la izquierda; setup/bienvenida/racha a la derecha; sin engranaje, Ajustes está en el sidebar). | Alta |
 | `/workout` | `views/Workout.jsx` | selector de rutina y **sesión en curso**: media del ejercicio, filas de series (peso × reps × esfuerzo), progresión, supersets, timers. Desktop ≥1000px: ejercicio actual (media al lado de las series si hay ancho) + rail de sesión; el selector de rutina va en dos zonas | **Máxima** |
 | `/plan` | `views/Plan.jsx` | semana + lista de rutinas | Alta |
 | `/plan/r/:id` | `views/RoutineEdit.jsx` | editor de rutina, secciones, supersets, preview de músculos | Media |
@@ -227,7 +228,7 @@ config de ejercicio en rutina, reprogramar día, calendario, detalle de workout,
 
 ### Deuda de diseño conocida (buenos puntos de partida)
 - **~340 `style={{…}}` inline** que saltean el sistema: `sheets.jsx` (129), `Home.jsx` (31), `Stats.jsx` (30), `RoutineEdit.jsx` (22), `Workout.jsx` (21), `Settings.jsx` (16), `Login.jsx` (15). Muchos son márgenes/gaps ad-hoc y overrides de tamaño (p. ej. `.iconbtn` a 30px, `.big` a 22px) → candidatos a clases/utilidades o variantes.
-- Colores de estado armados inline (ej. tag naranja de "Resume" con `color-mix` en Home) → falta una variante `.tag.warn`/`.tag.orange`.
+- Colores de estado armados inline → existe `.tag.warn` (Home ya lo usa para "Resume"); revisar el resto de pantallas. Ya existen también `.iconbtn.sm` y `.big.sm` (Home migrado).
 - Márgenes 4/6/8/10/12/14/16/18/22 sueltos (ya existe la escala `--sp-*`; falta migrar los inline existentes pantalla por pantalla).
 - `h2` de card se sobreescribe inline seguido (`margin:0`, `marginTop:0`).
 - `index.html` tiene `theme-color #0c0e12` y el manifest también, pero el `--bg` dark es `#000` (App.jsx lo corrige en runtime).
