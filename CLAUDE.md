@@ -69,6 +69,7 @@ frontend/src/
   store/useUI.js      estado efímero: sheets abiertos, toast, timers
   lib/
     lógica pura + tests (progression, onerm, history, effort, blocks, i18n, format…)
+    settingsPanes.js  categorías de Ajustes en desktop: `settingsCats`, `resolveCat`, `settingsCatPath` (+ test)
     statsPanes.js     helpers puros de Stats/History desktop: `filterByQuery` (búsqueda sin acentos) y `pickWorkout` (+ test)
     athleteShell.js   items del sidebar del atleta, tab activa por ruta, cuándo se muestra el shell, rutas del Plan (`planRoutinePath`, `planRoutineEditPath`) y clave por sección del frame de contenido (`athleteSectionKey`) (+ test)
     sessionOutline.js esquema de la sesión activa para el rail del Workout: superset = una fila, secciones, estado por ejercicio (+ test)
@@ -192,8 +193,8 @@ Si un diseño necesita un ícono nuevo, se agrega como path SVG en `Icon.jsx` co
 | `/stats` | `views/Stats.jsx` | heatmap anual, body map, gráficos, PRs, 1RM, esfuerzo. Desktop ≥1000px: tiles → heatmap → Equilibrio muscular \| Esfuerzo → Peso \| Recientes → Progreso por ejercicio a ancho completo (lista buscable `.xprog` + gráfico). Mobile igual que antes (`SelectRow`) | Alta |
 | `/history`, `/history/:id` | `views/History.jsx` + `components/WorkoutDetail.jsx` | lista de workouts. Desktop ≥1000px: lista + panel de detalle del workout seleccionado (por defecto el último); en mobile `/history/:id` redirige y la fila abre el sheet. `openWorkout(w)` (sheets.jsx) decide panel vs sheet | Baja |
 | `/library`, `/library/:id` | `views/Library.jsx` + `ExerciseDetail` (exportado de `sheets.jsx`) | 1.324 ejercicios, búsqueda, filtros por equipamiento. Desktop ≥1000px: búsqueda + chips + lista a la izquierda y detalle del ejercicio a la derecha (`.exd` en dos columnas si el panel tiene ancho); en mobile `/library/:id` redirige y la fila abre el sheet. `openExercise(ex)` decide panel vs sheet; el botón Detalles del Workout sigue abriendo el sheet | Media |
-| `/settings` | `views/Settings.jsx` | listas agrupadas: tema, acento, idioma, unidades, esfuerzo, import/export… | Media |
-| `/profile` | `views/Profile.jsx` | perfil de entrenamiento (objetivo, nivel, equipo, limitaciones) | Baja |
+| `/settings`, `/settings/:cat` | `views/Settings.jsx` | listas agrupadas: tema, acento, idioma, unidades, esfuerzo, import/export… Desktop ≥1000px: dos paneles — categorías (Cuenta, Entrenamiento, General, Notificaciones si hay usuario o app móvil, Datos) a la izquierda y sus secciones a la derecha (`.pane-cats`); en mobile una sola columna como antes y `/settings/:cat` redirige. Categorías en `lib/settingsPanes.js` | Media |
+| `/profile` | `views/Profile.jsx` | perfil de entrenamiento (objetivo, nivel, equipo, limitaciones). Desktop: formulario centrado a `--page-w` (`.narrow.page`) | Baja |
 | `/program` | `views/Program.jsx` | bloques de entrenamiento (draft / activo / terminado). Desktop: lista de bloques + preview del bloque seleccionado (por defecto el activo). | Media |
 | `/coach` | `views/Coach.jsx` | home del coach: lista de alumnos con adherencia semanal + badge de atención (copy en español literal) | Media |
 | `/coach/rutinas` | `views/CoachRoutines.jsx` | lista de rutinas plantilla del coach, asignar desde la fila | Media |
@@ -202,7 +203,7 @@ Si un diseño necesita un ícono nuevo, se agrega como path SVG en `Icon.jsx` co
 | `/coach/rutinas/:id` | `views/CoachRoutines.jsx` + `components/RoutinePanel.jsx` | resumen de rutina + asignación inline (desktop); en mobile redirige al editor | Media |
 | `/coach/rutinas/:id/editar` | `views/RoutineEdit.jsx` | editor de rutina dentro del shell coach | Media |
 | `/admin` | `views/Admin.jsx` | dashboard operador (solo inglés, a propósito) | Baja |
-| — | `views/Login.jsx` | passkey / crear perfil / invitado | Media |
+| — | `views/Login.jsx` | passkey / crear perfil / invitado. Desktop: tarjeta centrada de 440px (`.login`) | Media |
 
 > **Coach desktop (≥1000px):** `views/CoachShell.jsx` es la ruta layout de `/coach/*`: dueño único de `listStudents()` + polling 15 s (comparte `{students, reload}` por `useCoachData`) y, en desktop, renderiza `CoachSidebar` + master–detalle (`.cshell/.cside/.cgrid/.cmaster/.cdetail` en `index.css`). Mobile sin cambios. Spec: `docs/superpowers/specs/2026-10-07-coach-desktop-panel-design.md`.
 
