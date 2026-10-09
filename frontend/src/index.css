@@ -1214,3 +1214,16 @@ h4.sec{
   /* the category rows are <button class="item">: keep them left-aligned and full width */
   .pane-cats .pane-list .item{width:100%;text-align:left}
 }
+
+/* -------------------------------------------- profile + login (desktop) --- */
+/* Login: the old inline wrapper, as a class so desktop can turn it into a card. */
+.login{display:flex;flex-direction:column;justify-content:center;min-height:78vh;text-align:center}
+@media (min-width:1000px){
+  .amain-in .narrow.page{max-width:var(--page-w)}
+  .narrow.login{
+    max-width:440px;min-height:0;margin:12vh auto 0;padding:var(--sp-8) var(--sp-7);
+    background:var(--surface);border-radius:var(--r-xl);
+  }
+  /* the explanatory cards inside the login card sit one step lighter than the card itself */
+  .login .card{background:var(--surface-2)}
+}

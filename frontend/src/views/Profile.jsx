@@ -22,10 +22,10 @@ export default function Profile() {
     s.profile = { ...s.profile, equipment: [...cur] }
   })
 
-  return <div className="narrow">
+  return <div className="narrow page">
     <div className="hdr">
       <button className="iconbtn" onClick={() => nav('/settings')} aria-label={t('Settings')}><Icon name="chevronLeft" /></button>
-      <div style={{ flex: 1, marginLeft: 10 }}><h1>{t('Training profile')}</h1></div>
+      <div className="grow"><h1>{t('Training profile')}</h1></div>
     </div>
 
     <div className="small dim" style={{ margin: '0 2px 16px' }}>
