@@ -13,6 +13,7 @@ import { useIsDesktop } from '../lib/useIsDesktop.js'
 import { planRoutinePath, planRoutineEditPath } from '../lib/athleteShell.js'
 import RoutineSummary from '../components/RoutineSummary.jsx'
 import ErrorBoundary from '../components/ErrorBoundary.jsx'
+import { rowProps } from '../lib/a11y.js'
 
 // Mobile: the week schedule and the routines list; a routine opens the editor.
 // Desktop: the same on the left, the selected routine's summary on the right
@@ -46,7 +47,7 @@ export default function Plan() {
     <div className="list" style={{ display: 'flex', flexDirection: 'column' }}>
       {[1, 2, 3, 4, 5, 6, 0].map(d => {
         const r = S.routines.find(x => x.id === S.week[d])
-        return <div key={d} className="item" onClick={() => dayAssignSheet(d)}>
+        return <div key={d} className="item" {...rowProps(() => dayAssignSheet(d))}>
           <div className="grow"><div className="tt">{t(DAYN[d])}</div></div>
           {r ? <span className="tag acc"><Icon name={glyphOf(r.emoji)} />{r.name}</span> : <span className="tag">{t('Rest')}</span>}
           <Icon name="chevronRight" className="chev" /></div>
@@ -61,7 +62,8 @@ export default function Plan() {
     </div>
     {S.routines.length ? <div className="list">{S.routines.map(r => <div key={r.id}
       className={'item' + (desktop && selected && r.id === selected.id ? ' sel' : '')}
-      onClick={() => nav(desktop ? planRoutinePath(r.id) : planRoutineEditPath(r.id))}>
+      aria-current={desktop && selected && r.id === selected.id ? 'true' : undefined}
+      {...rowProps(() => nav(desktop ? planRoutinePath(r.id) : planRoutineEditPath(r.id)))}>
       <span className="lrow-i"><Icon name={glyphOf(r.emoji)} /></span>
       <div className="grow"><div className="tt">{r.name}{isAssigned(r) && <span className="tag acc" style={{ marginLeft: 6 }}>{t('from your coach')}</span>}</div><div className="ss">{exCount(countEx(r.ex))}</div></div>
       <Icon name="chevronRight" className="chev" /></div>)}</div> : <>

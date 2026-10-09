@@ -19,6 +19,7 @@ import { routinePath } from '../lib/coachShell.js'
 import { planRoutinePath } from '../lib/athleteShell.js'
 import AdjustSheet from '../components/AdjustSheet.jsx'
 import RoutineMuscles from '../components/RoutineMuscles.jsx'
+import { rowProps } from '../lib/a11y.js'
 
 function SectionHeader({ name, onRename, onMove, onDelete }) {
   return (
@@ -152,9 +153,9 @@ export default function RoutineEdit() {
             const linkedPrev = i > 0 && e.sg && r.ex[i - 1] && r.ex[i - 1].sg === e.sg
             return <div key={i}>
               {unitFirst.has(i) && <div className="ss-label"><Icon name="link" />{t('Superset')}</div>}
-              <div className={'item' + (inSS.has(i) ? ' in-ss' : '')} onClick={() => {
+              <div className={'item' + (inSS.has(i) ? ' in-ss' : '')} {...rowProps(() => {
                 exConfigSheet(ex, e, cfg => edit(x => { x[i] = { id: x[i].id, sg: x[i].sg, ...cfg } }), () => edit(x => { x.splice(i, 1); cleanupSg(x) }), r)
-              }}>
+              })}>
                 <Thumb ex={ex} />
                 <div className="grow"><div className="tt cap1">{nameFor(ex)}</div><div className="ss">{exLine(e, S.unit)}</div></div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: 'none', alignItems: 'center' }}>

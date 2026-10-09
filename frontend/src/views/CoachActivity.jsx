@@ -4,6 +4,7 @@ import { fmtDate } from '../lib/format.js'
 import { activityFeed } from '../lib/coachShell.js'
 import { useCoachData } from '../lib/useCoachData.js'
 import Icon from '../components/Icon.jsx'
+import { rowProps } from '../lib/a11y.js'
 
 // Who trained, newest day first. Workouts carry a date but no clock time, so days are the finest grain.
 export default function CoachActivity() {
@@ -16,7 +17,7 @@ export default function CoachActivity() {
       : !feed.length ? <div className="empty"><div className="ico"><Icon name="history" /></div>Todavía no hay entrenos para mostrar.</div>
       : feed.map(g => <div key={g.d}>
         <div className="feed-day">{fmtDate(g.d, true)}</div>
-        <div className="list">{g.items.map((i, n) => <div key={i.studentId + g.d + i.workout + n} className="item" onClick={() => nav('/coach/alumno/' + i.studentId)}>
+        <div className="list">{g.items.map((i, n) => <div key={i.studentId + g.d + i.workout + n} className="item" {...rowProps(() => nav('/coach/alumno/' + i.studentId))}>
           <div className="grow"><div className="tt">{i.name}</div><div className="ss">terminó {i.workout || 'un entreno'}</div></div>
           <Icon name="chevronRight" className="chev" />
         </div>)}</div>

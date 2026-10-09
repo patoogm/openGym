@@ -7,6 +7,7 @@ import { glyphOf } from '../lib/glyphs.js'
 import { Button, Check } from './ui.jsx'
 import { listStudents, assignRoutine } from '../lib/coachApi.js'
 import { assignMany, assignSummary } from '../lib/coachShell.js'
+import { rowProps } from '../lib/a11y.js'
 
 export function openAssignSheet(opts = {}) {
   useUI.getState().openSheet(close => <AssignSheet {...opts} close={close} />)
@@ -70,12 +71,12 @@ function AssignSheet({ routineId: rid0 = null, studentId = null, onDone, close }
         <Button variant="primary" onClick={() => { close(); nav('/coach') }}>Ir a Alumnos</Button>
       </>
       : <>
-        {eligible.length > 1 && <div className="item" onClick={toggleAll}>
+        {eligible.length > 1 && <div className="item" {...rowProps(toggleAll)}>
           <div className="grow"><div className="tt">Todos</div></div>
           <Check checked={allOn} onChange={noop} />
         </div>}
         <div className="list">
-          {students.map(s => <div key={s.id} className={'item' + (taken(s) ? ' off' : '')} onClick={() => !taken(s) && toggle(s.id)}>
+          {students.map(s => <div key={s.id} className={'item' + (taken(s) ? ' off' : '')} {...rowProps(() => !taken(s) && toggle(s.id))} aria-disabled={taken(s) || undefined} tabIndex={taken(s) ? -1 : 0}>
             <div className="grow"><div className="tt">{s.name}</div>{taken(s) && <div className="ss">ya la tiene</div>}</div>
             <Check checked={taken(s) || sel.has(s.id)} onChange={noop} />
           </div>)}

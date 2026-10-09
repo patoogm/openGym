@@ -1,6 +1,7 @@
 import Icon from './Icon.jsx'
 import { fmtDate, fmtVol, fmtDur } from '../lib/format.js'
 import { workoutVolume, setsDone } from '../lib/history.js'
+import { rowProps } from '../lib/a11y.js'
 
 // `t` is optional: the admin dashboard renders these components English-only and passes
 // nothing (identity fallback), the coach dashboard passes the real translator.
@@ -50,7 +51,7 @@ export function WorkoutHistory({ workouts, unit, t = id }) {
 }
 
 export function StudentRow({ u, onOpen, extra, t = id }) {
-  return <div className="item" onClick={() => onOpen(u.id)} style={u.disabled ? { opacity: .55 } : null}>
+  return <div className="item" {...rowProps(() => onOpen(u.id))} style={u.disabled ? { opacity: .55 } : null}>
     <div className="grow">
       <div className="tt">{u.live && <Icon name="dot" style={{ fontSize: 9, color: 'var(--green)', display: 'inline-block', marginRight: 5 }} />}{u.name}{extra}</div>
       <div className="ss">{u.live ? t('training now') + ' · ' + u.live.name

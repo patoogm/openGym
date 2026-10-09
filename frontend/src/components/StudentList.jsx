@@ -6,6 +6,7 @@ import { SearchField } from './ui.jsx'
 import { TrainingNow } from './ProgressViews.jsx'
 import WeekMini from './WeekMini.jsx'
 import { attentionReasons, attentionTexts, sortStudents, weekSummary, lastLabel } from '../lib/coachShell.js'
+import { rowProps } from '../lib/a11y.js'
 
 // Student list for the coach. Copy is Spanish-literal; shared components get `t`.
 const SEARCH_FROM = 8
@@ -42,7 +43,7 @@ export default function StudentList({ students, selectedId = null, onOpen, onInv
       {list.map(s => {
         const { done, planned } = weekSummary(s, today)
         const texts = compact ? attentionTexts(s, today) : []
-        return <div key={s.id} className={'item' + (s.id === selectedId ? ' sel' : '')} onClick={() => onOpen(s.id)}>
+        return <div key={s.id} className={'item' + (s.id === selectedId ? ' sel' : '')} aria-current={s.id === selectedId ? 'true' : undefined} {...rowProps(() => onOpen(s.id))}>
           <div className="grow">
             <div className="tt">{s.live && <Icon name="dot" className="live-dot" />}{s.name}
               {!compact && s.pendingRequests > 0 && <span className="tag warn">{s.pendingRequests}</span>}</div>

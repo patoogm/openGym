@@ -268,9 +268,9 @@ export default function Stats() {
     {exHist.length ? (desktop
       ? <div className="xprog">
         <div className="xprog-list">
-          <SearchField value={q} onChange={e => setQ(e.target.value)} onClear={() => setQ('')} placeholder={t('Search…')} />
-          <div className="xprog-opts" role="listbox" aria-label={t('Exercise progress')}>
-            {shown.length ? shown.map(id => <button key={id} role="option" aria-selected={id === curEx}
+          <SearchField value={q} onChange={e => setQ(e.target.value)} onClear={() => setQ('')} placeholder={t('Search…')} aria-label={t('Search…')} />
+          <div className="xprog-opts" role="group" aria-label={t('Exercise progress')}>
+            {shown.length ? shown.map(id => <button key={id} aria-pressed={id === curEx}
               className={'xprog-opt cap1' + (id === curEx ? ' sel' : '')} onClick={() => setExId(id)}>{nameFor(EXIDX[id])}</button>)
               : <div className="muted small">{t('No match')}</div>}
           </div>

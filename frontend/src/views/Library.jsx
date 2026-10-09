@@ -12,6 +12,7 @@ import { Button } from '../components/ui.jsx'
 import ErrorBoundary from '../components/ErrorBoundary.jsx'
 import { useIsDesktop } from '../lib/useIsDesktop.js'
 import { libraryExercisePath } from '../lib/athleteShell.js'
+import { rowProps } from '../lib/a11y.js'
 
 // Mobile: search, chips and the list; a row opens the detail sheet.
 // Desktop: the same on the left, the selected exercise's detail on the right (`/library/:id`;
@@ -45,7 +46,7 @@ export default function Library() {
   const header = <div className="hdr"><div><h1>{t('Exercises')}</h1><div className="sub">{t('{0} exercises with animations', EXDB.length)}</div></div></div>
   const controls = <>
     <div className="search" style={{ marginBottom: 10 }}><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
-      <input className="input" placeholder={t('Search…')} value={q} onChange={e => { setQ(e.target.value); setShown(40) }} /></div>
+      <input className="input" aria-label={t('Search…')} placeholder={t('Search…')} value={q} onChange={e => { setQ(e.target.value); setShown(40) }} /></div>
     <div className="chips" style={{ marginBottom: eqOpts.length > 1 ? 8 : 12 }}>
       <button className={'chip nocap' + (!bp ? ' on' : '')} onClick={() => { setBp(''); setEq(''); setShown(40) }}>{t('All')}</button>
       {BODYPARTS.map(b => <button key={b} className={'chip' + (bp === b ? ' on' : '')} onClick={() => { setBp(b); setEq(''); setShown(40) }}>{t(b)}</button>)}
@@ -56,13 +57,13 @@ export default function Library() {
     </div>}
   </>
   const listEl = <div className="list">
-    <div className="item" onClick={() => customExSheet(null, ex => openExercise(ex), q.trim())}>
+    <div className="item" {...rowProps(() => customExSheet(null, ex => openExercise(ex), q.trim()))}>
       <div className="thumb thumb-x"><Icon name="sparkles" /></div>
       <div className="grow"><div className="tt">{t('Create your own exercise')}</div><div className="ss">{t('name + body part, no animation')}</div></div><Icon name="plus" className="chev" />
     </div>
     {f.slice(0, shown).map(e => {
       const best = bestWeightFor(S, e.id)
-      return <div key={e.id} className={'item' + (selected && e.id === selected.id ? ' sel' : '')} onClick={() => pick(e)}>
+      return <div key={e.id} className={'item' + (selected && e.id === selected.id ? ' sel' : '')} aria-current={selected && e.id === selected.id ? 'true' : undefined} {...rowProps(() => pick(e), { role: false })}>
         <Thumb ex={e} />
         <div className="grow"><div className="tt cap1">{nameFor(e)}</div><div className="ss capitalize">{t(e.tg || e.bp)} · {t(e.eq)}</div></div>
         {best > 0 && <span className="tag acc">{fmtNum(best)}</span>}

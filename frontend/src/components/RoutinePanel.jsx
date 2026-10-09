@@ -6,6 +6,7 @@ import { routineEditPath } from '../lib/coachShell.js'
 import Icon from './Icon.jsx'
 import { Button } from './ui.jsx'
 import AssignPanel from './AssignPanel.jsx'
+import { rowProps } from '../lib/a11y.js'
 
 // Desktop summary of one of the coach's routines: who has it, edit, and inline assignment.
 export default function RoutinePanel({ r, students, onChanged }) {
@@ -19,7 +20,7 @@ export default function RoutinePanel({ r, students, onChanged }) {
     </div>
 
     <h4 className="sec">Asignada a</h4>
-    {have.length ? <div className="list">{have.map(s => <div key={s.id} className="item" onClick={() => nav('/coach/alumno/' + s.id)}>
+    {have.length ? <div className="list">{have.map(s => <div key={s.id} className="item" {...rowProps(() => nav('/coach/alumno/' + s.id))}>
       <div className="grow"><div className="tt">{s.name}</div></div>
       <Icon name="chevronRight" className="chev" />
     </div>)}</div> : <div className="empty small">Todavía no está asignada a nadie.</div>}

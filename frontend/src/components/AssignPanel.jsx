@@ -6,6 +6,7 @@ import Icon from './Icon.jsx'
 import { glyphOf } from '../lib/glyphs.js'
 import { Button, Check } from './ui.jsx'
 import { assignRoutine } from '../lib/coachApi.js'
+import { rowProps } from '../lib/a11y.js'
 import {
   assignMany, assignSummary, assignRoutines, assignRoutinesSummary, eligibleStudents, eligibleRoutines
 } from '../lib/coachShell.js'
@@ -54,14 +55,14 @@ export default function AssignPanel({ routineId = null, studentId = null, studen
   </>
 
   return <>
-    {eligible.length > 1 && <div className="item" onClick={toggleAll}>
+    {eligible.length > 1 && <div className="item" {...rowProps(toggleAll)}>
       <div className="grow"><div className="tt">Todos</div></div>
       <Check checked={allOn} onChange={noop} />
     </div>}
     <div className="list">
       {all.map(x => {
         const off = !eligibleIds.has(x.id)
-        return <div key={x.id} className={'item' + (off ? ' off' : '')} onClick={() => !off && toggle(x.id)}>
+        return <div key={x.id} className={'item' + (off ? ' off' : '')} {...rowProps(() => !off && toggle(x.id))} aria-disabled={off || undefined} tabIndex={off ? -1 : 0}>
           {!byRoutine && <span className="lrow-i"><Icon name={glyphOf(x.emoji)} /></span>}
           <div className="grow"><div className="tt">{x.name}</div>{off && <div className="ss">{byRoutine ? 'ya la tiene' : 'ya la tiene asignada'}</div>}</div>
           <Check checked={off || sel.has(x.id)} onChange={noop} />

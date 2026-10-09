@@ -22,6 +22,7 @@ import { Button } from '../components/ui.jsx'
 import { confirmSheet } from '../sheets.jsx'
 import { newManualBlock, activeBlock, materializeBlock, snapshotActiveBlock, finishActiveBlock } from '../lib/blocks.js'
 import BlockPreview from '../components/BlockPreview.jsx'
+import { rowProps } from '../lib/a11y.js'
 
 export default function Program() {
   const nav = useNavigate()
@@ -126,7 +127,7 @@ export default function Program() {
     {blocks.length ? <div className="list">
       {blocks.map(b => {
         const state = b.id === activeId ? t('active') : b.completedAt ? t('completed') : t('draft')
-        return <div key={b.id} className={'item' + (desktop && preview && b.id === preview.id ? ' sel' : '')} onClick={() => setPreviewId(b.id)}>
+        return <div key={b.id} className={'item' + (desktop && preview && b.id === preview.id ? ' sel' : '')} aria-current={desktop && preview && b.id === preview.id ? 'true' : undefined} {...rowProps(() => setPreviewId(b.id))}>
           <div className="grow"><div className="tt">{b.name}</div><div className="ss">{t('{0} weeks', b.weeks)} · {state}</div></div>
           <Icon name="chevronRight" className="chev" />
         </div>
