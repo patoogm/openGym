@@ -1060,3 +1060,46 @@ h4.sec{
   font-size:12px;color:var(--label-2);margin-bottom:5px;text-transform:capitalize;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
+
+/* ------------------------------------------------- workout desktop (≥1000px) --- */
+/* ExerciseBlock wraps media + body so desktop can put them side by side. Below 1000px these
+   wrappers are plain blocks and the markup flows exactly as before. */
+.exblock,.exbody{display:block}
+.wmain{container-type:inline-size;min-width:0}
+@media (min-width:1000px){
+  .wdesk{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:var(--sp-6);align-items:start}
+  .wrail{
+    position:sticky;top:var(--sp-5);max-height:calc(100vh - 2 * var(--sp-5));
+    display:flex;flex-direction:column;gap:var(--sp-4);
+    padding:var(--sp-4);background:var(--surface);border-radius:var(--r-card);
+  }
+  .wrail-name{font-size:17px;font-weight:600;letter-spacing:-.02em;overflow-wrap:anywhere}
+  .wrail-sub{font-size:15px;color:var(--label-2);margin:2px 0 var(--sp-3)}
+  .wrail-hd .wprog{margin-bottom:0}
+  /* the outline scrolls on its own so the timer and Finish stay in view */
+  .wout{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
+  .wout .wsection{padding:var(--sp-2) var(--sp-2) 2px;margin:0}
+  .wout-i{
+    display:flex;align-items:center;gap:var(--sp-2);width:100%;min-height:44px;padding:var(--sp-2);
+    border-radius:var(--r);text-align:left;color:var(--label-2);
+    transition:background var(--fast),color var(--fast);
+  }
+  .wout-i:hover{background:var(--surface-2)}
+  .wout-i.current{background:var(--surface-2);color:var(--label);box-shadow:inset 3px 0 0 var(--acc)}
+  .wout-i.done{color:var(--label-3)}
+  .wout-ic{width:20px;font-size:16px;flex:none;display:flex;justify-content:center}
+  .wout-i.current .wout-ic,.wout-i.done .wout-ic{color:var(--acc)}
+  .wout-names{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:15px;overflow-wrap:anywhere}
+  .wout-ss{font-size:14px;color:var(--acc);flex:none}
+  .wout-n{font-size:13px;font-variant-numeric:tabular-nums;flex:none}
+  .wrail-ft{display:flex;flex-direction:column;gap:var(--sp-2)}
+  .wrail-ft .timer-inline{background:var(--surface-2)}
+  /* 44px touch targets for the set steppers (tablet/laptop touch) */
+  .wmain .setrow .stp button{height:44px}
+}
+/* media beside the set table once the main column has room (≈1440px viewport and up) */
+@container (min-width:760px){
+  .exblock.has-media:not(.compact){display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:var(--sp-5);align-items:start}
+  .exblock.has-media:not(.compact) .exmedia{margin-bottom:0}
+  .exblock.has-media:not(.compact) .exmedia:not(.mini) img{height:300px}
+}
