@@ -1,32 +1,24 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useStore } from '../store/useStore.js'
-import { effectiveRoutine } from '../lib/history.js'
-import { todayISO } from '../lib/format.js'
-import { countEx } from '../lib/routine.js'
 import { t } from '../lib/i18n.js'
 import { COACH_TABS, activeCoachTab, isCoachPath } from '../lib/coachShell.js'
 import { useIsDesktop } from '../lib/useIsDesktop.js'
 import { openAssignSheet } from './AssignSheet.jsx'
+import { useStartWorkout } from './useStartWorkout.js'
 import Icon from './Icon.jsx'
 
-export default function TabBar({ onStart }) {
+export default function TabBar() {
   const nav = useNavigate()
   const loc = useLocation()
   const S = useStore(s => s.S)
   const user = useStore(s => s.user)
   const isGuest = useStore(s => s.isGuest())
   const desktop = useIsDesktop()
+  const startWorkout = useStartWorkout()
   if (!user && !isGuest) return null
   const cur = loc.pathname.split('/')[1] || 'home'
   const on = k => cur === k || (cur === 'history' && k === 'stats') || (cur === 'settings' && k === 'home')
 
-  const startWorkout = () => {
-    if (!S.active) {
-      const r = effectiveRoutine(S, todayISO())
-      if (r && countEx(r.ex)) { onStart(r.id); return }
-    }
-    nav('/workout')
-  }
   const Tab = ({ k, icon, to, label }) => (
     <button className={on(k) ? 'on' : ''} onClick={() => nav(to)}>
       <Icon name={icon} /><span>{label}</span>
@@ -35,7 +27,7 @@ export default function TabBar({ onStart }) {
 
   const coachMode = !!user?.coach && isCoachPath(loc.pathname)
   const activeCoach = activeCoachTab(loc.pathname)
-  if (coachMode && desktop) return null   // CoachSidebar replaces the bar
+  if (desktop) return null   // CoachSidebar / AthleteSidebar replace the bar at ≥1000px
 
   if (coachMode) {
     const CT = ({ k, icon, to, label, dot }) => (
