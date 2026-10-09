@@ -269,7 +269,8 @@ function ActiveWorkout() {
   }, [])
 
   const discard = () => confirmSheet({ title: t('Discard workout?'), message: t('The sets you logged in this session will be lost.'), confirmText: t('Discard'), danger: true, onConfirm: () => { update(s => { s.active = null }); stopRest(); nav('/home') } })
-  const jump = idx => update(s => { s.active.cur = idx })
+  // Only the rail jumps: bring the new exercise to the top instead of leaving the page at the old exercise's scroll offset.
+  const jump = idx => { update(s => { s.active.cur = idx }); window.scrollTo({ top: 0 }) }
   const exDone = A.entries.filter(e => e.sets.length && e.sets.every(s => s.done)).length
   const allDone = A.entries.length > 0 && exDone === A.entries.length
 

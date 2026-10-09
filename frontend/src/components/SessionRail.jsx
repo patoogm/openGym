@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { t, nameFor } from '../lib/i18n.js'
 import { exOr } from '../lib/exercises.js'
 import { sessionOutline } from '../lib/sessionOutline.js'
@@ -13,6 +14,13 @@ export default function SessionRail({ A, done, total, onJump, onFinish, onDiscar
   const exDone = A.entries.filter(e => e.sets.length && e.sets.every(s => s.done)).length
   const allDone = A.entries.length > 0 && exDone === A.entries.length
   const pct = total ? Math.round(done / total * 100) : 0
+  // Keep the current row in view when the cursor moves by any means (Next/Prev, Add exercise,
+  // a superset advancing) — a long session's outline scrolls on its own.
+  const listRef = useRef(null)
+  useEffect(() => {
+    const el = listRef.current && listRef.current.querySelector('[aria-current="step"]')
+    if (el) el.scrollIntoView({ block: 'nearest' })
+  }, [A.cur, rows.length])
 
   return <aside className="wrail" aria-label={t('Exercises')}>
     <div className="wrail-hd">
@@ -20,7 +28,7 @@ export default function SessionRail({ A, done, total, onJump, onFinish, onDiscar
       <div className="wrail-sub"><Elapsed start={A.start} /> · {t('{0} sets', done + '/' + total)}</div>
       <div className="wprog"><i style={{ width: pct + '%' }} /></div>
     </div>
-    <div className="wout">
+    <div className="wout" ref={listRef}>
       {!rows.length && <div className="small dim">{t('Freestyle workout — add your first exercise.')}</div>}
       {rows.map(r => r.type === 'section'
         ? <div key={r.key} className="wsection">{r.label}</div>
