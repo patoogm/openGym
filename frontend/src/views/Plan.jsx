@@ -76,7 +76,8 @@ export default function Plan() {
   </>
 
   return <div className="pane">
-    <section className="pane-list" aria-label={t('Plan')}>{header}{scheduleCol}{routinesCol}</section>
+    {/* routines first: they are what you pick from; the week schedule is secondary here */}
+    <section className="pane-list" aria-label={t('Plan')}>{header}{routinesCol}{scheduleCol}</section>
     <section className="pane-detail">
       <ErrorBoundary key={selected ? selected.id : 'none'}>
         {selected ? <RoutineSummary key={selected.id} r={selected} /> : null}

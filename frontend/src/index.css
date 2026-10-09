@@ -1153,13 +1153,14 @@ h4.sec{
     position:sticky;top:var(--sp-5);max-height:calc(100vh - 2 * var(--sp-5));overflow-y:auto;
     min-width:0;padding-right:2px;
   }
-  .pane-detail{min-width:0}
+  .pane-detail{min-width:0;container-type:inline-size}
   #app .pane-list .list,#app .pane-detail .list,#app .redit .list{display:flex;flex-direction:column}
   .pane-list .item.sel{background:var(--surface-2);box-shadow:inset 3px 0 0 var(--acc)}
   .pane-detail .narrow{max-width:none;margin:0}
   .pane-detail .hdr>.lrow-i{align-self:center}
-  /* a routine's summary: exercises beside the muscle map */
-  .rsum{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);column-gap:var(--sp-5);align-items:start}
+  /* a routine's summary: the muscle map goes beside the exercises only once the detail pane
+     has room (≈1366px viewport and up); below that it stacks under them */
+  .rsum{display:grid;grid-template-columns:minmax(0,1fr);column-gap:var(--sp-5);align-items:start}
   .rsum>*{min-width:0}
   /* the routine editor: exercises on the left, progression / coverage / delete on the right */
   .redit{
@@ -1169,4 +1170,7 @@ h4.sec{
   .redit>.hdr{grid-area:hdr}
   .redit>.rmain{grid-area:main;min-width:0}
   .redit>.raside{grid-area:aside;min-width:0}
+}
+@container (min-width:640px){
+  .rsum{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
 }
