@@ -1034,8 +1034,11 @@ h4.sec{
   #timer.rest .acts{flex-wrap:wrap}
   #timer.rest .acts .skip{flex:1 1 100%;margin-left:0}
   #timer.working .grow{flex:1 1 100%;order:3}
-  /* leave room under the last sidebar item so the timer never covers it */
-  body.resting .cside{padding-bottom:calc(180px + var(--sab))}
+  /* leave room under the last sidebar item so the timer never covers it; the padding glides
+     instead of snapping, so the coach/admin footer doesn't jump when a rest starts or ends */
+  :root{--timer-h:170px}
+  .cside{transition:padding-bottom var(--med) var(--ease)}
+  body.resting .cside{padding-bottom:calc(var(--timer-h) + var(--sab))}
 }
 
 /* ------------------------------------------------------ inline timer (rail) --- */

@@ -32,10 +32,10 @@ export function activeAthleteTab(pathname) {
 // Role-based links under the nav; safe for guests (user is null).
 export function athleteFooter(user) {
   const out = []
-  if (user && user.coach) out.push({ k: 'coach', icon: 'person', to: '/coach', label: 'Panel coach' })
+  if (user && user.coach) out.push({ k: 'coach', icon: 'crown', to: '/coach', label: 'Panel coach' })
   if (user && user.admin) out.push({ k: 'admin', icon: 'shield', to: '/admin', label: 'Admin' })
   return out
 }
 
 // The coach area has its own shell; the athlete shell covers every other signed-in route.
-export const showAthleteShell = (pathname, desktop, authed) => !!desktop && !!authed && !isCoachPath(pathname)
+export const showAthleteShell = (pathname, desktop, authed) => !!desktop && !!authed && !isCoachPath(String(pathname || ''))

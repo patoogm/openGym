@@ -10,7 +10,7 @@ import Icon from './Icon.jsx'
 export default function TabBar() {
   const nav = useNavigate()
   const loc = useLocation()
-  const S = useStore(s => s.S)
+  const training = useStore(s => !!s.S.active)
   const user = useStore(s => s.user)
   const isGuest = useStore(s => s.isGuest())
   const desktop = useIsDesktop()
@@ -45,7 +45,7 @@ export default function TabBar() {
           <span className="cir"><Icon name="plus" /></span><span>Asignar</span>
         </button>
         <CT {...actividad} />
-        <CT k="yo" icon="dumbbell" to="/home" label="Yo" dot={!!S.active} />
+        <CT k="yo" icon="dumbbell" to="/home" label="Yo" dot={training} />
       </nav>
     )
   }
@@ -55,9 +55,9 @@ export default function TabBar() {
       {user?.coach && <button onClick={() => nav('/coach')}><Icon name="chevronLeft" /><span>Coach</span></button>}
       <Tab k="home" icon="house" to="/home" label={t('Home')} />
       <Tab k="plan" icon="calendar" to="/plan" label={t('Plan')} />
-      <button className={'start' + (S.active ? ' rec' : '')} onClick={startWorkout}>
-        <span className="cir"><Icon name={S.active ? 'play' : 'dumbbell'} /></span>
-        <span>{S.active ? t('Resume') : t('Start')}</span>
+      <button className={'start' + (training ? ' rec' : '')} onClick={startWorkout}>
+        <span className="cir"><Icon name={training ? 'play' : 'dumbbell'} /></span>
+        <span>{training ? t('Resume') : t('Start')}</span>
       </button>
       <Tab k="stats" icon="chart" to="/stats" label={t('Stats')} />
       <Tab k="library" icon="list" to="/library" label={t('Exercises')} />

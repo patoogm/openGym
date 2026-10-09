@@ -9,8 +9,10 @@ import { startFlow } from '../sheets.jsx'
 // it (after the body-weight prompt); otherwise open the Workout screen (resume, or the chooser).
 export function useStartWorkout() {
   const nav = useNavigate()
-  const S = useStore(s => s.S)
+  // Read the store when the button is pressed instead of subscribing to all of it, so the
+  // sidebar and tab bar don't re-render on every set edit.
   return () => {
+    const S = useStore.getState().S
     if (!S.active) {
       const r = effectiveRoutine(S, todayISO())
       if (r && countEx(r.ex)) { startFlow(r.id); return }

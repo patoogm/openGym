@@ -50,6 +50,10 @@ describe('athleteFooter', () => {
     expect(athleteFooter({ admin: true }).map(i => i.to)).toEqual(['/admin'])
     expect(athleteFooter({ coach: true, admin: true }).map(i => i.k)).toEqual(['coach', 'admin'])
   })
+  it('gives every nav entry its own icon so two rows never look alike', () => {
+    const icons = [...ATHLETE_TABS, ...ATHLETE_MORE, ...athleteFooter({ coach: true, admin: true })].map(i => i.icon)
+    expect(new Set(icons).size).toBe(icons.length)
+  })
 })
 
 describe('showAthleteShell', () => {
@@ -60,5 +64,10 @@ describe('showAthleteShell', () => {
     expect(showAthleteShell('/home', true, false)).toBe(false)
     expect(showAthleteShell('/coach', true, true)).toBe(false)
     expect(showAthleteShell('/coach/rutinas/r1', true, true)).toBe(false)
+  })
+  it('does not throw on a missing path', () => {
+    expect(showAthleteShell(undefined, true, true)).toBe(true)
+    expect(showAthleteShell(null, true, true)).toBe(true)
+    expect(showAthleteShell('', true, true)).toBe(true)
   })
 })

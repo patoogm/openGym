@@ -26,7 +26,8 @@ export default function AthleteSidebar() {
   return <nav className="cside" aria-label="openGym">
     <div className="brand">openGym</div>
     {ATHLETE_TABS.map(item)}
-    <Button variant="primary" icon={training ? 'play' : 'dumbbell'} onClick={start}>
+    <Button variant="primary" icon={training ? 'play' : 'dumbbell'} onClick={start}
+      aria-current={cur === 'workout' ? 'page' : undefined}>
       {training ? t('Resume') : t('Start')}
     </Button>
     <div className="cside-sec">{ATHLETE_MORE.map(item)}</div>
