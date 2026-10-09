@@ -1103,3 +1103,17 @@ h4.sec{
   .exblock.has-media:not(.compact) .exmedia{margin-bottom:0}
   .exblock.has-media:not(.compact) .exmedia:not(.mini) img{height:300px}
 }
+
+/* start chooser: today's routine and Freestyle on the left, the other routines on the right */
+@media (min-width:1000px){
+  .narrow.wchoose{
+    max-width:none;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    grid-template-areas:"hdr hdr" "hero side" "free side";grid-template-rows:auto auto 1fr;
+    column-gap:var(--sp-6);align-items:start;
+  }
+  .wchoose>.hdr{grid-area:hdr}
+  .wchoose>.wc-hero{grid-area:hero}
+  .wchoose>.wc-side{grid-area:side}
+  .wchoose>.wc-free{grid-area:free}
+  .wchoose .wc-side h4.sec{margin-top:0}
+}
