@@ -247,7 +247,7 @@ h4.sec{
   background:var(--tint,var(--acc));color:#fff;
 }
 .lrow-m{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
-.lrow-t{font-size:17px;letter-spacing:-.012em;line-height:1.25}
+.lrow-t{font-size:17px;letter-spacing:-.012em;line-height:1.25;overflow-wrap:anywhere;hyphens:auto}
 .lrow-s{font-size:13px;color:var(--label-2);line-height:1.3}
 /* flex:none would let a long value ("Follow the routine (Linear progression)") run straight
    through the title next to it, since the title's column is already free to shrink to nothing.

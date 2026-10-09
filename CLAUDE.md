@@ -70,6 +70,7 @@ frontend/src/
   lib/
     lógica pura + tests (progression, onerm, history, effort, blocks, i18n, format…)
     settingsPanes.js  categorías de Ajustes en desktop: `settingsCats`, `resolveCat`, `settingsCatPath` (+ test)
+    a11y.js           `rowProps(handler, {role})`: props para que un `<div class="item" onClick>` sea operable con Enter/Espacio (ignora teclas de controles anidados; `role:false` si la fila contiene botones) (+ test)
     statsPanes.js     helpers puros de Stats/History desktop: `filterByQuery` (búsqueda sin acentos) y `pickWorkout` (+ test)
     athleteShell.js   items del sidebar del atleta, tab activa por ruta, cuándo se muestra el shell, rutas del Plan (`planRoutinePath`, `planRoutineEditPath`) y clave por sección del frame de contenido (`athleteSectionKey`) (+ test)
     sessionOutline.js esquema de la sesión activa para el rail del Workout: superset = una fila, secciones, estado por ejercicio (+ test)
@@ -118,12 +119,13 @@ Semántica en uso: naranja = workout en curso / racha; amarillo = objetivo de pe
 
 **Acento** (por usuario, sincronizado; `<html data-accent="…">`):
 `lime` (default → green), `sky`, `orange`, `violet`, `pink`, `red`, `teal`, `gold`.
-Derivados: `--acc`, `--acc-2` (pressed), `--on-acc` (texto sobre acento, elegido por **contraste medido**, no por gusto), `--acc-soft` (16%), `--acc-line` (38%).
+Derivados: `--acc`, `--acc-2` (pressed), `--on-acc` (texto sobre acento, elegido por **contraste medido**, no por gusto; medido el 2026-10-09 en `.btn.primary`: `sky`, `violet`, `pink` y `red` con texto blanco quedan en 3,4–4,1:1, por debajo de 4,5:1 — ver deuda), `--acc-soft` (16%), `--acc-line` (38%).
 Los nombres de acento se validan contra `ACCENTS` en `lib/format.js`.
 
 **Geometría**: `--r-sm 8px`, `--r 12px`, `--r-card 14px`, `--r-lg 16px`, `--r-xl 22px`, `--pad 16px`, `--icon-stroke 1.7`.
 
 **Spacing y anchos (desktop)**: `--sp-1…--sp-8` (4/8/12/16/20/24/32/40px) para márgenes y gaps nuevos; `--page-w` 720px (columna de lectura) y `--wide-w` 1200px (dashboards).
+**Tinta de aviso**: `--orange-ink` (naranja legible como texto: igual a `--orange` en dark, `#a85a00` en light); lo usa `.tag.warn`.
 **Motion**: `--ease cubic-bezier(.32,.72,0,1)`, `--fast 140ms`, `--med 220ms`. `prefers-reduced-motion` apaga todo.
 **Safe areas**: `--sat`, `--sab` (env insets).
 
@@ -165,6 +167,7 @@ Utilidades: `.muted` (label-2), `.dim` (label-3), `.accent`, `.cap1` (solo prime
 | Semana | `.week` > `.wday` (+ `.dot.plan/.ovr/.done`, `.today`), `.today-row` | Home |
 | Datos | `.chart`, `.ctip`, `.hm-*` (heatmap), `.bodymap`/`.bm-*`, `.tiles`/`.tile`, `.mrow`, `.pr` | |
 | Coach | `.wk-mini` (mini-tira 7 días), `.attn` (banner de atención), `.feed-day` (encabezado de día en actividad), `.item.off` (alumno ya tiene rutina, inert) | |
+| Utilidades | `.m-0`, `.mt-N` / `.mb-N` (N = 0…8 sobre `--sp-*`), `.ml-1/2/auto`, `.gap-1/2/3`, `.sp-1…5` (separador vertical), `.ta-l/c/r`, `.w-full`, `.nocase`, `.hidden` | reemplazan estilos inline de espaciado; llevan `!important` a propósito (un inline ganaba a cualquier selector) |
 | Otros | `.empty`, `#toast`, `.swatches` (selector de acento), `.glyph-grid` (íconos de rutina), `.cal-*`, `.ss-*` (supersets), `.efftbl`, `.tag.warn` (tag naranja de aviso) | |
 
 **Iconos disponibles** (`<Icon name="…" />`, 24×24, stroke, heredan color y tamaño vía `1em`):
@@ -231,12 +234,12 @@ config de ejercicio en rutina, reprogramar día, calendario, detalle de workout,
 - No tocar la lógica de `lib/` ni `store/` para cambios puramente visuales. Si un rediseño requiere datos nuevos, separarlo en otro cambio con test.
 - No abrir los archivos de datos gigantes (`exercises-data.js`, `body-paths.js`, `instr/`, `names/`).
 
-### Deuda de diseño conocida (buenos puntos de partida)
-- **~340 `style={{…}}` inline** que saltean el sistema: `sheets.jsx` (129), `Home.jsx` (31), `Stats.jsx` (30), `RoutineEdit.jsx` (22), `Workout.jsx` (21), `Settings.jsx` (16), `Login.jsx` (15). Muchos son márgenes/gaps ad-hoc y overrides de tamaño (p. ej. `.iconbtn` a 30px, `.big` a 22px) → candidatos a clases/utilidades o variantes.
-- Colores de estado armados inline → existe `.tag.warn` (Home ya lo usa para "Resume"); revisar el resto de pantallas. Ya existen también `.iconbtn.sm` y `.big.sm` (Home migrado).
-- Márgenes 4/6/8/10/12/14/16/18/22 sueltos (ya existe la escala `--sp-*`; falta migrar los inline existentes pantalla por pantalla).
-- `h2` de card se sobreescribe inline seguido (`margin:0`, `marginTop:0`).
-- `index.html` tiene `theme-color #0c0e12` y el manifest también, pero el `--bg` dark es `#000` (App.jsx lo corrige en runtime).
+### Deuda de diseño conocida
+- **Inline `style={{…}}`**: quedan 246 (medido el 2026-10-09; eran ~340). `sheets.jsx` (126) y `Admin.jsx` (12) quedaron fuera a propósito del barrido de espaciado (sheets = UI mobile compartida que no se rediseñó; Admin = solo operador). En vistas y componentes quedan sobre todo estilos dinámicos (anchos de barras, colores por estado, tamaños de íconos): `RoutineEdit.jsx` (17), `Home.jsx` (14), `ProgressViews.jsx` (12), `Workout.jsx` (9), `Settings.jsx` (9), `Stats.jsx` (8), `Login.jsx` (7).
+- **Contraste de `--on-acc`**: con texto blanco, los acentos `sky`, `violet`, `pink` y `red` no llegan a 4,5:1 en el botón primario (dark 3,4–3,7; light 3,6–4,1). Con texto negro los cuatro pasarían de 5,7:1 (calculado, dark). Es una decisión de diseño (negro sobre rojo/rosa cambia el carácter del acento), no se tocó.
+- **Desktop, decisiones pendientes** (no son defectos): `.wchoose` queda medio vacío si solo existe Freestyle; el GIF minimizado sigue reservando su columna 5fr; al cruzar 1000px el shell se remonta (latido de presencia y se pierde input sin confirmar).
+- **Caso borde sin confirmar**: entrar directo a `/library/<id de un ejercicio propio>` podría redirigir de más si los ejercicios propios se hidrataran de forma asíncrona (hoy el store lee localStorage de forma síncrona).
+- El sitio `website/` conserva `theme-color #0c0e12` (es una landing aparte).
 - Sin fuente propia: depende de SF Pro/Segoe/Roboto según plataforma → la app se ve distinta en Android/Windows.
 
 ---
@@ -251,5 +254,7 @@ config de ejercicio en rutina, reprogramar día, calendario, detalle de workout,
    - clases en `index.css` (una sección comentada por componente, como está hoy),
    - cambios de markup en `views/` / `components/` usando esas clases (no inline styles).
 5. **Verificar**: `npm test`, `check-locales.mjs`, y recorrido visual de las pantallas tocadas en ambos temas y un par de acentos.
+
+**Estado (2026-10-09)**: el rediseño desktop del atleta (sidebar, Workout con rail, Home, Plan/Program/RoutineEdit, Stats/History, Library, Settings/Profile/Login, QA) está completo; planes en `docs/superpowers/plans/2026-10-09-athlete-desktop-*.md`, spec en `docs/superpowers/specs/2026-10-09-athlete-desktop-design.md`.
 
 Cuando se decida algo de diseño (nueva paleta, nueva fuente, nuevo componente), actualizar este archivo en §5 para que siga siendo la fuente de verdad.
