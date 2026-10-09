@@ -39,3 +39,16 @@ export function athleteFooter(user) {
 
 // The coach area has its own shell; the athlete shell covers every other signed-in route.
 export const showAthleteShell = (pathname, desktop, authed) => !!desktop && !!authed && !isCoachPath(String(pathname || ''))
+
+// Plan routes: on desktop /plan/r/:id is the routine's summary and the editor lives at
+// /plan/r/:id/editar (same shape as the coach's); on mobile the summary redirects to the editor.
+export const planRoutinePath = id => '/plan/r/' + id
+export const planRoutineEditPath = id => '/plan/r/' + id + '/editar'
+
+// Key for the shell's content frame. Per *section*, not per path: picking another routine in a
+// list + detail pane must not remount the list (and lose its scroll), while a summary <-> editor
+// switch or a change of section still remounts and re-contains a view that threw.
+export function athleteSectionKey(pathname) {
+  const p = String(pathname || '')
+  return (activeAthleteTab(p) || p) + (p.endsWith('/editar') ? ':editar' : '')
+}

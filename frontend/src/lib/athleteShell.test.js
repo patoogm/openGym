@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { ATHLETE_TABS, ATHLETE_MORE, activeAthleteTab, athleteFooter, showAthleteShell } from './athleteShell.js'
+import { ATHLETE_TABS, ATHLETE_MORE, activeAthleteTab, athleteFooter, showAthleteShell, planRoutinePath, planRoutineEditPath, athleteSectionKey } from './athleteShell.js'
 
 describe('nav lists', () => {
   it('have unique keys and routes, and the main tabs mirror the mobile tab bar', () => {
@@ -69,5 +69,33 @@ describe('showAthleteShell', () => {
     expect(showAthleteShell(undefined, true, true)).toBe(true)
     expect(showAthleteShell(null, true, true)).toBe(true)
     expect(showAthleteShell('', true, true)).toBe(true)
+  })
+})
+
+describe('plan routes', () => {
+  it('builds the summary and editor paths', () => {
+    expect(planRoutinePath('r1')).toBe('/plan/r/r1')
+    expect(planRoutineEditPath('r1')).toBe('/plan/r/r1/editar')
+  })
+  it('the editor path still belongs to the Plan tab', () => {
+    expect(activeAthleteTab(planRoutineEditPath('r1'))).toBe('plan')
+  })
+})
+
+describe('athleteSectionKey', () => {
+  it('is stable while moving inside a section, so the list pane is not remounted', () => {
+    expect(athleteSectionKey('/plan')).toBe('plan')
+    expect(athleteSectionKey('/plan/r/a')).toBe('plan')
+    expect(athleteSectionKey('/plan/r/b')).toBe('plan')
+  })
+  it('changes between a summary and its editor, and between sections', () => {
+    expect(athleteSectionKey('/plan/r/a/editar')).toBe('plan:editar')
+    expect(athleteSectionKey('/plan/r/a')).not.toBe(athleteSectionKey('/plan/r/a/editar'))
+    expect(athleteSectionKey('/stats')).not.toBe(athleteSectionKey('/plan'))
+  })
+  it('falls back to the raw path for unknown routes and tolerates a missing one', () => {
+    expect(athleteSectionKey('/nope')).toBe('/nope')
+    expect(athleteSectionKey(undefined)).toBe('home')
+    expect(athleteSectionKey('')).toBe('home')
   })
 })
