@@ -1120,3 +1120,25 @@ h4.sec{
   .wchoose>.wc-free{grid-area:free}
   .wchoose .wc-side h4.sec{margin-top:0}
 }
+
+/* ------------------------------------------------------------------- home --- */
+/* Variants for what Home used to override inline. */
+.iconbtn.sm{width:30px;height:30px;font-size:15px}
+.card .big.sm{font-size:22px}
+/* the "Today" row's icon square: in progress / planned / rest day */
+.today-row .lrow-i.live{background:var(--orange)}
+.today-row .lrow-i.plan{background:var(--acc)}
+.today-row .lrow-i.rest{background:var(--surface-3)}
+/* .tag.warn carries a left margin for use inside lists; the Today row spaces itself */
+.today-row .tag.warn{margin-left:0}
+
+/* desktop dashboard: week, Today and body weight on the left; setup/welcome/streak on the right */
+@media (min-width:1000px){
+  .hdesk{
+    display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);
+    grid-template-areas:"hdr hdr" "main aside";column-gap:var(--sp-6);align-items:start;
+  }
+  .hdesk>.hdr{grid-area:hdr}
+  .hdesk>.hmain{grid-area:main;min-width:0}
+  .hdesk>.haside{grid-area:aside;min-width:0}
+}
