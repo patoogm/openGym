@@ -1227,8 +1227,8 @@ h4.sec{
 }
 
 /* ------------------------------------------------ desktop polish (plan 8) --- */
-.today-row .tag{white-space:nowrap}
 @media (min-width:1000px){
+  .today-row .tag{white-space:nowrap}
   /* long labels (de/ru/hi) wrap instead of running under the chevron */
   .pane-list .item .tt{overflow-wrap:anywhere}
   /* focus rings inside scroll containers must not be clipped by the container's edge */

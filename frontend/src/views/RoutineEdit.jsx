@@ -155,7 +155,7 @@ export default function RoutineEdit() {
               {unitFirst.has(i) && <div className="ss-label"><Icon name="link" />{t('Superset')}</div>}
               <div className={'item' + (inSS.has(i) ? ' in-ss' : '')} {...rowProps(() => {
                 exConfigSheet(ex, e, cfg => edit(x => { x[i] = { id: x[i].id, sg: x[i].sg, ...cfg } }), () => edit(x => { x.splice(i, 1); cleanupSg(x) }), r)
-              })}>
+              }, { role: false })}>
                 <Thumb ex={ex} />
                 <div className="grow"><div className="tt cap1">{nameFor(ex)}</div><div className="ss">{exLine(e, S.unit)}</div></div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: 'none', alignItems: 'center' }}>
