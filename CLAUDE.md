@@ -54,9 +54,9 @@ frontend/src/
     ui.jsx            ★ controles propios: NumberField, TextField, TextArea, SearchField, Switch,
                         Segmented, Stepper, Slider, Check, Section, Row, SelectRow, Button
     Icon.jsx          set de iconos SVG (ver lista abajo)
-    TabBar.jsx        tab bar inferior con botón central "Start"
+    TabBar.jsx        tab bar inferior con botón central "Start" (solo mobile; en ≥1000px devuelve null)
     Modals.jsx        render de sheets (bottom sheet con swipe-to-dismiss, o 'center')
-    RestTimer.jsx     timer flotante (descanso / serie cronometrada)
+    RestTimer.jsx     timer flotante en mobile, acoplado al sidebar en desktop (descanso / serie cronometrada)
     AssignSheet.jsx   sheet de dos pasos para asignar rutinas a alumnos
     WeekMini.jsx      mini-tira de 7 días para adherencia semanal
     AthleteSidebar.jsx sidebar fija del atleta (≥1000px, mismas clases `.cside*` que el coach); `useStartWorkout.js`: acción Start/Resume compartida con TabBar
@@ -167,7 +167,7 @@ Si un diseño necesita un ícono nuevo, se agrega como path SVG en `Icon.jsx` co
 ### 5.5 Layout
 
 - Mobile: `#app` max-width 560px, padding 16px, padding-bottom grande para el tab bar (y más si hay timer: `body.resting`).
-- Desktop ≥1000px: `#app` 1080px, `.cols` a 2 columnas, `.list` en grid, `.narrow` = 640px, tab bar y timer flotantes centrados, sheet de 640px.
+- Desktop ≥1000px: `#app` 1080px, `.cols` a 2 columnas, `.list` en grid, `.narrow` = 640px, sheet de 640px. La tab bar es solo mobile: en desktop la reemplaza el sidebar (atleta y coach) y el timer se acopla al pie del sidebar (ver shell del atleta abajo).
 - Hit targets ≥44px aunque el control pintado sea más chico.
 - Transición entre vistas: `.vfade` (fade + 4px).
 - **Shell del atleta (≥1000px)**: `AthleteSidebar` (clases `.cside*` compartidas con el coach) + `.amain-in` (contenido centrado a `--wide-w`); la tab bar es solo mobile. El timer de descanso/serie se acopla al pie del sidebar. Lógica pura en `lib/athleteShell.js`. Spec: `docs/superpowers/specs/2026-10-09-athlete-desktop-design.md`.
