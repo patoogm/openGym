@@ -1193,3 +1193,15 @@ h4.sec{
   .xprog-main{min-width:0}
   #app .card .list{display:flex;flex-direction:column}
 }
+
+/* ------------------------------------------------------ library (desktop) --- */
+@media (min-width:1000px){
+  /* 340px is too narrow for a horizontally scrolling chip strip with a mouse: wrap instead */
+  .lib-list .chips{flex-wrap:wrap;overflow-x:hidden;overflow-y:auto;max-height:116px;padding:2px}
+  .pane-detail .exmedia{margin-bottom:var(--sp-3)}
+}
+/* media + tags on the left, numbers and instructions on the right once the panel has room */
+@container (min-width:760px){
+  .exd{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--sp-5);align-items:start}
+  .exd>*{min-width:0}
+}
