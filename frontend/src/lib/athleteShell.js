@@ -52,3 +52,6 @@ export function athleteSectionKey(pathname) {
   const p = String(pathname || '')
   return (activeAthleteTab(p) || p) + (p.endsWith('/editar') ? ':editar' : '')
 }
+
+// History: on desktop /history/:id is the selected workout's detail panel.
+export const historyWorkoutPath = id => '/history/' + id
