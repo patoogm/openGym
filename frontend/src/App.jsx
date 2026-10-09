@@ -7,7 +7,6 @@ import { ACCENTS } from './lib/format.js'
 import { setLang, setExNamesEn, useLang } from './lib/i18n.js'
 import { setNav } from './lib/nav.js'
 import { useWakeLock } from './lib/wakelock.js'
-import { startFlow } from './sheets.jsx'
 import Icon from './components/Icon.jsx'
 import TabBar from './components/TabBar.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
@@ -32,6 +31,8 @@ import CoachActivity from './views/CoachActivity.jsx'
 import CoachShell from './views/CoachShell.jsx'
 import { useIsDesktop } from './lib/useIsDesktop.js'
 import { homePathFor, isCoachPath } from './lib/coachShell.js'
+import { showAthleteShell } from './lib/athleteShell.js'
+import AthleteSidebar from './components/AthleteSidebar.jsx'
 
 bindUI(useUI)   // lets the shared controls open sheets without importing the store at module scope
 
@@ -73,40 +74,50 @@ function Shell() {
   // On desktop the coach area is one persistent shell: a stable key keeps it (and its student
   // polling) mounted while navigating between coach screens. Elsewhere #app re-keys per route.
   const coachDesk = desktop && !!user?.coach && isCoachPath(loc.pathname)
+  // Same idea for the athlete area: the sidebar stays mounted, only the content frame re-keys.
+  const athleteDesk = showAthleteShell(loc.pathname, desktop, authed)
+
+  const routes = (
+    <Routes>
+      <Route path="/home" element={<Home />} />
+      <Route path="/plan" element={<Plan />} />
+      <Route path="/plan/r/:id" element={<RoutineEdit />} />
+      <Route path="/workout" element={<Workout />} />
+      <Route path="/stats" element={<Stats />} />
+      <Route path="/history" element={<History />} />
+      <Route path="/library" element={<Library />} />
+      <Route path="/settings" element={<Settings />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/program" element={<Program />} />
+      <Route path="/admin" element={user?.admin ? <Admin /> : <Navigate to="/home" replace />} />
+      <Route element={coachOnly(<CoachShell />)}>
+        <Route path="/coach" element={<Coach />} />
+        <Route path="/coach/alumno/:id" element={<Coach />} />
+        <Route path="/coach/rutinas" element={<CoachRoutines />} />
+        <Route path="/coach/rutinas/:id" element={<CoachRoutines />} />
+        <Route path="/coach/rutinas/:id/editar" element={<RoutineEdit />} />
+        <Route path="/coach/actividad" element={<CoachActivity />} />
+      </Route>
+      <Route path="*" element={<Navigate to={homePathFor(user)} replace />} />
+    </Routes>
+  )
 
   return (
     <>
       {/* keyed on the route: a view that throws is contained, and switching tabs
-          re-mounts the boundary, so the tab bar is always a way out */}
-      <div id="app" className={'vfade' + (coachDesk ? ' cdesk' : '')} key={coachDesk ? 'coach-desktop' : loc.pathname}>
-        <ErrorBoundary>
-          {!authed ? <Login /> : (
-            <Routes>
-              <Route path="/home" element={<Home />} />
-              <Route path="/plan" element={<Plan />} />
-              <Route path="/plan/r/:id" element={<RoutineEdit />} />
-              <Route path="/workout" element={<Workout />} />
-              <Route path="/stats" element={<Stats />} />
-              <Route path="/history" element={<History />} />
-              <Route path="/library" element={<Library />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/program" element={<Program />} />
-              <Route path="/admin" element={user?.admin ? <Admin /> : <Navigate to="/home" replace />} />
-              <Route element={coachOnly(<CoachShell />)}>
-                <Route path="/coach" element={<Coach />} />
-                <Route path="/coach/alumno/:id" element={<Coach />} />
-                <Route path="/coach/rutinas" element={<CoachRoutines />} />
-                <Route path="/coach/rutinas/:id" element={<CoachRoutines />} />
-                <Route path="/coach/rutinas/:id/editar" element={<RoutineEdit />} />
-                <Route path="/coach/actividad" element={<CoachActivity />} />
-              </Route>
-              <Route path="*" element={<Navigate to={homePathFor(user)} replace />} />
-            </Routes>
-          )}
-        </ErrorBoundary>
+          re-mounts the boundary, so the tab bar / sidebar is always a way out */}
+      <div id="app" className={'vfade' + (coachDesk ? ' cdesk' : '') + (athleteDesk ? ' adesk' : '')}
+        key={coachDesk ? 'coach-desktop' : athleteDesk ? 'athlete-desktop' : loc.pathname}>
+        {athleteDesk
+          ? <div className="ashell">
+            <AthleteSidebar />
+            <main className="amain">
+              <div className="amain-in vfade" key={loc.pathname}><ErrorBoundary>{routes}</ErrorBoundary></div>
+            </main>
+          </div>
+          : <ErrorBoundary>{!authed ? <Login /> : routes}</ErrorBoundary>}
       </div>
-      <TabBar onStart={startFlow} />
+      <TabBar />
       <RestTimer />
       <Modals />
       <Toast />
