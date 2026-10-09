@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { ATHLETE_TABS, ATHLETE_MORE, activeAthleteTab, athleteFooter, showAthleteShell, planRoutinePath, planRoutineEditPath, athleteSectionKey, historyWorkoutPath } from './athleteShell.js'
+import { ATHLETE_TABS, ATHLETE_MORE, activeAthleteTab, athleteFooter, showAthleteShell, planRoutinePath, planRoutineEditPath, athleteSectionKey, historyWorkoutPath, libraryExercisePath } from './athleteShell.js'
 
 describe('nav lists', () => {
   it('have unique keys and routes, and the main tabs mirror the mobile tab bar', () => {
@@ -105,5 +105,13 @@ describe('historyWorkoutPath', () => {
     expect(historyWorkoutPath('w1')).toBe('/history/w1')
     expect(activeAthleteTab(historyWorkoutPath('w1'))).toBe('history')
     expect(athleteSectionKey('/history/w1')).toBe(athleteSectionKey('/history'))
+  })
+})
+
+describe('libraryExercisePath', () => {
+  it('builds the detail route, which stays in the Library section', () => {
+    expect(libraryExercisePath('0313')).toBe('/library/0313')
+    expect(activeAthleteTab(libraryExercisePath('0313'))).toBe('library')
+    expect(athleteSectionKey('/library/0313')).toBe(athleteSectionKey('/library'))
   })
 })

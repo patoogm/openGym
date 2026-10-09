@@ -55,3 +55,6 @@ export function athleteSectionKey(pathname) {
 
 // History: on desktop /history/:id is the selected workout's detail panel.
 export const historyWorkoutPath = id => '/history/' + id
+
+// Library: on desktop /library/:id is the selected exercise's detail panel.
+export const libraryExercisePath = id => '/library/' + id

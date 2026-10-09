@@ -88,6 +88,7 @@ function Shell() {
       <Route path="/history" element={<History />} />
       <Route path="/history/:id" element={<History />} />
       <Route path="/library" element={<Library />} />
+      <Route path="/library/:id" element={<Library />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/program" element={<Program />} />
