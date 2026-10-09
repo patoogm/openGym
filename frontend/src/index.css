@@ -37,7 +37,7 @@
   --hair:      .5px;
 
   /* system palette (iOS dark values) */
-  --blue:#0a84ff; --green:#30d158; --red:#ff453a; --orange:#ff9f0a;
+  --blue:#0a84ff; --green:#30d158; --red:#ff453a; --orange:#ff9f0a; --orange-ink:var(--orange);
   --yellow:#ffd60a; --teal:#40c8e0; --indigo:#5e5ce6; --pink:#ff375f;
   --purple:#bf5af2; --mint:#63e6e2; --brown:#ac8e68; --grey:#8e8e93;
 
@@ -84,6 +84,7 @@
   --sep-op:    rgba(60,60,67,.20);
 
   --blue:#007aff; --green:#34c759; --red:#ff3b30; --orange:#ff9500;
+  --orange-ink:#a85a00;   /* readable orange text on a light surface */
   --yellow:#ffcc00; --teal:#30b0c7; --indigo:#5856d6; --pink:#ff2d55;
   --purple:#af52de; --mint:#00c7be; --brown:#a2845e; --grey:#8e8e93;
   --acc-2:#248a3d;
@@ -392,7 +393,7 @@ h4.sec{
   font-weight:500;text-transform:capitalize;
 }
 .tag.acc{background:var(--acc-soft);color:var(--acc)}
-.tag.warn{background:color-mix(in srgb,var(--orange) 16%,transparent);color:var(--orange);margin-left:6px}
+.tag.warn{background:color-mix(in srgb,var(--orange) 16%,transparent);color:var(--orange-ink);margin-left:6px}
 
 /* ---------------------------------------------------------------- chips -- */
 .chips{
@@ -1210,9 +1211,6 @@ h4.sec{
 @media (min-width:1000px){
   .pane.pane-cats{grid-template-columns:240px minmax(0,1fr)}
   .pane-cats .pane-detail{max-width:var(--page-w)}
-  .pane-cats .pane-detail .sect:first-child{margin-top:0}
-  /* the category rows are <button class="item">: keep them left-aligned and full width */
-  .pane-cats .pane-list .item{width:100%;text-align:left}
 }
 
 /* -------------------------------------------- profile + login (desktop) --- */
@@ -1226,4 +1224,15 @@ h4.sec{
   }
   /* the explanatory cards inside the login card sit one step lighter than the card itself */
   .login .card{background:var(--surface-2)}
+}
+
+/* ------------------------------------------------ desktop polish (plan 8) --- */
+.today-row .tag{white-space:nowrap}
+@media (min-width:1000px){
+  /* long labels (de/ru/hi) wrap instead of running under the chevron */
+  .pane-list .item .tt{overflow-wrap:anywhere}
+  /* focus rings inside scroll containers must not be clipped by the container's edge */
+  .pane-list :focus-visible,.wout :focus-visible,.xprog-opts :focus-visible,.lib-list .chips :focus-visible{outline-offset:-2px}
+  /* the delete button in a detail panel is an action, not a full-width bar */
+  .pane-detail>.btn.danger{width:auto;min-width:200px}
 }
