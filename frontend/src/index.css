@@ -1205,3 +1205,12 @@ h4.sec{
   .exd{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--sp-5);align-items:start}
   .exd>*{min-width:0}
 }
+
+/* ----------------------------------------------- settings panes (desktop) --- */
+@media (min-width:1000px){
+  .pane.pane-cats{grid-template-columns:240px minmax(0,1fr)}
+  .pane-cats .pane-detail{max-width:var(--page-w)}
+  .pane-cats .pane-detail .sect:first-child{margin-top:0}
+  /* the category rows are <button class="item">: keep them left-aligned and full width */
+  .pane-cats .pane-list .item{width:100%;text-align:left}
+}

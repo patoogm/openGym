@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useStore, DEF, hasData } from '../store/useStore.js'
 import { useUI } from '../store/useUI.js'
 import { ACCENTS, todayISO, localTZ } from '../lib/format.js'
@@ -9,6 +9,8 @@ import { pushSupported, enablePush, disablePush, sendTestPush } from '../lib/pus
 import { wakeLockSupported } from '../lib/wakelock.js'
 import { t, LANGS, INSTR_LANGS } from '../lib/i18n.js'
 import { DEMO, REPO } from '../lib/demo.js'
+import { useIsDesktop } from '../lib/useIsDesktop.js'
+import { settingsCats, resolveCat, settingsCatPath } from '../lib/settingsPanes.js'
 import { MOBILE, shareExport, syncReminder } from '../lib/mobile.js'
 import { loadStarterPlan, confirmSheet, importFromApp } from '../sheets.jsx'
 import Icon from '../components/Icon.jsx'
@@ -66,12 +68,15 @@ export default function Settings() {
     },
   })
 
-  return <div className="narrow">
-    <div className="hdr">
-      <button className="iconbtn" onClick={() => nav('/home')} aria-label={t('Home')}><Icon name="chevronLeft" /></button>
-      <div style={{ flex: 1, marginLeft: 10 }}><h1>{t('Settings')}</h1></div>
-    </div>
+  const { cat } = useParams()
+  const desktop = useIsDesktop()
+  const cats = settingsCats({ notifications: !!(user || MOBILE) })
+  const { key, valid } = resolveCat(cat, cats)
+  // an unknown category, or one this build does not offer (Notifications for a guest), goes back
+  useEffect(() => { if (cat && !valid) nav('/settings', { replace: true }) }, [cat, valid])
+  if (cat && !desktop) return <Navigate to="/settings" replace />   // mobile has no category screen
 
+  const account = <>
     {/* ---------- account (demo and mobile builds have nothing to sign in to) ---------- */}
     <Section title={MOBILE ? t('Your data') : DEMO ? t('Demo') : t('Account')}>
       {MOBILE ? <>
@@ -97,7 +102,9 @@ export default function Settings() {
       )}
     </Section>
     {!user && !DEMO && !MOBILE && <p className="sect-f" style={{ marginTop: -18, marginBottom: 22 }}>{t('Guest mode — data lives only in this browser.')}</p>}
+  </>
 
+  const training = <>
     {/* ---------- training profile (feeds the block generator) ---------- */}
     <Section title={t('Training')}>
       <Row icon="target" iconTint="var(--purple)" title={t('Training profile')}
@@ -107,7 +114,9 @@ export default function Settings() {
         subtitle={t('Your training blocks — create, activate and finish them.')}
         accessory="chevron" onClick={() => nav('/program')} />
     </Section>
+  </>
 
+  const general = <>
     {/* ---------- general ---------- */}
     <Section title={t('General')} footer={t('Note: switching units only changes the label — logged numbers are not converted.')}>
       <SelectRow
@@ -128,7 +137,9 @@ export default function Settings() {
           value={S.unit} onChange={v => update(s => { s.unit = v })} />
       </Row>
     </Section>
+  </>
 
+  const workout = <>
     {/* ---------- during a workout ---------- */}
     <Section title={t('During a workout')} footer={wakeOK ? t('The screen stays on while a workout is running, so you don’t have to unlock your phone between sets.') : null}>
       <SelectRow icon="timer" iconTint="var(--orange)" title={t('Rest timer')}
@@ -153,9 +164,13 @@ export default function Settings() {
           value={effortOf(S)} onChange={v => update(s => { s.effort = v; delete s.showRir })} />
       </Row>
     </Section>
+  </>
 
+  const notifications = <>
     {(user || MOBILE) && <NotificationsCard S={S} update={update} toast={toast} />}
+  </>
 
+  const appearance = <>
     {/* ---------- appearance ---------- */}
     <Section title={t('Appearance')} footer={DEMO || MOBILE ? undefined : t('synced with your profile')}>
       <Row icon="moon" iconTint="var(--indigo)" title={t('Theme')}>
@@ -185,7 +200,9 @@ export default function Settings() {
         </div>
       </div>
     </Section>
+  </>
 
+  const data = <>
     {/* ---------- data: fill it, bring things over, back it up, wipe it ---------- */}
     <Section title={t('Data')}>
       <Row icon="sparkles" iconTint="var(--acc)" title={t('Load starter plan (PPL)')} accessory="chevron" onClick={loadStarterPlan} />
@@ -196,22 +213,56 @@ export default function Settings() {
       <Row icon="download" iconTint="var(--blue)" title={t('Export backup (JSON)')} accessory="chevron" onClick={doExport} />
       <Row icon="trash" iconTint="var(--red)" title={t('Reset everything')} danger onClick={() => confirmSheet({ title: t('Reset everything?'), message: t('Deletes your plan, workouts and body weight on this device. This cannot be undone.'), confirmText: t('Delete everything'), danger: true, onConfirm: () => { replaceState(JSON.parse(JSON.stringify(DEF)), true); nav('/home'); toast(t('All data reset')) } })} />
     </Section>
+  </>
+
+  const inputs = <>
     <input ref={fileRef} type="file" accept=".json,application/json" style={{ display: 'none' }} onChange={doImport} />
     {/* Reset after reading so picking the same file twice still fires onChange. */}
     <input ref={importRef} type="file" accept=".csv,.xml,text/csv,text/xml" style={{ display: 'none' }}
       onChange={ev => { const f = ev.target.files[0]; if (f) importFromApp(f); ev.target.value = '' }} />
+  </>
 
+  const tip = <>
     {/* "Add to Home screen" makes no sense inside the native app */}
     {!MOBILE && <Section title={t('Tip')}>
       <Row icon="lightbulb" iconTint="var(--yellow)"
         title={IS_ANDROID ? t('In Chrome: ⋮ menu → Add to Home screen') : t('In Safari: Share → Add to Home Screen')}
         subtitle={t('to install openGym as a full-screen app.') + ' ' + (user ? t('Your data syncs with your profile — sign in anywhere to see it.') : t('Guest data stays on this device — export a backup now and then!'))} />
     </Section>}
+  </>
 
+  const footer = <>
     <div className="dim small" style={{ textAlign: 'center', marginTop: 4, lineHeight: 1.6 }}>
       openGym · {t('free & open source (AGPL v3)')}<br />
       <a href="https://github.com/DuarteSantos8/openGym" target="_blank" rel="noopener">{t('source code')}</a> · {t('exercise data')}: hasaneyldrm/exercises-dataset (CC)
     </div>
+  </>
+
+  if (!desktop) return <div className="narrow">
+    <div className="hdr">
+      <button className="iconbtn" onClick={() => nav('/home')} aria-label={t('Home')}><Icon name="chevronLeft" /></button>
+      <div style={{ flex: 1, marginLeft: 10 }}><h1>{t('Settings')}</h1></div>
+    </div>
+
+    {account}{training}{general}{workout}{notifications}{appearance}{data}{inputs}{tip}{footer}
+  </div>
+
+  // desktop: one category at a time (its sections stack, like the mobile page does for all of them)
+  const panes = {
+    account, training: <>{training}{workout}</>, general: <>{general}{appearance}</>,
+    notifications, data: <>{data}{tip}</>,
+  }
+  const label = c => (c.k === 'account' ? (MOBILE ? t('Your data') : DEMO ? t('Demo') : t('Account')) : t(c.label))
+  return <div className="pane pane-cats">
+    <section className="pane-list" aria-label={t('Settings')}>
+      <div className="hdr"><div className="grow"><h1>{t('Settings')}</h1></div></div>
+      <div className="list">{cats.map(c => <button key={c.k} className={'item' + (c.k === key ? ' sel' : '')}
+        aria-current={c.k === key ? 'page' : undefined} onClick={() => nav(settingsCatPath(c.k))}>
+        <span className="lrow-i"><Icon name={c.icon} /></span>
+        <div className="grow"><div className="tt">{label(c)}</div></div><Icon name="chevronRight" className="chev" />
+      </button>)}</div>
+    </section>
+    <section className="pane-detail">{panes[key]}{inputs}{footer}</section>
   </div>
 }
 

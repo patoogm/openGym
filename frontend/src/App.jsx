@@ -90,6 +90,7 @@ function Shell() {
       <Route path="/library" element={<Library />} />
       <Route path="/library/:id" element={<Library />} />
       <Route path="/settings" element={<Settings />} />
+      <Route path="/settings/:cat" element={<Settings />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/program" element={<Program />} />
       <Route path="/admin" element={user?.admin ? <Admin /> : <Navigate to="/home" replace />} />
