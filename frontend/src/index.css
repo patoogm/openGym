@@ -1142,3 +1142,31 @@ h4.sec{
   .hdesk>.hmain{grid-area:main;min-width:0}
   .hdesk>.haside{grid-area:aside;min-width:0}
 }
+
+/* ----------------------------------------- list + detail panes (athlete) --- */
+/* Plan and Program: a sticky list on the left, the selected item on the right. Mirrors the
+   coach's .cgrid/.cmaster/.cdetail, but inside the athlete content frame (which already has
+   its own padding and width) instead of the full-bleed coach shell. */
+@media (min-width:1000px){
+  .pane{display:grid;grid-template-columns:var(--list-w) minmax(0,1fr);column-gap:var(--sp-6);align-items:start}
+  .pane-list{
+    position:sticky;top:var(--sp-5);max-height:calc(100vh - 2 * var(--sp-5));overflow-y:auto;
+    min-width:0;padding-right:2px;
+  }
+  .pane-detail{min-width:0}
+  #app .pane-list .list,#app .pane-detail .list{display:flex;flex-direction:column}
+  .pane-list .item.sel{background:var(--surface-2);box-shadow:inset 3px 0 0 var(--acc)}
+  .pane-detail .narrow{max-width:none;margin:0}
+  .pane-detail .hdr>.lrow-i{align-self:center}
+  /* a routine's summary: exercises beside the muscle map */
+  .rsum{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);column-gap:var(--sp-5);align-items:start}
+  .rsum>*{min-width:0}
+  /* the routine editor: exercises on the left, progression / coverage / delete on the right */
+  .redit{
+    display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
+    grid-template-areas:"hdr hdr" "main aside";column-gap:var(--sp-6);align-items:start;
+  }
+  .redit>.hdr{grid-area:hdr}
+  .redit>.rmain{grid-area:main;min-width:0}
+  .redit>.raside{grid-area:aside;min-width:0}
+}
