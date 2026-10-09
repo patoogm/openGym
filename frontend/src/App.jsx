@@ -31,7 +31,7 @@ import CoachActivity from './views/CoachActivity.jsx'
 import CoachShell from './views/CoachShell.jsx'
 import { useIsDesktop } from './lib/useIsDesktop.js'
 import { homePathFor, isCoachPath } from './lib/coachShell.js'
-import { showAthleteShell } from './lib/athleteShell.js'
+import { showAthleteShell, athleteSectionKey } from './lib/athleteShell.js'
 import AthleteSidebar from './components/AthleteSidebar.jsx'
 
 bindUI(useUI)   // lets the shared controls open sheets without importing the store at module scope
@@ -81,7 +81,8 @@ function Shell() {
     <Routes>
       <Route path="/home" element={<Home />} />
       <Route path="/plan" element={<Plan />} />
-      <Route path="/plan/r/:id" element={<RoutineEdit />} />
+      <Route path="/plan/r/:id" element={<Plan />} />
+      <Route path="/plan/r/:id/editar" element={<RoutineEdit />} />
       <Route path="/workout" element={<Workout />} />
       <Route path="/stats" element={<Stats />} />
       <Route path="/history" element={<History />} />
@@ -112,7 +113,7 @@ function Shell() {
           ? <div className="ashell">
             <AthleteSidebar />
             <main className="amain">
-              <div className="amain-in vfade" key={loc.pathname}><ErrorBoundary>{routes}</ErrorBoundary></div>
+              <div className="amain-in vfade" key={athleteSectionKey(loc.pathname)}><ErrorBoundary>{routes}</ErrorBoundary></div>
             </main>
           </div>
           : <ErrorBoundary>{!authed ? <Login /> : routes}</ErrorBoundary>}

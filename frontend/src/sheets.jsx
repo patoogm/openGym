@@ -22,6 +22,7 @@ import { estimate1RM, best1RM, is1RMRecord, REP_CAP } from './lib/onerm.js'
 import { nextPrescription, applyPrescription, policyFor, defaultIncrement, POLICIES_FOR, POLICY_NAME, POLICY_DESC, MAX_BW_SETS } from './lib/progression.js'
 import { MOBILE, shareExport } from './lib/mobile.js'
 import { intervalSummary } from './lib/cardio.js'
+import { planRoutineEditPath } from './lib/athleteShell.js'
 
 const S = () => useStore.getState().S
 const update = (...a) => useStore.getState().update(...a)
@@ -322,7 +323,7 @@ function AddToRoutine({ ex, close }) {
       })
       const r = isNew ? S().routines[S().routines.length - 1] : st.routines.find(x => x.id === rid)
       toast(t('“{0}” added to {1}', nameFor(ex), r ? r.name : t('routine')))
-      if (isNew && r) nav('/plan/r/' + r.id)
+      if (isNew && r) nav(planRoutineEditPath(r.id))
     }, null, isNew ? null : st.routines.find(x => x.id === rid))
   }
   return <>
