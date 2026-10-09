@@ -69,6 +69,7 @@ frontend/src/
   store/useUI.js      estado efímero: sheets abiertos, toast, timers
   lib/
     lógica pura + tests (progression, onerm, history, effort, blocks, i18n, format…)
+    statsPanes.js     helpers puros de Stats/History desktop: `filterByQuery` (búsqueda sin acentos) y `pickWorkout` (+ test)
     athleteShell.js   items del sidebar del atleta, tab activa por ruta, cuándo se muestra el shell, rutas del Plan (`planRoutinePath`, `planRoutineEditPath`) y clave por sección del frame de contenido (`athleteSectionKey`) (+ test)
     sessionOutline.js esquema de la sesión activa para el rail del Workout: superset = una fila, secciones, estado por ejercicio (+ test)
     coachShell.js     lógica de tabs según rol, orden de lista, criterios de atención
@@ -158,7 +159,7 @@ Utilidades: `.muted` (label-2), `.dim` (label-3), `.accent`, `.cap1` (solo prime
 | Sheets | `.sheet` (bottom, swipe-down), `.center` (diálogo), `.mback` backdrop | se abren con `useUI().openSheet(render, {kind})` |
 | Timer | `#timer`, `#timer.rest` (2 filas), `#timer.working` (borde acento) | flota sobre el tab bar |
 | Workout | `.setrow`, `.sethead`, `.stp.w/.r/.eff`, `.setgo`, `.progline`, `.exmedia`, `.wprog`; desktop: `.wdesk` > `.wmain` + `.wrail` (`.wout`, `.wout-i`), `.exblock`/`.exbody`, `.timer-inline`, `.wchoose` | la pantalla más crítica |
-| Paneles lista + detalle (atleta) | `.pane` > `.pane-list` (+ `.item.sel`) + `.pane-detail`, `.rsum`, `.redit` > `.rmain` + `.raside` | Plan y Program en desktop |
+| Paneles lista + detalle (atleta) | `.pane` > `.pane-list` (+ `.item.sel`) + `.pane-detail`, `.rsum`, `.redit` > `.rmain` + `.raside`; Stats: `.xprog` > `.xprog-list` (+ `.xprog-opt.sel`) + `.xprog-main` | Plan y Program en desktop |
 | Home | `.hdesk` > `.hmain` + `.haside` (dashboard desktop), `.today-row` con `.lrow-i.live/.plan/.rest` y `.tag.warn` | primera pantalla |
 | Semana | `.week` > `.wday` (+ `.dot.plan/.ovr/.done`, `.today`), `.today-row` | Home |
 | Datos | `.chart`, `.ctip`, `.hm-*` (heatmap), `.bodymap`/`.bm-*`, `.tiles`/`.tile`, `.mrow`, `.pr` | |
@@ -188,8 +189,8 @@ Si un diseño necesita un ícono nuevo, se agrega como path SVG en `Icon.jsx` co
 | `/plan` | `views/Plan.jsx` | semana + lista de rutinas. Desktop ≥1000px: lista a la izquierda y resumen de la rutina seleccionada a la derecha (`/plan/r/:id`; sin id, la primera). | Alta |
 | `/plan/r/:id` | `views/Plan.jsx` + `components/RoutineSummary.jsx` | resumen de rutina en desktop; en mobile redirige al editor | Media |
 | `/plan/r/:id/editar` | `views/RoutineEdit.jsx` | editor de rutina, secciones, supersets, preview de músculos. Desktop: dos columnas (ejercicios \| progresión, cobertura, borrar). | Media |
-| `/stats` | `views/Stats.jsx` | heatmap anual, body map, gráficos, PRs, 1RM, esfuerzo | Alta |
-| `/history` | `views/History.jsx` | lista de workouts | Baja |
+| `/stats` | `views/Stats.jsx` | heatmap anual, body map, gráficos, PRs, 1RM, esfuerzo. Desktop ≥1000px: tiles → heatmap → Equilibrio muscular \| Esfuerzo → Peso \| Recientes → Progreso por ejercicio a ancho completo (lista buscable `.xprog` + gráfico). Mobile igual que antes (`SelectRow`) | Alta |
+| `/history`, `/history/:id` | `views/History.jsx` + `components/WorkoutDetail.jsx` | lista de workouts. Desktop ≥1000px: lista + panel de detalle del workout seleccionado (por defecto el último); en mobile `/history/:id` redirige y la fila abre el sheet. `openWorkout(w)` (sheets.jsx) decide panel vs sheet | Baja |
 | `/library` | `views/Library.jsx` | 1.324 ejercicios, búsqueda, filtros por equipamiento | Media |
 | `/settings` | `views/Settings.jsx` | listas agrupadas: tema, acento, idioma, unidades, esfuerzo, import/export… | Media |
 | `/profile` | `views/Profile.jsx` | perfil de entrenamiento (objetivo, nivel, equipo, limitaciones) | Baja |
