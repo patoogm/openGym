@@ -54,6 +54,12 @@
   --wk-dot:10px;
   --icon-stroke:1.7;
 
+  /* spacing scale — use these instead of ad-hoc 6/10/14/18px margins */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:20px; --sp-6:24px; --sp-7:32px; --sp-8:40px;
+
+  /* desktop content widths: reading column vs dashboards */
+  --page-w:720px; --wide-w:1200px;
+
   /* motion */
   --ease:cubic-bezier(.32,.72,0,1);
   --fast:140ms; --med:220ms;
@@ -965,8 +971,8 @@ h4.sec{
 .hdr>.iconbtn+.grow{margin-left:8px}
 .act-dot{width:8px;height:8px;border-radius:50%;background:var(--orange);flex:none}
 @media (min-width:1000px){
-  #app.cdesk{max-width:none;margin:0;padding:0}
-  .cshell{display:grid;grid-template-columns:var(--side-w) minmax(0,1fr);min-height:100vh}
+  #app.cdesk,#app.adesk{max-width:none;margin:0;padding:0}
+  .cshell,.ashell{display:grid;grid-template-columns:var(--side-w) minmax(0,1fr);min-height:100vh}
   .cside{
     position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:2px;
     padding:22px 12px calc(16px + var(--sab));background:var(--bg-el);
@@ -984,7 +990,7 @@ h4.sec{
   .cside-i.on{background:var(--surface-2);color:var(--label)}
   .cside .btn.primary{margin-top:14px}
   .cside-foot{margin-top:auto;padding-top:8px;border-top:var(--hair) solid var(--sep)}
-  .cmain{min-width:0}
+  .cmain,.amain{min-width:0}
   .cmain>.narrow{max-width:720px;margin:0 auto;padding:22px 28px calc(40px + var(--sab))}
   .cgrid{display:grid;grid-template-columns:var(--list-w) minmax(0,1fr);align-items:start;min-height:100vh}
   .cmaster{
@@ -1001,4 +1007,29 @@ h4.sec{
   .cdetail .tiles{grid-template-columns:repeat(3,1fr)}
   .ccols{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
   .ccols>*{min-width:0}
+}
+
+/* ------------------------------------------------- athlete desktop shell --- */
+/* The athlete area shares the coach shell's grid and sidebar classes (.cshell/.ashell, .cside,
+   .cside-i); what is new is the content frame, a sidebar group divider, and the rest/work
+   timer docked in the sidebar so it is visible on every screen. */
+@media (min-width:1000px){
+  .amain-in{max-width:var(--wide-w);margin:0 auto;padding:22px 28px calc(40px + var(--sab))}
+  .amain-in.vfade{animation:viewfade var(--med) var(--ease)}
+  .cside-sec{margin-top:var(--sp-4);padding-top:var(--sp-2);border-top:var(--hair) solid var(--sep)}
+  .cside-i .grow{overflow-wrap:anywhere}
+
+  /* the mobile "keep the timer scrollable-past" padding must not leak into the desktop shells */
+  body.resting #app.cdesk,body.resting #app.adesk{padding-bottom:0}
+
+  /* docked timer: bottom of the sidebar, same width as its items */
+  #timer{
+    left:var(--sp-3);right:auto;margin-left:0;bottom:calc(var(--sp-3) + var(--sab));
+    width:calc(var(--side-w) - 2 * var(--sp-3));flex-wrap:wrap;gap:var(--sp-2);
+  }
+  #timer.rest{flex-direction:column;align-items:stretch;gap:10px}
+  #timer.rest .head{flex:none}
+  #timer.working .grow{flex:1 1 100%;order:3}
+  /* leave room under the last sidebar item so the timer never covers it */
+  body.resting .cside{padding-bottom:calc(180px + var(--sab))}
 }
