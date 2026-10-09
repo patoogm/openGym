@@ -86,6 +86,7 @@ function Shell() {
       <Route path="/workout" element={<Workout />} />
       <Route path="/stats" element={<Stats />} />
       <Route path="/history" element={<History />} />
+      <Route path="/history/:id" element={<History />} />
       <Route path="/library" element={<Library />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/profile" element={<Profile />} />
