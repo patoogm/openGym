@@ -139,6 +139,6 @@ export default function Program() {
 
   return <div className="pane">
     <section className="pane-list" aria-label={t('Program')}>{header}{body}</section>
-    <section className="pane-detail">{previewBlock}</section>
+    <section className="pane-detail">{previewBlock || <div className="empty"><div className="ico"><Icon name="calendar" /></div>{t('Block preview')}</div>}</section>
   </div>
 }

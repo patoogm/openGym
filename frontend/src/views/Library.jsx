@@ -39,6 +39,8 @@ export default function Library() {
 
   // an unknown id (deleted custom exercise, stale link) goes back to the list
   useEffect(() => { if (id && !byId) nav('/library', { replace: true }) }, [id, !!byId])
+  // the detail panel scrolls with the page: a new exercise starts at its top
+  useEffect(() => { if (desktop) window.scrollTo(0, 0) }, [selected && selected.id])
   if (id && !desktop) return <Navigate to="/library" replace />   // mobile has no detail screen
 
   const pick = e => (desktop ? nav(libraryExercisePath(e.id)) : openExercise(e))

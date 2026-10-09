@@ -72,9 +72,8 @@ export default function Settings() {
   const desktop = useIsDesktop()
   const cats = settingsCats({ notifications: !!(user || MOBILE) })
   const { key, valid } = resolveCat(cat, cats)
-  // an unknown category, or one this build does not offer (Notifications for a guest), goes back
-  useEffect(() => { if (cat && !valid) nav('/settings', { replace: true }) }, [cat, valid])
-  if (cat && !desktop) return <Navigate to="/settings" replace />   // mobile has no category screen
+  // mobile has no category screen; an unknown category, or one this build does not offer, goes back too
+  if (cat && (!desktop || !valid)) return <Navigate to="/settings" replace />
 
   const account = <>
     {/* ---------- account (demo and mobile builds have nothing to sign in to) ---------- */}

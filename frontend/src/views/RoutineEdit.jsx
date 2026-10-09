@@ -75,7 +75,7 @@ export default function RoutineEdit() {
   const desktop = useIsDesktop()
   const back = inCoach ? (desktop ? routinePath(id) : '/coach/rutinas') : (desktop ? planRoutinePath(id) : '/plan')
   const r = S.routines.find(x => x.id === id)
-  useEffect(() => { if (!r) nav(back) }, [!!r])
+  useEffect(() => { if (!r) nav(back, { replace: true }) }, [!!r])
   if (!r) return null
   if (isAssigned(r)) return <AssignedRoutineView r={r} />
 

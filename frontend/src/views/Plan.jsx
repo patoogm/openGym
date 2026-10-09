@@ -82,7 +82,8 @@ export default function Plan() {
     <section className="pane-list" aria-label={t('Plan')}>{header}{routinesCol}{scheduleCol}</section>
     <section className="pane-detail">
       <ErrorBoundary key={selected ? selected.id : 'none'}>
-        {selected ? <RoutineSummary key={selected.id} r={selected} /> : null}
+        {selected ? <RoutineSummary key={selected.id} r={selected} />
+          : <div className="empty"><div className="ico"><Icon name="clipboard" /></div>{t('No routines yet.')}</div>}
       </ErrorBoundary>
     </section>
   </div>
