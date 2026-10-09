@@ -59,6 +59,7 @@ frontend/src/
     RestTimer.jsx     timer flotante (descanso / serie cronometrada)
     AssignSheet.jsx   sheet de dos pasos para asignar rutinas a alumnos
     WeekMini.jsx      mini-tira de 7 días para adherencia semanal
+    AthleteSidebar.jsx sidebar fija del atleta (≥1000px, mismas clases `.cside*` que el coach); `useStartWorkout.js`: acción Start/Resume compartida con TabBar
     CoachSidebar.jsx  sidebar fija del coach (≥1000px); StudentList / StudentDetail / AssignPanel / RoutinePanel: piezas del panel coach desktop
     LineChart, Heatmap, BodyMap, Media (gif/img de ejercicios), ProgressViews, InvitesCard, BlockPreview, Toast
   views/              una por ruta (ver §6)
@@ -66,6 +67,7 @@ frontend/src/
   store/useUI.js      estado efímero: sheets abiertos, toast, timers
   lib/
     lógica pura + tests (progression, onerm, history, effort, blocks, i18n, format…)
+    athleteShell.js   items del sidebar del atleta, tab activa por ruta, cuándo se muestra el shell (+ test)
     coachShell.js     lógica de tabs según rol, orden de lista, criterios de atención
   locales/*.js        traducciones UI (la key es el string en inglés)
   instr/*.js, names/  instrucciones y nombres de ejercicios por idioma (lazy-load, enormes: no abrir)
@@ -115,6 +117,8 @@ Derivados: `--acc`, `--acc-2` (pressed), `--on-acc` (texto sobre acento, elegido
 Los nombres de acento se validan contra `ACCENTS` en `lib/format.js`.
 
 **Geometría**: `--r-sm 8px`, `--r 12px`, `--r-card 14px`, `--r-lg 16px`, `--r-xl 22px`, `--pad 16px`, `--icon-stroke 1.7`.
+
+**Spacing y anchos (desktop)**: `--sp-1…--sp-8` (4/8/12/16/20/24/32/40px) para márgenes y gaps nuevos; `--page-w` 720px (columna de lectura) y `--wide-w` 1200px (dashboards).
 **Motion**: `--ease cubic-bezier(.32,.72,0,1)`, `--fast 140ms`, `--med 220ms`. `prefers-reduced-motion` apaga todo.
 **Safe areas**: `--sat`, `--sab` (env insets).
 
@@ -166,6 +170,7 @@ Si un diseño necesita un ícono nuevo, se agrega como path SVG en `Icon.jsx` co
 - Desktop ≥1000px: `#app` 1080px, `.cols` a 2 columnas, `.list` en grid, `.narrow` = 640px, tab bar y timer flotantes centrados, sheet de 640px.
 - Hit targets ≥44px aunque el control pintado sea más chico.
 - Transición entre vistas: `.vfade` (fade + 4px).
+- **Shell del atleta (≥1000px)**: `AthleteSidebar` (clases `.cside*` compartidas con el coach) + `.amain-in` (contenido centrado a `--wide-w`); la tab bar es solo mobile. El timer de descanso/serie se acopla al pie del sidebar. Lógica pura en `lib/athleteShell.js`. Spec: `docs/superpowers/specs/2026-10-09-athlete-desktop-design.md`.
 
 ---
 
@@ -221,7 +226,7 @@ config de ejercicio en rutina, reprogramar día, calendario, detalle de workout,
 ### Deuda de diseño conocida (buenos puntos de partida)
 - **~340 `style={{…}}` inline** que saltean el sistema: `sheets.jsx` (129), `Home.jsx` (31), `Stats.jsx` (30), `RoutineEdit.jsx` (22), `Workout.jsx` (21), `Settings.jsx` (16), `Login.jsx` (15). Muchos son márgenes/gaps ad-hoc y overrides de tamaño (p. ej. `.iconbtn` a 30px, `.big` a 22px) → candidatos a clases/utilidades o variantes.
 - Colores de estado armados inline (ej. tag naranja de "Resume" con `color-mix` en Home) → falta una variante `.tag.warn`/`.tag.orange`.
-- No hay escala de spacing como token (márgenes 4/6/8/10/12/14/16/18/22 sueltos).
+- Márgenes 4/6/8/10/12/14/16/18/22 sueltos (ya existe la escala `--sp-*`; falta migrar los inline existentes pantalla por pantalla).
 - `h2` de card se sobreescribe inline seguido (`margin:0`, `marginTop:0`).
 - `index.html` tiene `theme-color #0c0e12` y el manifest también, pero el `--bg` dark es `#000` (App.jsx lo corrige en runtime).
 - Sin fuente propia: depende de SF Pro/Segoe/Roboto según plataforma → la app se ve distinta en Android/Windows.

@@ -40,7 +40,7 @@ Success criteria:
   `--side-w` 240px):
   - brand;
   - main: Home · Plan · Stats · Exercises;
-  - **Start / Resume** as `.btn.primary` (orange dot while a workout is active); same start logic as
+  - **Start / Resume** as `.btn.primary` (turns into Resume with a play icon while a workout is active); same start logic as
     `TabBar.startWorkout`;
   - secondary: Program · History · Profile · Settings (today these are hidden behind icon buttons);
   - foot: "Panel coach" when `user.coach`, "Admin" when `user.admin`.
@@ -52,7 +52,7 @@ Success criteria:
   `--page-w` (reading width, 720px) or `--wide-w` (dashboards, ~1200px) per screen, instead of the
   1080px cap. Coach desktop (`.cdesk`) is untouched.
 - Nav model lives in a pure module `lib/athleteShell.js` (items, `activeAthleteTab(pathname)`;
-  `/plan/r/*` → Plan, `/history` → Stats, `/settings|profile|program` → their own items), mirroring
+  `/plan/r/*` → Plan; History, Settings, Profile and Program are their own items), mirroring
   `lib/coachShell.js`, with a Vitest test.
 
 ## Foundations (sub-project 0)
@@ -67,7 +67,7 @@ Design-system additions, all in `index.css` (new commented sections), documented
 - Inline-style cleanup is done **only for the screens being touched**, converting ad-hoc margins and
   size overrides to classes/variants (`.iconbtn.sm`, `.tag.warn` already exists, `.big.sm`, etc.).
 - `ExerciseDetail` content extracted from `exerciseDetailSheet` (sheets.jsx) into a component used
-  by both the sheet and the Library panel — one source of truth.
+  by both the sheet and the Library panel — one source of truth. Moved to the Library plan (sub-project 6), its first consumer.
 
 ## Screens
 
