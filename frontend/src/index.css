@@ -1027,8 +1027,12 @@ h4.sec{
     left:var(--sp-3);right:auto;margin-left:0;bottom:calc(var(--sp-3) + var(--sab));
     width:calc(var(--side-w) - 2 * var(--sp-3));flex-wrap:wrap;gap:var(--sp-2);
   }
-  #timer.rest{flex-direction:column;align-items:stretch;gap:10px}
-  #timer.rest .head{flex:none}
+  /* column + wrap lets the line grow past the dock width, so the rest variant must not wrap;
+     its controls wrap instead, with Skip on its own full-width row (a big target mid-set) */
+  #timer.rest{flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:10px}
+  #timer.rest .head{flex:none;min-width:0}
+  #timer.rest .acts{flex-wrap:wrap}
+  #timer.rest .acts .skip{flex:1 1 100%;margin-left:0}
   #timer.working .grow{flex:1 1 100%;order:3}
   /* leave room under the last sidebar item so the timer never covers it */
   body.resting .cside{padding-bottom:calc(180px + var(--sab))}
