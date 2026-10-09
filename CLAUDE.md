@@ -61,6 +61,7 @@ frontend/src/
     WeekMini.jsx      mini-tira de 7 días para adherencia semanal
     AthleteSidebar.jsx sidebar fija del atleta (≥1000px, mismas clases `.cside*` que el coach); `useStartWorkout.js`: acción Start/Resume compartida con TabBar
     SessionRail.jsx   rail derecha del Workout en desktop (reloj, progreso, esquema con salto, timer inline, terminar/descartar); `Elapsed.jsx`: reloj de la sesión
+    RoutineSummary.jsx detalle de rutina (solo lectura) en el Plan desktop; `RoutineMuscles.jsx`: card "qué trabaja esta sesión" (editor y resumen); `AdjustSheet.jsx`: "Request a change" de rutinas del coach
     CoachSidebar.jsx  sidebar fija del coach (≥1000px); StudentList / StudentDetail / AssignPanel / RoutinePanel: piezas del panel coach desktop
     LineChart, Heatmap, BodyMap, Media (gif/img de ejercicios), ProgressViews, InvitesCard, BlockPreview, Toast
   views/              una por ruta (ver §6)
@@ -68,7 +69,7 @@ frontend/src/
   store/useUI.js      estado efímero: sheets abiertos, toast, timers
   lib/
     lógica pura + tests (progression, onerm, history, effort, blocks, i18n, format…)
-    athleteShell.js   items del sidebar del atleta, tab activa por ruta, cuándo se muestra el shell (+ test)
+    athleteShell.js   items del sidebar del atleta, tab activa por ruta, cuándo se muestra el shell, rutas del Plan (`planRoutinePath`, `planRoutineEditPath`) y clave por sección del frame de contenido (`athleteSectionKey`) (+ test)
     sessionOutline.js esquema de la sesión activa para el rail del Workout: superset = una fila, secciones, estado por ejercicio (+ test)
     coachShell.js     lógica de tabs según rol, orden de lista, criterios de atención
   locales/*.js        traducciones UI (la key es el string en inglés)
@@ -157,6 +158,7 @@ Utilidades: `.muted` (label-2), `.dim` (label-3), `.accent`, `.cap1` (solo prime
 | Sheets | `.sheet` (bottom, swipe-down), `.center` (diálogo), `.mback` backdrop | se abren con `useUI().openSheet(render, {kind})` |
 | Timer | `#timer`, `#timer.rest` (2 filas), `#timer.working` (borde acento) | flota sobre el tab bar |
 | Workout | `.setrow`, `.sethead`, `.stp.w/.r/.eff`, `.setgo`, `.progline`, `.exmedia`, `.wprog`; desktop: `.wdesk` > `.wmain` + `.wrail` (`.wout`, `.wout-i`), `.exblock`/`.exbody`, `.timer-inline`, `.wchoose` | la pantalla más crítica |
+| Paneles lista + detalle (atleta) | `.pane` > `.pane-list` (+ `.item.sel`) + `.pane-detail`, `.rsum`, `.redit` > `.rmain` + `.raside` | Plan y Program en desktop |
 | Home | `.hdesk` > `.hmain` + `.haside` (dashboard desktop), `.today-row` con `.lrow-i.live/.plan/.rest` y `.tag.warn` | primera pantalla |
 | Semana | `.week` > `.wday` (+ `.dot.plan/.ovr/.done`, `.today`), `.today-row` | Home |
 | Datos | `.chart`, `.ctip`, `.hm-*` (heatmap), `.bodymap`/`.bm-*`, `.tiles`/`.tile`, `.mrow`, `.pr` | |
@@ -183,14 +185,15 @@ Si un diseño necesita un ícono nuevo, se agrega como path SVG en `Icon.jsx` co
 |---|---|---|---|
 | `/home` | `views/Home.jsx` | saludo + fecha, CTA de setup, tira semanal + "Hoy", card peso corporal (gráfico + objetivo), racha, etc. Desktop ≥1000px: dashboard 2:1 (semana + Hoy + peso a la izquierda; setup/bienvenida/racha a la derecha; sin engranaje, Ajustes está en el sidebar). | Alta |
 | `/workout` | `views/Workout.jsx` | selector de rutina y **sesión en curso**: media del ejercicio, filas de series (peso × reps × esfuerzo), progresión, supersets, timers. Desktop ≥1000px: ejercicio actual (media al lado de las series si hay ancho) + rail de sesión; el selector de rutina va en dos zonas | **Máxima** |
-| `/plan` | `views/Plan.jsx` | semana + lista de rutinas | Alta |
-| `/plan/r/:id` | `views/RoutineEdit.jsx` | editor de rutina, secciones, supersets, preview de músculos | Media |
+| `/plan` | `views/Plan.jsx` | semana + lista de rutinas. Desktop ≥1000px: lista a la izquierda y resumen de la rutina seleccionada a la derecha (`/plan/r/:id`; sin id, la primera). | Alta |
+| `/plan/r/:id` | `views/Plan.jsx` + `components/RoutineSummary.jsx` | resumen de rutina en desktop; en mobile redirige al editor | Media |
+| `/plan/r/:id/editar` | `views/RoutineEdit.jsx` | editor de rutina, secciones, supersets, preview de músculos. Desktop: dos columnas (ejercicios \| progresión, cobertura, borrar). | Media |
 | `/stats` | `views/Stats.jsx` | heatmap anual, body map, gráficos, PRs, 1RM, esfuerzo | Alta |
 | `/history` | `views/History.jsx` | lista de workouts | Baja |
 | `/library` | `views/Library.jsx` | 1.324 ejercicios, búsqueda, filtros por equipamiento | Media |
 | `/settings` | `views/Settings.jsx` | listas agrupadas: tema, acento, idioma, unidades, esfuerzo, import/export… | Media |
 | `/profile` | `views/Profile.jsx` | perfil de entrenamiento (objetivo, nivel, equipo, limitaciones) | Baja |
-| `/program` | `views/Program.jsx` | bloques de entrenamiento (draft / activo / terminado) | Media |
+| `/program` | `views/Program.jsx` | bloques de entrenamiento (draft / activo / terminado). Desktop: lista de bloques + preview del bloque seleccionado (por defecto el activo). | Media |
 | `/coach` | `views/Coach.jsx` | home del coach: lista de alumnos con adherencia semanal + badge de atención (copy en español literal) | Media |
 | `/coach/rutinas` | `views/CoachRoutines.jsx` | lista de rutinas plantilla del coach, asignar desde la fila | Media |
 | `/coach/actividad` | `views/CoachActivity.jsx` | feed de actividad agrupado por día (workouts completados, cambios solicitados) | Media |
