@@ -1,9 +1,8 @@
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useStore } from '../store/useStore.js'
 import { useUI } from '../store/useUI.js'
 import { isAssigned } from '../lib/coaching.js'
-import { requestAdjustment } from '../lib/coachApi.js'
 import { exOr } from '../lib/exercises.js'
 import { uid } from '../lib/format.js'
 import { t, nameFor } from '../lib/i18n.js'
@@ -14,11 +13,12 @@ import Icon from '../components/Icon.jsx'
 import { glyphOf } from '../lib/glyphs.js'
 import { Button, SelectRow } from '../components/ui.jsx'
 import { POLICIES_FOR, POLICY_NAME, POLICY_DESC } from '../lib/progression.js'
-import BodyMap from '../components/BodyMap.jsx'
-import { loadOfRoutine, rankOf, MUSCLE_NAME } from '../lib/muscles.js'
 import { sectionsOf, isSection, countEx, sectionEnd } from '../lib/routine.js'
 import { useIsDesktop } from '../lib/useIsDesktop.js'
 import { routinePath } from '../lib/coachShell.js'
+import { planRoutinePath } from '../lib/athleteShell.js'
+import AdjustSheet from '../components/AdjustSheet.jsx'
+import RoutineMuscles from '../components/RoutineMuscles.jsx'
 
 function SectionHeader({ name, onRename, onMove, onDelete }) {
   return (
@@ -30,20 +30,6 @@ function SectionHeader({ name, onRename, onMove, onDelete }) {
       <button className="iconbtn" aria-label={t('Delete section')} style={{ width: 28, height: 24, borderRadius: 7, fontSize: 12 }} onClick={onDelete}><Icon name="trash" /></button>
     </div>
   )
-}
-
-function AdjustSheet({ r, close }) {
-  const toast = useUI(s => s.toast)
-  const [note, setNote] = useState('')
-  return <>
-    <h3>{t('Request a change')}</h3>
-    <p className="muted small">{t('Tell your coach what you want to change about this routine.')}</p>
-    <textarea className="input" rows={4} maxLength={500} value={note} onChange={e => setNote(e.target.value)} />
-    <Button variant="primary" style={{ marginTop: 10 }} disabled={!note.trim()}
-      onClick={() => requestAdjustment(r.assignmentId, note.trim())
-        .then(() => { toast(t('Sent to your coach')); close() })
-        .catch(e => toast(e.message))}>{t('Send')}</Button>
-  </>
 }
 
 function AssignedRoutineView({ r }) {
@@ -86,7 +72,7 @@ export default function RoutineEdit() {
   const update = useStore(s => s.update)
   const inCoach = useLocation().pathname.startsWith('/coach/')
   const desktop = useIsDesktop()
-  const back = inCoach ? (desktop ? routinePath(id) : '/coach/rutinas') : '/plan'
+  const back = inCoach ? (desktop ? routinePath(id) : '/coach/rutinas') : (desktop ? planRoutinePath(id) : '/plan')
   const r = S.routines.find(x => x.id === id)
   useEffect(() => { if (!r) nav(back) }, [!!r])
   if (!r) return null
@@ -120,16 +106,16 @@ export default function RoutineEdit() {
     return -1
   }
 
-  return <div className="narrow">
-    <div className="hdr">
-      <button className="iconbtn" onClick={() => nav(back)} aria-label={inCoach ? 'Rutinas' : t('Plan')}><Icon name="chevronLeft" /></button>
-      <div style={{ flex: 1, margin: '0 12px' }}>
-        <input className="input" defaultValue={r.name} style={{ fontWeight: 600, fontSize: 20, letterSpacing: '-.021em' }}
-          onChange={e => update(s => { s.routines.find(x => x.id === id).name = e.target.value.trim() || t('Routine') })} />
-      </div>
-      <button className="iconbtn" aria-label={t('Pick an icon')} onClick={() => glyphPicker(r.emoji, g => update(s => { s.routines.find(x => x.id === id).emoji = g }))}><Icon name={glyphOf(r.emoji)} /></button>
+  const header = <div className="hdr">
+    <button className="iconbtn" onClick={() => nav(back)} aria-label={inCoach ? 'Rutinas' : t('Plan')}><Icon name="chevronLeft" /></button>
+    <div style={{ flex: 1, margin: '0 12px' }}>
+      <input className="input" defaultValue={r.name} style={{ fontWeight: 600, fontSize: 20, letterSpacing: '-.021em' }}
+        onChange={e => update(s => { s.routines.find(x => x.id === id).name = e.target.value.trim() || t('Routine') })} />
     </div>
+    <button className="iconbtn" aria-label={t('Pick an icon')} onClick={() => glyphPicker(r.emoji, g => update(s => { s.routines.find(x => x.id === id).emoji = g }))}><Icon name={glyphOf(r.emoji)} /></button>
+  </div>
 
+  const progression = <>
     <div className="sect-b" style={{ marginBottom: 16 }}>
       <SelectRow icon="chartLine" title={t('Progression')} sheetTitle={t('Progression')}
         value={r.prog || 'linear'} onChange={v => update(s => { s.routines.find(x => x.id === id).prog = v })}
@@ -138,28 +124,29 @@ export default function RoutineEdit() {
     <div className="small dim" style={{ margin: '-10px 2px 16px' }}>
       {t('Applies to every exercise in this routine that does not set its own rule.')}
     </div>
+  </>
 
-    {countEx(r.ex) || r.ex.some(isSection)
-      ? <div className="list">
-        {(() => { const groups = sectionsOf(r.ex); const leadingOffset = groups[0] && groups[0].name === null ? 1 : 0; const hasSections = r.ex.some(isSection); return groups.map((g, gi) => {
-          const mi = g.name === null ? -1 : sectionMarkerIndex(gi - leadingOffset)
-          return <div key={gi}>
+  const listBlock = countEx(r.ex) || r.ex.some(isSection)
+    ? <div className="list">
+      {(() => { const groups = sectionsOf(r.ex); const leadingOffset = groups[0] && groups[0].name === null ? 1 : 0; const hasSections = r.ex.some(isSection); return groups.map((g, gi) => {
+        const mi = g.name === null ? -1 : sectionMarkerIndex(gi - leadingOffset)
+        return <div key={gi}>
           {g.name !== null && <SectionHeader name={g.name}
-              onRename={v => { if (mi < 0) return; update(s => { s.routines.find(x => x.id === id).ex[mi].section = v.trim() || t('New section') }) }}
-              onMove={dir => { if (mi < 0) return; move(mi, dir) }}
-              onDelete={() => {
-                if (mi < 0) return
-                if (g.rows.length === 0) {
-                  edit(ex => { ex.splice(mi, 1) })
-                  return
-                }
-                confirmSheet({
-                  title: t('Delete section?'),
-                  message: t('“{0}” and its {1} exercises will be removed. This can’t be undone.', g.name, g.rows.length),
-                  confirmText: t('Delete'), danger: true,
-                  onConfirm: () => edit(ex => { ex.splice(mi, g.rows.length + 1); cleanupSg(ex) })
-                })
-              }} />}
+            onRename={v => { if (mi < 0) return; update(s => { s.routines.find(x => x.id === id).ex[mi].section = v.trim() || t('New section') }) }}
+            onMove={dir => { if (mi < 0) return; move(mi, dir) }}
+            onDelete={() => {
+              if (mi < 0) return
+              if (g.rows.length === 0) {
+                edit(ex => { ex.splice(mi, 1) })
+                return
+              }
+              confirmSheet({
+                title: t('Delete section?'),
+                message: t('“{0}” and its {1} exercises will be removed. This can’t be undone.', g.name, g.rows.length),
+                confirmText: t('Delete'), danger: true,
+                onConfirm: () => edit(ex => { ex.splice(mi, g.rows.length + 1); cleanupSg(ex) })
+              })
+            }} />}
           {g.rows.map(({ e, i }) => {
             const ex = exOr(e.id)
             const linkedPrev = i > 0 && e.sg && r.ex[i - 1] && r.ex[i - 1].sg === e.sg
@@ -184,28 +171,19 @@ export default function RoutineEdit() {
             <Icon name="plus" />{g.name === null ? t('Add exercise') : t('Add to {0}', g.name)}
           </button>}
         </div>
-        }) })()}
-      </div>
-      : <div className="empty"><div className="ico"><Icon name="dumbbell" /></div>{t('No exercises yet — add your first one.')}</div>}
+      }) })()}
+    </div>
+    : <div className="empty"><div className="ico"><Icon name="dumbbell" /></div>{t('No exercises yet — add your first one.')}</div>
 
-    {/* Coverage of the routine as planned, so a gap shows up while you're building it
-        rather than after a month of training around it. */}
-    {r.ex.length > 0 && (() => {
-      const load = loadOfRoutine(r)
-      const { worked } = rankOf(load)
-      return <div className="card" style={{ marginTop: 12 }}>
-        <h2>{t('What this session hits')}</h2>
-        <BodyMap load={load} body={S.body} />
-        <div className="mchips">
-          {worked.slice(0, 6).map(m => <span key={m} className="mchip">{t(MUSCLE_NAME[m])}</span>)}
-        </div>
-      </div>
-    })()}
+  const hint = <div className="small dim row" style={{ margin: '10px 2px', gap: 5 }}><Icon name="link" style={{ fontSize: 13 }} />{t('Tap the link button on an exercise to superset it with the one above — you’ll do them back-to-back.')}</div>
 
-    <div className="small dim row" style={{ margin: '10px 2px', gap: 5 }}><Icon name="link" style={{ fontSize: 13 }} />{t('Tap the link button on an exercise to superset it with the one above — you’ll do them back-to-back.')}</div>
+  const addButtons = <>
     <Button variant="primary" onClick={() => exercisePicker(ex => exConfigSheet(ex, null, cfg => edit(x => { x.push({ id: ex.id, ...cfg }) }), null, r))} icon="plus">{t('Add exercise')}</Button>
     <div style={{ height: 8 }} />
     <Button onClick={() => edit(ex => { ex.push({ section: t('New section') }) })} icon="plus">{t('Add section')}</Button>
+  </>
+
+  const deleteButton = <>
     <div style={{ height: 10 }} />
     <Button variant="danger" onClick={() => confirmSheet({
       title: t('Delete routine?'), message: t('“{0}” and its exercises will be removed.', r.name), confirmText: t('Delete'), danger: true,
@@ -218,5 +196,21 @@ export default function RoutineEdit() {
         nav(back)
       }
     })}>{t('Delete routine')}</Button>
+  </>
+
+  if (desktop) return <div className="redit">
+    {header}
+    <div className="rmain">{listBlock}<div style={{ height: 12 }} />{addButtons}</div>
+    <div className="raside">{progression}<RoutineMuscles r={r} />{hint}{deleteButton}</div>
+  </div>
+
+  return <div className="narrow">
+    {header}
+    {progression}
+    {listBlock}
+    <RoutineMuscles r={r} />
+    {hint}
+    {addButtons}
+    {deleteButton}
   </div>
 }
