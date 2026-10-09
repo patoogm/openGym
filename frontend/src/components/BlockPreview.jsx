@@ -34,26 +34,26 @@ export default function BlockPreview({ block, onAccept, onDiscard, droppedCount 
   return (
     <div className="narrow">
       <h2>{block.name}</h2>
-      <div className="small dim" style={{ marginBottom: 12 }}>
+      <div className="small dim mb-3">
         {t('{0} weeks', block.weeks)}
         {block.source === 'agent' ? ` · ${t('generated')}` : ''}
       </div>
 
       {block.rationale && (
-        <div className="card" style={{ marginBottom: 14 }}>
-          <p style={{ margin: 0 }}>{block.rationale}</p>
+        <div className="card mb-4">
+          <p className="m-0">{block.rationale}</p>
         </div>
       )}
 
       {droppedCount > 0 && (
-        <div className="card warn" style={{ marginBottom: 14 }}>
+        <div className="card warn mb-4">
           <Icon name="info" />{' '}
           {t('{0} suggested exercises are not in the library and were removed — review before accepting.', droppedCount)}
         </div>
       )}
 
       <h4 className="sec">{t('Week schedule')}</h4>
-      <div className="list" style={{ marginBottom: 16 }}>
+      <div className="list mb-4">
         {WEEK_ORDER.map(d => {
           const r = byId[block.week?.[d]]
           return (
@@ -68,7 +68,7 @@ export default function BlockPreview({ block, onAccept, onDiscard, droppedCount 
       </div>
 
       {routines.map(r => (
-        <div key={r.id} className="card" style={{ marginBottom: 12 }}>
+        <div key={r.id} className="card mb-3">
           <h2 style={{ textTransform: 'capitalize' }}>{r.name}</h2>
           <div className="list">
             {(r.ex || []).map((e, i) => (

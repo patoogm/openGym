@@ -39,7 +39,7 @@ export default function RoutineSummary({ r }) {
         ? <Button size="sm" variant="tinted" icon="pencil" onClick={() => openSheet(close => <AdjustSheet r={r} close={close} />)}>{t('Request a change')}</Button>
         : <Button size="sm" variant="tinted" icon="pencil" onClick={() => nav(planRoutineEditPath(r.id))}>{t('Edit')}</Button>}
     </div>
-    <div className="small muted" style={{ marginBottom: 12 }}>{t('Progression')}: {t(POLICY_NAME[r.prog || 'linear'])}</div>
+    <div className="small muted mb-3">{t('Progression')}: {t(POLICY_NAME[r.prog || 'linear'])}</div>
 
     <div className="rsum">
       <div>

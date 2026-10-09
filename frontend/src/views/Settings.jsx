@@ -215,10 +215,9 @@ export default function Settings() {
   </>
 
   const inputs = <>
-    <input ref={fileRef} type="file" accept=".json,application/json" style={{ display: 'none' }} onChange={doImport} />
+    <input className="hidden" ref={fileRef} type="file" accept=".json,application/json" onChange={doImport} />
     {/* Reset after reading so picking the same file twice still fires onChange. */}
-    <input ref={importRef} type="file" accept=".csv,.xml,text/csv,text/xml" style={{ display: 'none' }}
-      onChange={ev => { const f = ev.target.files[0]; if (f) importFromApp(f); ev.target.value = '' }} />
+    <input className="hidden" ref={importRef} type="file" accept=".csv,.xml,text/csv,text/xml" onChange={ev => { const f = ev.target.files[0]; if (f) importFromApp(f); ev.target.value = '' }} />
   </>
 
   const tip = <>
@@ -297,7 +296,7 @@ function effortHelpSheet() {
       <div>{t('RIR counts the reps you left; RPE reads the same effort off a 10-point scale — so RPE ≈ 10 − RIR. Pick the one you already think in.')}</div>
       <div>{t('The highlighted row is where most working sets land. Sets you have already logged keep their own scale, and nothing else reads the value — progression and estimated 1RM are unaffected.')}</div>
     </div>
-    <div style={{ height: 8 }} />
+    <div className="sp-2" />
   </>)
 }
 
@@ -411,14 +410,14 @@ function RegisterInline({ close, setUser, pushState, pullState, toast }) {
   }
   return <>
     <h3>{t('Create your profile')}</h3>
-    <div className="muted small" style={{ marginBottom: 14 }}>{t('Pick a name, then confirm with your device.')}</div>
+    <div className="muted small mb-4">{t('Pick a name, then confirm with your device.')}</div>
     <TextField ref={nameRef} placeholder={t('Your name')} maxLength={40} />
     {inviteOnly && <>
-      <div style={{ height: 10 }} />
+      <div className="sp-3" />
       <input className="input" placeholder={t('Invite code')} maxLength={40} value={code}
         onChange={e => setCode(e.target.value.toUpperCase())} style={{ letterSpacing: '.14em', fontWeight: 600, textAlign: 'center' }} />
-      <div className="dim small" style={{ marginTop: 6 }}>{t('This app is invite-only — enter the code you were given.')}</div>
+      <div className="dim small mt-2">{t('This app is invite-only — enter the code you were given.')}</div>
     </>}
-    <div style={{ height: 12 }} /><Button variant="primary" onClick={go}>{t('Create passkey')}</Button>
+    <div className="sp-3" /><Button variant="primary" onClick={go}>{t('Create passkey')}</Button>
   </>
 }

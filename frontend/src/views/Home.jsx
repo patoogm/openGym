@@ -63,9 +63,9 @@ export default function Home() {
     const hasProgram = !!(S.program?.blocks || []).length
     if (hasProfile && hasProgram) return null
     return (
-      <div className="card" style={{ marginBottom: 16 }}>
-        <h2 style={{ marginTop: 0 }}>{t('Set up your training')}</h2>
-        <p className="small dim" style={{ marginTop: 4, marginBottom: 12 }}>
+      <div className="card mb-4">
+        <h2 className="mt-0">{t('Set up your training')}</h2>
+        <p className="small dim mt-1 mb-3">
           {hasProfile
             ? t('Create your first training block.')
             : t('Tell us your goal and constraints to build a periodized plan.')}
@@ -78,7 +78,7 @@ export default function Home() {
   })()
 
   const week = <div className="card">
-    <div className="row between" style={{ marginBottom: 8 }}>
+    <div className="row between mb-2">
       <button className="iconbtn sm" onClick={() => setWeekOffset(w => w - 1)} aria-label={t('Previous week')}><Icon name="chevronLeft" /></button>
       <div className="small muted" style={{ fontWeight: 500 }}>{wkLabel}</div>
       <button className="iconbtn sm" onClick={() => setWeekOffset(w => w + 1)} aria-label={t('Next week')}><Icon name="chevronRight" /></button>
@@ -106,16 +106,16 @@ export default function Home() {
         <span className="lrow-i"><Icon name="sparkles" /></span>
         <div className="big sm">{t('Welcome!')}</div>
       </div>
-      <div className="muted small" style={{ marginBottom: 12 }}>{t('Set up your weekly routine to get going — or load a ready-made Push / Pull / Legs plan.')}</div>
+      <div className="muted small mb-3">{t('Set up your weekly routine to get going — or load a ready-made Push / Pull / Legs plan.')}</div>
       <Button variant="primary" icon="sparkles" onClick={loadStarterPlan}>{t('Load starter plan (PPL)')}</Button>
-      <div style={{ height: 8 }} /><Button onClick={() => nav('/plan')}>{t('Build my own plan')}</Button>
+      <div className="sp-2" /><Button onClick={() => nav('/plan')}>{t('Build my own plan')}</Button>
     </div>
   ) : null
 
   const bodyWeight = <div className="card">
-    <div className="row between" style={{ marginBottom: 6 }}>
-      <h2 style={{ margin: 0 }}>{t('Body weight')}</h2>
-      <div className="row" style={{ gap: 8 }}>
+    <div className="row between mb-2">
+      <h2 className="m-0">{t('Body weight')}</h2>
+      <div className="row gap-2">
         <Button size="sm" icon="target" style={S.targetW ? { color: 'var(--yellow)' } : undefined} onClick={goalSheet}>{S.targetW ? fmtNum(S.targetW) : t('Goal')}</Button>
         <Button size="sm" icon="plus" onClick={() => bwSheet()}>{t('Log')}</Button>
       </div>
@@ -130,7 +130,7 @@ export default function Home() {
             {fmtNum(Math.abs(delta))}
           </span>
         )}
-        <span className="dim small" style={{ marginLeft: 'auto' }}>{fmtDate(bw.d, true)}</span>
+        <span className="dim small ml-auto">{fmtDate(bw.d, true)}</span>
       </div>
       {S.targetW && (
         <div className="small row" style={{ color: 'var(--yellow)', marginTop: 4, gap: 5 }}>
@@ -138,7 +138,7 @@ export default function Home() {
           <span>{t('Goal')} {fmtNum(S.targetW)} {S.unit} · {Math.abs(S.targetW - bw.w) < 0.05 ? t('reached!') : t(S.targetW > bw.w ? '{0} to gain' : '{0} to lose', fmtNum(Math.abs(S.targetW - bw.w)) + ' ' + S.unit)}</span>
         </div>
       )}
-      <div className="chart" style={{ marginTop: 8 }}><LineChart points={bwPoints} h={130} unit={S.unit} goal={S.targetW} /></div>
+      <div className="chart mt-2"><LineChart points={bwPoints} h={130} unit={S.unit} goal={S.targetW} /></div>
     </> : <div className="muted small">{t("No entries yet — log your weight to start the curve. It's also asked before every workout.")}</div>}
   </div>
 
@@ -149,7 +149,7 @@ export default function Home() {
           <Icon name="flame" style={{ color: 'var(--orange)' }} />
           {t('{0} week streak', streakWeeks(S))}
         </div>
-        <div className="muted small" style={{ marginTop: 2 }}>{wThisWeek}{plannedPerWeek ? ' / ' + plannedPerWeek : ''} {t('this week')} · {t(S.workouts.length === 1 ? '{0} workout total' : '{0} workouts total', S.workouts.length)}</div>
+        <div className="muted small mt-1">{wThisWeek}{plannedPerWeek ? ' / ' + plannedPerWeek : ''} {t('this week')} · {t(S.workouts.length === 1 ? '{0} workout total' : '{0} workouts total', S.workouts.length)}</div>
       </div>
       <Icon name="calendar" className="chev" style={{ fontSize: 20 }} />
     </div>

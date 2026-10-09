@@ -117,7 +117,7 @@ export default function RoutineEdit() {
   </div>
 
   const progression = <>
-    <div className="sect-b" style={{ marginBottom: 16 }}>
+    <div className="sect-b mb-4">
       <SelectRow icon="chartLine" title={t('Progression')} sheetTitle={t('Progression')}
         value={r.prog || 'linear'} onChange={v => update(s => { s.routines.find(x => x.id === id).prog = v })}
         options={POLICIES_FOR.reps.map(p => ({ value: p, label: t(POLICY_NAME[p]), subtitle: t(POLICY_DESC[p]) }))} />
@@ -180,12 +180,12 @@ export default function RoutineEdit() {
 
   const addButtons = <>
     <Button variant="primary" onClick={() => exercisePicker(ex => exConfigSheet(ex, null, cfg => edit(x => { x.push({ id: ex.id, ...cfg }) }), null, r))} icon="plus">{t('Add exercise')}</Button>
-    <div style={{ height: 8 }} />
+    <div className="sp-2" />
     <Button onClick={() => edit(ex => { ex.push({ section: t('New section') }) })} icon="plus">{t('Add section')}</Button>
   </>
 
   const deleteButton = <>
-    <div style={{ height: 10 }} />
+    <div className="sp-3" />
     <Button variant="danger" onClick={() => confirmSheet({
       title: t('Delete routine?'), message: t('“{0}” and its exercises will be removed.', r.name), confirmText: t('Delete'), danger: true,
       onConfirm: () => {
@@ -201,7 +201,7 @@ export default function RoutineEdit() {
 
   if (desktop) return <div className="redit">
     {header}
-    <div className="rmain">{listBlock}<div style={{ height: 12 }} />{addButtons}</div>
+    <div className="rmain">{listBlock}<div className="sp-3" />{addButtons}</div>
     <div className="raside">{progression}<RoutineMuscles r={r} />{hint}{deleteButton}</div>
   </div>
 

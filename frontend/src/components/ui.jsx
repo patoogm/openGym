@@ -265,7 +265,7 @@ export function SelectRow({ icon, iconTint, title, value, options, onChange, she
             </button>
           ))}
         </div>
-        <div style={{ height: 8 }} />
+        <div className="sp-2" />
       </>
     ))
     return h

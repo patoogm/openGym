@@ -34,9 +34,9 @@ export default function InvitesCard({ invites, reload, t = id, heading }) {
   const count = <span className="small muted">{t('{0} unused · {1} redeemed', open.length, used.length)}</span>
   return <div className="card">
     <div className="row between" style={{ marginBottom: title ? 6 : 12 }}>
-      {title ? <h2 style={{ margin: 0 }}>{title}</h2> : count}
+      {title ? <h2 className="m-0">{title}</h2> : count}
       <Button variant="primary" size="sm" onClick={gen} icon="plus">{t('Generate')}</Button></div>
-    {title && <div className="small muted" style={{ marginBottom: 10 }}>{count}</div>}
+    {title && <div className="small muted mb-3">{count}</div>}
     {open.map(i => <div key={i.code} className="row between" style={{ padding: '7px 2px', borderBottom: '1px solid var(--sep)' }}>
       <span style={{ fontFamily: 'ui-monospace,SFMono-Regular,Menlo,monospace', fontWeight: 500, letterSpacing: '.06em' }}
         onClick={() => { navigator.clipboard?.writeText(i.code).catch(() => {}); toast(t('Copied {0}', i.code)) }}>{i.code}</span>

@@ -10,7 +10,7 @@ export default function RoutineMuscles({ r }) {
   if (!r.ex.length) return null
   const load = loadOfRoutine(r)
   const { worked } = rankOf(load)
-  return <div className="card" style={{ marginTop: 12 }}>
+  return <div className="card mt-3">
     <h2>{t('What this session hits')}</h2>
     <BodyMap load={load} body={S.body} />
     <div className="mchips">

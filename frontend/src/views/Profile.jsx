@@ -32,7 +32,7 @@ export default function Profile() {
       {t('Used to generate your training blocks. You can change it any time.')}
     </div>
 
-    <div className="sect-b" style={{ marginBottom: 16 }}>
+    <div className="sect-b mb-4">
       <SelectRow icon="target" iconTint="var(--purple)" title={t('Goal')} sheetTitle={t('Goal')}
         value={p.goal || 'general'} onChange={v => set('goal', v)}
         options={GOALS.map(g => ({ value: g, label: t(g) }))} />
@@ -44,7 +44,7 @@ export default function Profile() {
         options={CARDIO.map(c => ({ value: c, label: t(c) }))} />
     </div>
 
-    <div className="row cfgrow" style={{ marginBottom: 18 }}>
+    <div className="row cfgrow mb-5">
       <Stepper label={t('Days per week')} value={p.daysPerWeek || 3} step={1} decimal={false}
         onChange={v => set('daysPerWeek', Math.max(2, Math.min(6, v)))} />
       <Stepper label={t('Minutes per session')} value={p.sessionMin || 60} step={5} decimal={false}
@@ -52,7 +52,7 @@ export default function Profile() {
     </div>
 
     <h4 className="sec">{t('Equipment')}</h4>
-    <div className="mchips" style={{ marginBottom: 18 }}>
+    <div className="mchips mb-5">
       {EQUIPMENT.map(eq => {
         const on = (p.equipment || []).includes(eq)
         return <button key={eq} className={'mchip' + (on ? ' on' : '')} onClick={() => toggleEq(eq)}>{t(eq)}</button>
@@ -60,13 +60,13 @@ export default function Profile() {
     </div>
 
     <h4 className="sec">{t('Injuries / limitations')}</h4>
-    <textarea className="input" rows={3} defaultValue={p.limitations || ''}
+    <textarea className="input mb-4 w-full" rows={3} defaultValue={p.limitations || ''}
       placeholder={t('e.g. right knee ACL reconstruction, no current restrictions')}
-      onBlur={e => set('limitations', e.target.value.trim())} style={{ marginBottom: 16, width: '100%' }} />
+      onBlur={e => set('limitations', e.target.value.trim())} />
 
     <h4 className="sec">{t('Extra notes for the coach')}</h4>
-    <textarea className="input" rows={3} defaultValue={p.notes || ''}
+    <textarea className="input mb-4 w-full" rows={3} defaultValue={p.notes || ''}
       placeholder={t('Exercises you dislike, gym constraints, anything else')}
-      onBlur={e => set('notes', e.target.value.trim())} style={{ marginBottom: 16, width: '100%' }} />
+      onBlur={e => set('notes', e.target.value.trim())} />
   </div>
 }

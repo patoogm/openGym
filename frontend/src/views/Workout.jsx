@@ -32,7 +32,7 @@ function StartChooser() {
     <div className="hdr"><div><h1>{t('Start workout')}</h1><div className="sub">{t(DAYN[new Date().getDay()])} — {todayR ? t('today is {0}', todayR.name) : t('rest day, but no one’s stopping you')}</div></div></div>
     {todayR && <div className="card wc-hero" style={{ borderColor: 'var(--acc)' }}>
       <h2 className="accent">{t("Today's plan")}{todayOvr ? ' · ' + t('rescheduled') : ''}</h2>
-      <div className="row between" style={{ marginBottom: 12 }}>
+      <div className="row between mb-3">
         <div><div className="big">{todayR.name}</div><div className="muted small">{exCount(countEx(todayR.ex))}</div></div>
         <span className="lrow-i" style={{ width: 38, height: 38, borderRadius: 9, fontSize: 22 }}><Icon name={glyphOf(todayR.emoji)} /></span>
       </div>
@@ -44,9 +44,9 @@ function StartChooser() {
         <div className="grow"><div className="tt">{r.name}</div><div className="ss">{exCount(countEx(r.ex))}</div></div>
         <span className="tag acc">{t('Start')}</span></div>)}</div></div>}
     <div className="wc-free">
-      <div style={{ height: 14 }} />
+      <div className="sp-4" />
       <Button icon="shuffle" onClick={() => startFlow(null)}>{t('Freestyle workout (pick as you go)')}</Button>
-      {!S.routines.length && <><div style={{ height: 10 }} /><Button variant="primary" onClick={() => nav('/plan')}>{t('Build a plan first')}</Button></>}
+      {!S.routines.length && <><div className="sp-3" /><Button variant="primary" onClick={() => nav('/plan')}>{t('Build a plan first')}</Button></>}
     </div>
   </div>
 }
@@ -113,7 +113,7 @@ function ExerciseBlock({ entryIdx, compact, onToggle, onField, onAddSet, onRemov
   return <div className={'exblock' + (compact ? ' compact' : '') + (ex.gif ? ' has-media' : '')}>
     <Media ex={ex} key={entry.id} compact={compact} minimizable />
     <div className="exbody">
-      <div className="row between" style={{ marginBottom: 6 }}>
+      <div className="row between mb-2">
         <div style={{ fontSize: compact ? 17 : 20, fontWeight: 600, letterSpacing: '-.02em', lineHeight: 1.2 }} className="cap1">{nameFor(ex)}</div>
         <button className="iconbtn" aria-label={t('Details')} onClick={() => exerciseDetailSheet(ex)}><Icon name="info" /></button>
       </div>
@@ -127,12 +127,12 @@ function ExerciseBlock({ entryIdx, compact, onToggle, onField, onAddSet, onRemov
         {best > 0 && <span className="tag nocap">{t('Best:')} {fmtNum(best)} {S.unit}</span>}
       </div>
       {iv && <div className="small dim" style={{ margin: '2px 0 10px' }}>{intervalSummary(iv)}</div>}
-      {last && <div className="small dim" style={{ marginBottom: 4 }}>{t('Last time')} ({fmtDate(last.d)}): {last.sets.map(s => setLabel(entry.id, s, last.target)).join(', ')}</div>}
+      {last && <div className="small dim mb-1">{t('Last time')} ({fmtDate(last.d)}): {last.sets.map(s => setLabel(entry.id, s, last.target)).join(', ')}</div>}
       {plan && plan.why && plan.kind !== 'off' && <div className={'progline' + (plan.kind === 'deload' ? ' warn' : '')}>
         <Icon name={plan.kind === 'up' ? 'arrowUp' : plan.kind === 'deload' ? 'arrowDown' : 'lightbulb'} />
         <span>{t(...plan.why)}</span>
       </div>}
-      <div className="card" style={{ marginTop: 10, marginBottom: 0 }}>
+      <div className="card mt-3 mb-0">
         {/* the header carries the same eff3 sizing as the rows, or the labels drift off their columns */}
         <div className={'sethead' + (col3 ? ' eff3' : '')}><span className="n-sp" /><span className="w-sp">{col1.hd}</span>{col2 && <span className="r-sp">{col2.hd}</span>}{col3 && <span className="eff-sp">{col3.hd}</span>}{timed && <span className="ck-sp" />}<span className="ck-sp" /></div>
         {entry.sets.map((s, i) => <div key={i} className={'setrow' + (s.done ? ' done' : '') + (col3 ? ' eff3' : '')}>
@@ -146,7 +146,7 @@ function ExerciseBlock({ entryIdx, compact, onToggle, onField, onAddSet, onRemov
             onClick={() => onStartTimed(i)}><Icon name="play" /></button>}
           <Check checked={s.done} onChange={() => onToggle(i)} />
         </div>)}
-        <div style={{ height: 8 }} />
+        <div className="sp-2" />
         <div className="row">
           <Button size="sm" icon="minus" disabled={entry.sets.length <= 1} onClick={onRemoveSet}>{t('Remove set')}</Button>
           <Button size="sm" icon="plus" onClick={onAddSet}>{t('Add set')}</Button>
@@ -279,7 +279,7 @@ function ActiveWorkout() {
   const body = <>
     {A.entries.length ? <>
       {A.entries[cur]?.section && <div className="wsection">{A.entries[cur].section}</div>}
-      <div className="muted small" style={{ marginBottom: 6 }}>{isSuperset ? t('Superset {0} / {1}', unitIdx + 1, units.length) : t('Exercise {0} / {1}', unitIdx + 1, units.length)}</div>
+      <div className="muted small mb-2">{isSuperset ? t('Superset {0} / {1}', unitIdx + 1, units.length) : t('Exercise {0} / {1}', unitIdx + 1, units.length)}</div>
       {isSuperset ? (
         <div className="ss-card">
           <div className="ss-hd"><Icon name="link" />{t('Superset · do these back-to-back, rest after both')}</div>
@@ -294,12 +294,12 @@ function ActiveWorkout() {
       )}
     </> : <div className="empty"><div className="ico"><Icon name="shuffle" /></div>{t('Freestyle workout — add your first exercise.')}</div>}
 
-    <div style={{ height: 12 }} />
+    <div className="sp-3" />
     <div className="row">
       <Button icon="chevronLeft" disabled={unitIdx <= 0} onClick={() => update(s => { s.active.cur = units[unitIdx - 1][0] })}>{t('Prev')}</Button>
       <Button trailingIcon="chevronRight" disabled={unitIdx < 0 || unitIdx >= units.length - 1} onClick={() => update(s => { s.active.cur = units[unitIdx + 1][0] })}>{t('Next')}</Button>
     </div>
-    <div style={{ height: 10 }} />
+    <div className="sp-3" />
     <Button onClick={() => exercisePicker(ex => exConfigSheet(ex, null, cfg => update(s => {
       const full = { ...cfg, id: ex.id }
       const plan = nextPrescription(s, full, s.routines.find(r => r.id === s.active.routineId))
@@ -316,12 +316,12 @@ function ActiveWorkout() {
   return <div className="narrow">
     <div className="hdr">
       <button className="iconbtn" aria-label={t('Discard')} onClick={discard}><Icon name="xmark" /></button>
-      <div style={{ textAlign: 'center' }}><div style={{ fontWeight: 600 }}>{A.name}</div><div className="sub"><Elapsed start={A.start} /> · {t('{0} sets', done + '/' + total)}</div></div>
+      <div className="ta-c"><div style={{ fontWeight: 600 }}>{A.name}</div><div className="sub"><Elapsed start={A.start} /> · {t('{0} sets', done + '/' + total)}</div></div>
       <button className="iconbtn" style={{ color: 'var(--acc)' }} aria-label={t('Finish')} onClick={finishWorkout}><Icon name="check" /></button>
     </div>
     <div className="wprog"><i style={{ width: (total ? done / total * 100 : 0) + '%' }} /></div>
     {body}
-    <div style={{ height: 10 }} />
+    <div className="sp-3" />
     <button className={allDone ? 'btn primary' : 'btn ghost dim'} onClick={finishWorkout}>
       {allDone ? t('Finish workout') : t('Finish workout early · {0} exercises', exDone + '/' + A.entries.length)}
     </button>

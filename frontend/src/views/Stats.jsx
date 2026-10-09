@@ -44,8 +44,8 @@ function MuscleBalance({ S }) {
   const sets = m => Math.round((load[m] || 0) * 10) / 10
 
   return <div className="card">
-    <div className="row between" style={{ marginBottom: 8 }}>
-      <h2 style={{ margin: 0 }}>{t('Muscle balance')} <span className="dim" style={{ textTransform: 'none', letterSpacing: 0 }}>· {on ? t('by hard sets') : t('by sets worked')}</span></h2>
+    <div className="row between mb-2">
+      <h2 className="m-0">{t('Muscle balance')} <span className="dim nocase">· {on ? t('by hard sets') : t('by sets worked')}</span></h2>
       {rated && <Button size="sm" icon="flame" style={on ? { color: 'var(--yellow)' } : undefined}
         onClick={() => { setHard(h => !h); setSel(null) }}>{on ? t('Hard') : t('All')}</Button>}
     </div>
@@ -65,11 +65,11 @@ function MuscleBalance({ S }) {
         <span className="v">{t('{0} sets', sets(m))}</span>
       </div>)}
       {missed.length > 0 && <>
-        <h4 className="sec" style={{ marginTop: 12 }}>{on ? t('No hard sets in this period') : t('Not trained in this period')}</h4>
+        <h4 className="sec mt-3">{on ? t('No hard sets in this period') : t('Not trained in this period')}</h4>
         <div className="mchips">{missed.map(m => <span key={m} className="mchip miss">{t(MUSCLE_NAME[m])}</span>)}</div>
       </>}
       {!missed.length && worked.length > 0 &&
-        <div className="muted small" style={{ marginTop: 10 }}>{on
+        <div className="muted small mt-3">{on
           ? t('Every muscle group got at least one hard set in this period.')
           : t('Every muscle group got some work in this period.')}</div>}
     </> : <div className="muted small">{t('No workouts in this period yet.')}</div>}
@@ -96,7 +96,7 @@ function EffortCard({ S }) {
   const binLabel = b => kind === 'rpe' ? (b.tail ? '≤ 6' : String(10 - b.rir)) : (b.tail ? b.rir + '+' : String(b.rir))
 
   return <div className="card">
-    <h2>{t('Effort')} <span className="dim" style={{ textTransform: 'none', letterSpacing: 0 }}>· {t('how close to failure')}</span></h2>
+    <h2>{t('Effort')} <span className="dim nocase">· {t('how close to failure')}</span></h2>
     <Segmented className="seg-range" value={win} onChange={setWin}
       options={[{ value: 30, label: '30d' }, { value: 90, label: '90d' }, { value: 365, label: '1Y' }, { value: 0, label: t('All') }]} />
     {sum.rated === 0 ? <div className="muted small">{t('No rated sets in this period.')}</div> : <>
@@ -105,26 +105,26 @@ function EffortCard({ S }) {
           <div className="stat-v">{sum.avg == null ? '—' : fmtNum(toScale(kind, sum.avg)) + ' ' + hd}</div>
           <div className="small dim">{t('average effort')}</div>
         </div>
-        <div style={{ textAlign: 'right' }}>
+        <div className="ta-r">
           <div className="stat-v" style={{ color: 'var(--yellow)' }}>{sum.hardPct == null ? '—' : Math.round(sum.hardPct * 100) + '%'}</div>
           <div className="small dim">{t('at {0} {1} or harder', hd, fmtNum(toScale(kind, HARD_RIR)))}</div>
         </div>
       </div>
-      <div className="small dim" style={{ marginTop: 8 }}>{t('{0} of {1} finished sets rated', sum.rated, sum.done)}</div>
+      <div className="small dim mt-2">{t('{0} of {1} finished sets rated', sum.rated, sum.done)}</div>
       {effortOf(S) === 'none' && <div className="small" style={{ color: 'var(--yellow)', marginTop: 4 }}>
         {t('Effort per set is switched off — turn it on in Settings to keep rating.')}
       </div>}
       {pts.length > 1 && <>
-        <h4 className="sec" style={{ marginTop: 12 }}>{t('Week by week')}</h4>
+        <h4 className="sec mt-3">{t('Week by week')}</h4>
         <div className="chart"><LineChart points={pts} h={140} unit={hd} color="var(--yellow)" invert={kind === 'rir'} /></div>
       </>}
-      <h4 className="sec" style={{ marginTop: 12 }}>{t('Where the sets land')}</h4>
+      <h4 className="sec mt-3">{t('Where the sets land')}</h4>
       {hist.map(b => <div key={b.rir} className="mrow">
         <span className="nm">{hd} {binLabel(b)}</span>
         <span className="bar"><i style={{ width: Math.round(b.n / maxBin * 100) + '%', background: b.rir <= HARD_RIR ? 'var(--yellow)' : 'var(--label-3)' }} /></span>
         <span className="v">{b.n ? b.n + ' · ' + Math.round(b.pct * 100) + '%' : '—'}</span>
       </div>)}
-      <div className="small dim" style={{ marginTop: 8 }}>
+      <div className="small dim mt-2">
         {t('Most working sets belong close to failure without living there — half at the floor and half at the top average out to a healthy-looking middle.')}
       </div>
     </>}
@@ -219,7 +219,7 @@ export default function Stats() {
   </div>
 
   const heat = <div className="card">
-    <h2>{t('Activity — last 12 months')} <span className="dim" style={{ textTransform: 'none', letterSpacing: 0 }}>· {t('by time trained')}</span></h2>
+    <h2>{t('Activity — last 12 months')} <span className="dim nocase">· {t('by time trained')}</span></h2>
     <Heatmap S={S} onDay={iso => { const ws = S.workouts.filter(w => w.d === iso); if (ws.length === 1) openWorkout(ws[0]); else if (ws.length) calendarSheet(iso) }} />
   </div>
 
@@ -227,9 +227,9 @@ export default function Stats() {
   const effort = anyEffort ? <EffortCard S={S} /> : null
 
   const bwCard = <div className="card">
-    <div className="row between" style={{ marginBottom: 8 }}>
-      <h2 style={{ margin: 0 }}>{t('Body weight')}</h2>
-      <div className="row" style={{ gap: 8 }}>
+    <div className="row between mb-2">
+      <h2 className="m-0">{t('Body weight')}</h2>
+      <div className="row gap-2">
         <Button size="sm" icon="target" style={S.targetW ? { color: 'var(--yellow)' } : undefined} onClick={goalSheet}>{S.targetW ? fmtNum(S.targetW) : t('Goal')}</Button>
         <Button size="sm" icon="plus" onClick={() => bwSheet()}>{t('Log')}</Button>
       </div>
@@ -247,16 +247,16 @@ export default function Stats() {
         ? <LineChart points={effPts} h={150} unit={hd} color="var(--yellow)" invert={kind === 'rir'} />
         : <LineChart points={onE1 ? e1Pts.map(p => ({ t: p.t, y: p.y, d: p.d })) : topPts} h={150} unit={exUnit} color="var(--blue)" />}
     </div>
-    <div style={{ marginTop: 8 }}>{exList.map((p, i) => <div key={i} className="row between small" style={{ padding: '6px 0', borderBottom: 'var(--hair) solid var(--sep)' }}>
+    <div className="mt-2">{exList.map((p, i) => <div key={i} className="row between small" style={{ padding: '6px 0', borderBottom: 'var(--hair) solid var(--sep)' }}>
       <span className="muted">{fmtDate(p.d, true)}</span><span>{p.sets.map(s => setLabel(curEx, s, p.target)).join('  ')}</span></div>)}</div>
-    <div className="small dim" style={{ marginTop: 8 }}>
+    <div className="small dim mt-2">
       {onEff ? t('Average effort per workout') : onE1 ? t('Estimated 1RM per workout') : curCardio ? t('Top speed per workout') : curTimed ? t('Longest hold per workout') : t('Best set weight per workout')}
       {onEff ? '' : <> · {t('Best:')}{' '}<b className="accent">{fmtNum(onE1 ? e1Best.est : exBest)} {onE1 ? S.unit : exUnit}</b></>}
     </div>
-    {onE1 && <div className="small dim" style={{ marginTop: 4 }}>
+    {onE1 && <div className="small dim mt-1">
       {t('Best estimate from {0} on {1} — an estimate, not a tested max.', fmtNum(e1Best.w) + ' ' + S.unit + ' × ' + e1Best.r, fmtDate(e1Best.d, true))}
     </div>}
-    {!onEff && !onE1 && showEff && <div className="small dim" style={{ marginTop: 4 }}>
+    {!onEff && !onE1 && showEff && <div className="small dim mt-1">
       {t('A fuller dot means less left in the tank — the same weight at a lower {0} is progress the line alone does not show.', hd)}
     </div>}
   </>
@@ -278,7 +278,7 @@ export default function Stats() {
         <div className="xprog-main">{exBody}</div>
       </div>
       : <>
-        <div className="sect-b" style={{ marginBottom: 10 }}>
+        <div className="sect-b mb-3">
           <SelectRow title={t('Exercise')} sheetTitle={t('Exercise progress')} value={curEx} onChange={setExId}
             options={exHist.map(id => ({ value: id, label: nameFor(EXIDX[id]) }))} />
         </div>
@@ -289,14 +289,14 @@ export default function Stats() {
   const recentRows = [...S.workouts].reverse().slice(0, 6).map(w => <WorkoutRow key={w.id} w={w} onClick={() => openWorkout(w)} />)
   const allBtn = <Button size="sm" variant="ghost" trailingIcon="chevronRight" onClick={() => nav('/history')}>{t('All')} {S.workouts.length}</Button>
   const recent = S.workouts.length > 0 ? <>
-    <div className="row between" style={{ marginBottom: 10 }}>
-      <h4 className="sec" style={{ margin: 0 }}>{t('Recent workouts')}</h4>{allBtn}
+    <div className="row between mb-3">
+      <h4 className="sec m-0">{t('Recent workouts')}</h4>{allBtn}
     </div>
     <div className="list">{recentRows}</div>
   </> : null
   const recentCard = S.workouts.length > 0 ? <div className="card">
-    <div className="row between" style={{ marginBottom: 8 }}>
-      <h2 style={{ margin: 0 }}>{t('Recent workouts')}</h2>{allBtn}
+    <div className="row between mb-2">
+      <h2 className="m-0">{t('Recent workouts')}</h2>{allBtn}
     </div>
     <div className="list">{recentRows}</div>
   </div> : null

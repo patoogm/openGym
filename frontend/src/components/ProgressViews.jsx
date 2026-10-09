@@ -17,7 +17,7 @@ export const rel = (ts, t = id) => {
 export const dur = ms => { const m = Math.max(0, Math.floor(ms / 60000)); return m < 60 ? m + 'm' : Math.floor(m / 60) + 'h' + (m % 60) + 'm' }
 
 export function StatTiles({ tiles }) {
-  return <div className="tiles" style={{ marginBottom: 12 }}>
+  return <div className="tiles mb-3">
     {tiles.map(t => <div className="tile" key={t.label}>
       <div className="l">{t.label}</div>
       <div className="v" style={t.accent ? { color: 'var(--acc)' } : undefined}>{t.value}</div>

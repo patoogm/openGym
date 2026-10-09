@@ -56,8 +56,8 @@ export default function Plan() {
   </div>
 
   const routinesCol = <div>
-    <div className="row between" style={{ marginTop: 22, marginBottom: 10 }}>
-      <h4 className="sec" style={{ margin: 0 }}>{t('Routines')}</h4>
+    <div className="row between mt-6 mb-3">
+      <h4 className="sec m-0">{t('Routines')}</h4>
       <Button size="sm" variant="tinted" icon="plus" onClick={addRoutine}>{t('New')}</Button>
     </div>
     {S.routines.length ? <div className="list">{S.routines.map(r => <div key={r.id}

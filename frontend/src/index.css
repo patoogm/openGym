@@ -1236,3 +1236,21 @@ h4.sec{
   /* the delete button in a detail panel is an action, not a full-width bar */
   .pane-detail>.btn.danger{width:auto;min-width:200px}
 }
+
+/* ------------------------------------------------------------ utilities --- */
+/* Spacing on the --sp-* scale (4/8/12/16/20/24/32/40) for what used to be inline styles.
+   !important on purpose: an inline style beat every selector, and these replace inline styles
+   (a `.card h2` margin must not win back what `.m-0` took away). */
+.m-0{margin:0!important}
+.mt-0{margin-top:0!important}.mb-0{margin-bottom:0!important}
+.mt-1{margin-top:var(--sp-1)!important}.mt-2{margin-top:var(--sp-2)!important}.mt-3{margin-top:var(--sp-3)!important}.mt-4{margin-top:var(--sp-4)!important}
+.mt-5{margin-top:var(--sp-5)!important}.mt-6{margin-top:var(--sp-6)!important}.mt-7{margin-top:var(--sp-7)!important}.mt-8{margin-top:var(--sp-8)!important}
+.mb-1{margin-bottom:var(--sp-1)!important}.mb-2{margin-bottom:var(--sp-2)!important}.mb-3{margin-bottom:var(--sp-3)!important}.mb-4{margin-bottom:var(--sp-4)!important}
+.mb-5{margin-bottom:var(--sp-5)!important}.mb-6{margin-bottom:var(--sp-6)!important}.mb-7{margin-bottom:var(--sp-7)!important}.mb-8{margin-bottom:var(--sp-8)!important}
+.ml-1{margin-left:var(--sp-1)!important}.ml-2{margin-left:var(--sp-2)!important}.ml-auto{margin-left:auto!important}
+.gap-1{gap:var(--sp-1)!important}.gap-2{gap:var(--sp-2)!important}.gap-3{gap:var(--sp-3)!important}
+.sp-1{height:var(--sp-1)}.sp-2{height:var(--sp-2)}.sp-3{height:var(--sp-3)}.sp-4{height:var(--sp-4)}.sp-5{height:var(--sp-5)}
+.ta-l{text-align:left!important}.ta-c{text-align:center!important}.ta-r{text-align:right!important}
+.w-full{width:100%!important}
+.nocase{text-transform:none!important;letter-spacing:0!important}
+.hidden{display:none!important}

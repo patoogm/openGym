@@ -29,7 +29,7 @@ export default class ErrorBoundary extends Component {
         </div>
         <Button variant="primary" icon="reset" onClick={() => location.reload()}>{t('Reload openGym')}</Button>
         {active && <>
-          <div style={{ height: 8 }} />
+          <div className="sp-2" />
           <Button variant="danger" icon="trash" onClick={() => {
             useStore.getState().update(s => { s.active = null })
             location.reload()

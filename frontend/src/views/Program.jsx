@@ -108,7 +108,7 @@ export default function Program() {
   const body = <>
     {/* Plan 2 mounts the "Generate block" button here. */}
 
-    {current && <div className="card" style={{ marginBottom: 16 }}>
+    {current && <div className="card mb-4">
       <div className="small dim">{t('Current block')}</div>
       <h2 style={{ margin: '2px 0 8px' }}>{current.name}</h2>
       <div className="small dim">{t('{0} weeks', current.weeks)}{current.startedAt ? ` · ${t('since')} ${fmtDate(current.startedAt, true)}` : ''}</div>
@@ -119,8 +119,8 @@ export default function Program() {
       </div>
     </div>}
 
-    <div className="row between" style={{ marginBottom: 10 }}>
-      <h4 className="sec" style={{ margin: 0 }}>{t('All blocks')}</h4>
+    <div className="row between mb-3">
+      <h4 className="sec m-0">{t('All blocks')}</h4>
       <Button size="sm" variant="tinted" icon="plus" onClick={addBlock}>{t('New')}</Button>
     </div>
 
