@@ -40,6 +40,7 @@
   --blue:#0a84ff; --green:#30d158; --red:#ff453a; --orange:#ff9f0a; --orange-ink:var(--orange);
   --orange-soft:color-mix(in srgb,var(--orange) 16%,transparent);   /* live-session chip, streak, attention */
   --red-ink:var(--red);   /* destructive text (Discard, Delete) */
+  --yellow-ink:var(--yellow);   /* weight goal text and line */
   --yellow:#ffd60a; --teal:#40c8e0; --indigo:#5e5ce6; --pink:#ff375f;
   --purple:#bf5af2; --mint:#63e6e2; --brown:#ac8e68; --grey:#8e8e93;
 
@@ -88,6 +89,7 @@
   --blue:#007aff; --green:#34c759; --red:#ff3b30; --orange:#ff9500;
   --orange-ink:#a85a00;   /* readable orange text on a light surface */
   --red-ink:#d70015;      /* readable red text on a light surface */
+  --yellow-ink:#9a7b00;   /* readable yellow text on a light surface */
   --yellow:#ffcc00; --teal:#30b0c7; --indigo:#5856d6; --pink:#ff2d55;
   --purple:#af52de; --mint:#00c7be; --brown:#a2845e; --grey:#8e8e93;
   --acc-2:#248a3d;
@@ -186,6 +188,9 @@ body.resting #app{padding-bottom:calc(250px + var(--sab))}
 .hdr{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:8px 0 18px}
 .hdr h1{font-size:34px;line-height:1.06;font-weight:700;letter-spacing:-.028em}
 .hdr .sub{color:var(--label-2);font-size:15px;letter-spacing:-.006em;margin-top:4px}
+/* Home: the date reads first, the greeting under it */
+.hdr.date-first>div{display:flex;flex-direction:column}
+.hdr.date-first .sub{order:-1;margin:0 0 2px}
 
 .iconbtn{
   width:36px;height:36px;border-radius:50%;flex:none;
@@ -193,6 +198,7 @@ body.resting #app{padding-bottom:calc(250px + var(--sab))}
   display:flex;align-items:center;justify-content:center;font-size:18px;
   transition:background var(--fast),transform var(--fast);
 }
+.iconbtn.lg{width:44px;height:44px;font-size:20px}
 .iconbtn:active{background:var(--surface-2);transform:scale(.92)}
 .iconbtn.on-ss{background:var(--acc-soft);color:var(--acc)}
 .iconbtn.danger{color:var(--red)}
@@ -358,13 +364,12 @@ h4.sec{
 .wday .dot{width:5px;height:5px;border-radius:50%;background:transparent;margin:0 auto}
 .wday .dot.plan{background:var(--label-3)}
 .wday .dot.ovr{background:var(--orange)}
-.wday .dot.done{background:var(--acc)}
+.wday.done .num{background:var(--acc);color:var(--on-acc)}
+.wday.done .num .icn{font-size:18px;--icon-stroke:2.4}
 .wday:active{background:var(--surface-2)}
-.wday.today .num{
-  background:var(--acc);color:var(--on-acc);font-weight:600;
-  width:31px;height:31px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;margin:2px auto;
-}
+.wday .num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:2px auto}
+.wday.today .num{box-shadow:inset 0 0 0 1.5px var(--acc);font-weight:600}
+.wday.today.done .num{box-shadow:none}
 
 /* ----------------------------------------------------------------- list -- */
 .list{display:flex;flex-direction:column;gap:8px}
@@ -968,16 +973,17 @@ h4.sec{
 
 /* --- home: today's session row --- */
 .today-row{
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-  margin-top:12px;padding:12px 14px;border-radius:var(--r);background:var(--surface-2);
-  transition:background var(--fast);width:100%;text-align:left;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--sp-3);
+  margin-top:var(--sp-3);padding:var(--sp-3) var(--sp-4);border-radius:var(--r);background:var(--surface-2);
 }
-.today-row:active{background:var(--surface-3)}
-.today-row .lbl2{font-size:11px;font-weight:500;letter-spacing:.03em;text-transform:uppercase;color:var(--label-3)}
+.today-info{gap:var(--sp-3);min-width:0;flex:1 1 200px}
+.today-tx{min-width:0}
+.today-row .lbl2{font-size:12px;color:var(--label-2)}
 .today-row .ttl{
-  font-weight:500;font-size:17px;line-height:1.25;text-transform:capitalize;
-  letter-spacing:-.012em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;
+  font-weight:600;font-size:20px;line-height:1.25;text-transform:capitalize;
+  letter-spacing:-.018em;overflow-wrap:anywhere;margin-top:1px;
 }
+.today-row .today-go{flex:1 1 100%;min-height:50px}
 
 /* --------------------------------------------------- desktop (≥1000px) --- */
 .cols{display:block}
@@ -1179,8 +1185,11 @@ h4.sec{
 .iconbtn.sm{width:30px;height:30px;font-size:15px}
 .card .big.sm{font-size:22px}
 /* the "Today" row's icon square: in progress / planned / rest day */
-.today-row .lrow-i.live{background:var(--orange)}
-.today-row .lrow-i.plan{background:var(--acc)}
+.today-row .lrow-i{width:44px;height:44px;border-radius:var(--r);font-size:24px}
+.today-row .lrow-i.live{background:var(--orange);color:#000}
+.today-row .lrow-i.plan{background:var(--orange-soft);color:var(--orange-ink)}
+.lrow-i.flame{background:var(--orange-soft);color:var(--orange-ink);width:36px;height:36px;border-radius:10px;font-size:22px}
+.goal-ink{color:var(--yellow-ink)}
 .today-row .lrow-i.rest{background:var(--surface-3)}
 /* .tag.warn carries a left margin for use inside lists; the Today row spaces itself */
 .today-row .tag.warn{margin-left:0}
@@ -1280,7 +1289,8 @@ h4.sec{
 
 /* ------------------------------------------------ desktop polish (plan 8) --- */
 @media (min-width:1000px){
-  .today-row .tag{white-space:nowrap}
+  .today-row .today-go{flex:none;width:auto;min-width:140px;padding-left:var(--sp-5);padding-right:var(--sp-5)}
+  .today-row .btn{white-space:nowrap}
   /* long labels (de/ru/hi) wrap instead of running under the chevron */
   .pane-list .item .tt{overflow-wrap:anywhere}
   /* focus rings inside scroll containers must not be clipped by the container's edge */

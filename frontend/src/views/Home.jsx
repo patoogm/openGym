@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store/useStore.js'
 import { effectiveRoutine, effectiveRoutineId, streakWeeks, lastBW, setsDoneActive } from '../lib/history.js'
-import { fmtNum, fmtDate, todayISO, isoOf, weekKey, DAYS } from '../lib/format.js'
+import { fmtNum, fmtDate, todayISO, isoOf, weekKey, DAYS, exCount } from '../lib/format.js'
+import { countEx } from '../lib/routine.js'
 import { t, dateLocale } from '../lib/i18n.js'
 import { useIsDesktop } from '../lib/useIsDesktop.js'
 import { bwSheet, goalSheet, dayOverrideSheet, calendarSheet, startFlow, loadStarterPlan, bwDeltaColor } from '../sheets.jsx'
@@ -10,6 +11,7 @@ import LineChart from '../components/LineChart.jsx'
 import Icon from '../components/Icon.jsx'
 import { Button } from '../components/ui.jsx'
 import { glyphOf } from '../lib/glyphs.js'
+import { rowProps } from '../lib/a11y.js'
 
 // Home = what to do now + a quick glance. Deep charts & history live in Stats.
 // Each card is built once and placed by one of two frames: the phone column (original order) or,
@@ -36,8 +38,8 @@ export default function Home() {
     const iso = isoOf(d)
     const eff = effectiveRoutineId(S, iso), ovr = S.dayPlan[iso] !== undefined, done = doneDays.has(iso)
     const dot = done ? ' done' : ovr && eff ? ' ovr' : eff ? ' plan' : ''
-    strip.push(<div key={i} className={'wday' + (iso === todayISO() ? ' today' : '')} onClick={() => dayOverrideSheet(iso)}>
-      <div className="lbl">{t(DAYS[d.getDay()])}</div><div className="num">{d.getDate()}</div><div className={'dot' + dot} /></div>)
+    strip.push(<div key={i} className={'wday' + (iso === todayISO() ? ' today' : '') + (done ? ' done' : '')} {...rowProps(() => dayOverrideSheet(iso))}>
+      <div className="lbl">{t(DAYS[d.getDay()])}</div><div className="num">{done ? <Icon name="check" /> : d.getDate()}</div><div className={'dot' + (done ? '' : dot)} /></div>)
   }
   const sunday = new Date(monday); sunday.setDate(monday.getDate() + 6)
   const wkLabel = weekOffset === 0 ? t('This week') : `${monday.getDate()} ${monday.toLocaleDateString(dateLocale(), { month: 'short' })} – ${sunday.getDate()} ${sunday.toLocaleDateString(dateLocale(), { month: 'short' })}`
@@ -49,10 +51,10 @@ export default function Home() {
   // today's session shown right under the week strip
   const onToday = () => { if (S.active) nav('/workout'); else if (routine) startFlow(routine.id); else dayOverrideSheet(todayISO()) }
 
-  const header = <div className="hdr">
+  const header = <div className="hdr date-first">
     <div><h1>{user ? t('Hi {0}', user.name) : 'openGym'}</h1><div className="sub">{today.toLocaleDateString(dateLocale(), { weekday: 'long', day: 'numeric', month: 'long' })}</div></div>
     {/* Settings is a sidebar item on desktop */}
-    {!desktop && <button className="iconbtn" onClick={() => nav('/settings')} aria-label={t('Settings')}><Icon name="gear" /></button>}
+    {!desktop && <button className="iconbtn lg" onClick={() => nav('/settings')} aria-label={t('Settings')}><Icon name="gear" /></button>}
   </div>
 
   const setup = (() => {
@@ -84,19 +86,20 @@ export default function Home() {
       <button className="iconbtn sm" onClick={() => setWeekOffset(w => w + 1)} aria-label={t('Next week')}><Icon name="chevronRight" /></button>
     </div>
     <div className="week">{strip}</div>
-    <div className="today-row" onClick={onToday}>
-      <div className="row" style={{ gap: 9, minWidth: 0 }}>
+    <div className="today-row">
+      <div className="row today-info">
         <span className={'lrow-i ' + (S.active ? 'live' : routine ? 'plan' : 'rest')}>
           <Icon name={S.active ? 'timer' : routine ? glyphOf(routine.emoji) : 'moon'} />
         </span>
-        <div style={{ minWidth: 0 }}>
+        <div className="today-tx">
           <div className="lbl2">{t('Today')}</div>
           <div className="ttl">{S.active ? t('{0} — in progress', S.active.name) : routine ? routine.name : t('Rest day')}{todayOvr && routine ? ' · ' + t('rescheduled') : ''}</div>
+          {routine && !S.active && <div className="t-sub muted">{exCount(countEx(routine.ex))}</div>}
         </div>
       </div>
-      {S.active ? <span className="tag warn">{t('Resume')}</span>
-        : routine ? <span className="tag acc">{t('Start')}</span>
-        : <Icon name="plus" className="chev" />}
+      {S.active ? <Button variant="primary" className="today-go" icon="play" onClick={onToday}>{t('Resume')}</Button>
+        : routine ? <Button variant="primary" className="today-go" icon="play" onClick={onToday}>{t('Start')}</Button>
+        : <button className="iconbtn lg" aria-label={t('Today')} onClick={onToday}><Icon name="plus" /></button>}
     </div>
   </div>
 
@@ -116,7 +119,7 @@ export default function Home() {
     <div className="row between mb-2">
       <h2 className="m-0">{t('Body weight')}</h2>
       <div className="row gap-2">
-        <Button size="sm" icon="target" style={S.targetW ? { color: 'var(--yellow)' } : undefined} onClick={goalSheet}>{S.targetW ? fmtNum(S.targetW) : t('Goal')}</Button>
+        <Button size="sm" icon="target" className={S.targetW ? 'goal-ink' : undefined} onClick={goalSheet}>{S.targetW ? fmtNum(S.targetW) : t('Goal')}</Button>
         <Button size="sm" icon="plus" onClick={() => bwSheet()}>{t('Log')}</Button>
       </div>
     </div>
@@ -133,7 +136,7 @@ export default function Home() {
         <span className="dim small ml-auto">{fmtDate(bw.d, true)}</span>
       </div>
       {S.targetW && (
-        <div className="small row" style={{ color: 'var(--yellow)', marginTop: 4, gap: 5 }}>
+        <div className="small row goal-ink mt-1 gap-1">
           <Icon name="target" style={{ fontSize: 13 }} />
           <span>{t('Goal')} {fmtNum(S.targetW)} {S.unit} · {Math.abs(S.targetW - bw.w) < 0.05 ? t('reached!') : t(S.targetW > bw.w ? '{0} to gain' : '{0} to lose', fmtNum(Math.abs(S.targetW - bw.w)) + ' ' + S.unit)}</span>
         </div>
@@ -146,7 +149,7 @@ export default function Home() {
     <div className="row between">
       <div>
         <div className="row" style={{ gap: 7, fontSize: 22, fontWeight: 600, letterSpacing: '-.021em' }}>
-          <Icon name="flame" style={{ color: 'var(--orange)' }} />
+          <span className="lrow-i flame"><Icon name="flame" /></span>
           {t('{0} week streak', streakWeeks(S))}
         </div>
         <div className="muted small mt-1">{wThisWeek}{plannedPerWeek ? ' / ' + plannedPerWeek : ''} {t('this week')} · {t(S.workouts.length === 1 ? '{0} workout total' : '{0} workouts total', S.workouts.length)}</div>
