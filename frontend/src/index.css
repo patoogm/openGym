@@ -387,6 +387,14 @@ h4.sec{
 }
 .item .tt{font-size:16px;font-weight:400;line-height:1.25;letter-spacing:-.009em}
 .item .ss{color:var(--label-2);font-size:13px;margin-top:2px}
+/* routine rows (Plan): 44px icon square, 17/600 name, 15px subtitle */
+.item.rich .lrow-i{width:44px;height:44px;border-radius:var(--r);font-size:24px;background:var(--acc-soft);color:var(--acc)}
+.item.rich .tt{font-size:17px;font-weight:600;letter-spacing:-.014em}
+.item.rich .ss{font-size:15px}
+.list.col{display:flex;flex-direction:column}
+.sec-g{margin:var(--sp-3) 2px 6px;font-weight:600}
+.rx-v{flex:none;max-width:45%;text-align:right;font-size:15px;color:var(--label-2);overflow-wrap:anywhere}
+.weyebrow.show{display:block;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--label-2);margin-bottom:var(--sp-1)}
 .item .grow{flex:1;min-width:0}
 .chev{color:var(--label);flex:none;font-size:15px;--icon-stroke:2.4}
 .tag{
@@ -877,6 +885,7 @@ h4.sec{
 .mchip{font-size:12px;padding:4px 9px;border-radius:99px;background:var(--surface-2);color:var(--label-2)}
 .mchip.miss{background:var(--orange-soft);color:var(--orange-ink)}
 .mchip.on{background:var(--acc);color:var(--on-acc)}
+.mchip.hit{background:var(--acc-soft);color:var(--acc)}
 
 /* --- stat tiles --- */
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
@@ -1218,7 +1227,7 @@ h4.sec{
   }
   .pane-detail{min-width:0;container-type:inline-size}
   #app .pane-list .list,#app .pane-detail .list,#app .redit .list{display:flex;flex-direction:column}
-  .pane-list .item.sel{background:var(--surface-2);box-shadow:inset 3px 0 0 var(--acc)}
+  .pane-list .item.sel{background:var(--acc-soft);box-shadow:inset 0 0 0 1.5px var(--acc)}
   .pane-detail .narrow{max-width:none;margin:0}
   .pane-detail .hdr>.lrow-i{align-self:center}
   /* a routine's summary: the muscle map goes beside the exercises only once the detail pane
