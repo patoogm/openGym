@@ -754,8 +754,9 @@ h4.sec{
 }
 :root[data-theme="light"] .sheet{background:var(--bg)}
 @keyframes sheetup{from{transform:translateY(100%)}to{transform:none}}
+.sheet .btn.primary,.center .btn.primary{min-height:50px}
 .sheet .grab{width:36px;height:5px;border-radius:99px;background:var(--label-4);margin:6px auto 14px}
-.sheet h3{font-size:20px;font-weight:600;letter-spacing:-.021em;margin-bottom:14px}
+.sheet h3{font-size:20px;font-weight:700;letter-spacing:-.021em;margin-bottom:14px}
 .center{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   width:min(84vw,300px);background:var(--bg-el);border-radius:var(--r-lg);padding:20px;
@@ -1337,5 +1338,26 @@ h4.sec{
 .sp-1{height:var(--sp-1)}.sp-2{height:var(--sp-2)}.sp-3{height:var(--sp-3)}.sp-4{height:var(--sp-4)}.sp-5{height:var(--sp-5)}
 .ta-l{text-align:left!important}.ta-c{text-align:center!important}.ta-r{text-align:right!important}
 .w-full{width:100%!important}
+.my-2{margin-block:var(--sp-2)!important}.my-3{margin-block:var(--sp-3)!important}
+.gap-0{gap:0!important}
+.wrap{flex-wrap:wrap}.f-1{flex:1}.jc-c{justify-content:center}
+.lh{line-height:1.45}
+.fs-15{font-size:15px}.fs-20{font-size:20px}
+.red-ink{color:var(--red-ink)}.warn-ink{color:var(--orange-ink)}
+
+/* --- sheets and dialogs (were inline styles in sheets.jsx) --- */
+.sheet-body{padding:var(--sp-2) 0}
+.sheet-hero{font-size:44px;display:flex;justify-content:center;color:var(--acc)}
+.tiles.compact .v{font-size:18px}
+.brow{padding:var(--sp-2) 2px;border-bottom:var(--hair) solid var(--sep)}
+.sched-row{padding:var(--sp-3) 2px;border-block:var(--hair) solid var(--sep);margin-bottom:var(--sp-4);gap:var(--sp-3)}
+.sect-t-pad{padding:0 2px var(--sp-2)}
+.hint{margin:var(--sp-2) 2px 0}
+.pull-up{margin-top:calc(-1 * var(--sp-3))}
+.ic-sm{font-size:14px}
+.ic-star{font-size:12px;display:inline-block;margin-right:var(--sp-1);vertical-align:-1px}
+.lrow-i.neutral{background:var(--surface-3)}
+.lrow-i.s34{width:34px;height:34px;border-radius:var(--r-sm);font-size:19px}
+.k-acc{background:var(--acc)}.k-plan{background:var(--label-3)}.k-ovr{background:var(--orange)}
 .nocase{text-transform:none!important;letter-spacing:0!important}
 .hidden{display:none!important}
