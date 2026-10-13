@@ -1,0 +1,1325 @@
+id,nombre_es,name_en,parte,target,equipo
+0001,abdominal 3/4,3/4 sit-up,waist,abs,body weight
+0002,flexión lateral de tronco a 45°,45° side bend,waist,abs,body weight
+0003,bicicleta en el aire,air bike,waist,abs,body weight
+1512,estiramiento de cuádriceps en cuatro apoyos,all fours squad stretch,upper legs,quads,body weight
+0006,toques de talón alternados,alternate heel touchers,waist,abs,body weight
+0007,jalón al pecho lateral alternado,alternate lateral pulldown,back,lats,cable
+1368,movimiento circular de tobillo,ankle circles,lower legs,calves,body weight
+3293,dominada archer,archer pull up,back,lats,body weight
+3294,flexión archer,archer push up,chest,pectorals,body weight
+2355,balanceo de piernas colgado con rodillas flexionadas,arm slingers hanging bent knee legs,waist,abs,body weight
+2333,balanceo de piernas colgado con piernas rectas,arm slingers hanging straight legs,waist,abs,body weight
+3214,toque de punta de pie con brazos abiertos en círculo,arms apart circular toe touch (male),upper legs,glutes,body weight
+3204,abdominal completo con brazos por encima de la cabeza,arms overhead full sit-up (male),waist,abs,body weight
+0009,fondo de pecho asistido (de rodillas),assisted chest dip (kneeling),chest,pectorals,leverage machine
+0011,elevación de rodillas colgado asistida,assisted hanging knee raise,waist,abs,assisted
+0010,elevación de rodillas colgado asistida con impulso,assisted hanging knee raise with throw down,waist,abs,assisted
+1708,estiramiento de gemelos acostado asistido,assisted lying calves stretch,lower legs,calves,assisted
+1709,estiramiento de glúteos acostado asistido,assisted lying glutes stretch,upper legs,glutes,assisted
+1710,estiramiento de glúteo y piriforme acostado asistido,assisted lying gluteus and piriformis stretch,upper legs,glutes,assisted
+0012,elevación de piernas acostado asistida con impulso lateral,assisted lying leg raise with lateral throw down,waist,abs,assisted
+0013,elevación de piernas acostado asistida con impulso,assisted lying leg raise with throw down,waist,abs,assisted
+0014,giro ruso asistido,assisted motion russian twist,waist,abs,medicine ball
+0015,dominada asistida con agarre cerrado paralelo,assisted parallel close grip pull-up,back,lats,leverage machine
+0016,femoral boca abajo asistido,assisted prone hamstring,upper legs,hamstrings,assisted
+1713,estiramiento de cuádriceps boca abajo asistido,assisted prone lying quads stretch,upper legs,quads,assisted
+1714,estiramiento de recto femoral boca abajo asistido,assisted prone rectus femoris stretch,waist,abs,assisted
+0017,dominada asistida,assisted pull-up,back,lats,leverage machine
+1716,estiramiento de pectoral mayor sentado asistido con pelota suiza,assisted seated pectoralis major stretch with stability ball,chest,pectorals,assisted
+1712,estiramiento de aductores de costado asistido,assisted side lying adductor stretch,upper legs,adductors,assisted
+1758,abdominal asistido,assisted sit-up,waist,abs,assisted
+1431,dominada supina de pie asistida,assisted standing chin-up,back,lats,leverage machine
+1432,dominada de pie asistida,assisted standing pull-up,back,lats,leverage machine
+0018,extensión de tríceps de pie asistida (con toalla),assisted standing triceps extension (with towel),upper arms,triceps,assisted
+0019,fondo de tríceps asistido (de rodillas),assisted triceps dip (kneeling),upper arms,triceps,leverage machine
+2364,fondo de pecho asistido con agarre abierto (de rodillas),assisted wide-grip chest dip (kneeling),chest,pectorals,leverage machine
+3220,saltos con piernas abiertas y cerradas,astride jumps (male),cardio,cardiovascular system,body weight
+3672,paso adelante y atrás,back and forth step,cardio,cardiovascular system,body weight
+1314,extensión de espalda sobre pelota suiza,back extension on exercise ball,back,spine,stability ball
+3297,palanca dorsal (back lever),back lever,back,upper back,body weight
+1405,estiramiento de pectoral por detrás,back pec stretch,back,lats,body weight
+1473,salto hacia atrás,backward jump,upper legs,quads,body weight
+0020,tabla de equilibrio,balance board,upper legs,quads,body weight
+0968,curl de bíceps alternado con banda,band alternating biceps curl,upper arms,biceps,band
+0969,v-up alternado con banda,band alternating v-up,waist,abs,band
+0970,dominada asistida con banda,band assisted pull-up,back,lats,band
+0971,rueda abdominal asistida con banda,band assisted wheel rollerout,waist,abs,band
+1254,press de banca con banda,band bench press,chest,pectorals,band
+0980,extensión de cadera con torso inclinado con banda,band bent-over hip extension,upper legs,glutes,band
+0972,crunch bicicleta con banda,band bicycle crunch,waist,abs,band
+0974,jalón con agarre cerrado con banda,band close-grip pulldown,back,lats,band
+0975,flexión con agarre cerrado con banda,band close-grip push-up,upper arms,triceps,band
+0976,curl concentrado con banda,band concentration curl,upper arms,biceps,band
+3117,jalón con agarre cerrado y espalda fija con banda,band fixed back close grip pulldown,back,lats,band
+3116,jalón con agarre supino y espalda fija con banda,band fixed back underhand pulldown,back,lats,band
+0977,elevación lateral al frente con banda,band front lateral raise,shoulders,delts,band
+0978,elevación frontal con banda,band front raise,shoulders,delts,band
+1408,elevación de cadera con banda,band hip lift,upper legs,glutes,band
+0979,press pallof horizontal con banda,band horizontal pallof press,waist,abs,band
+0981,abdominal jack knife con banda,band jack knife sit-up,waist,abs,band
+0983,jalón a un brazo de rodillas con banda,band kneeling one arm pulldown,back,lats,band
+0985,crunch con giro de rodillas con banda,band kneeling twisting crunch,waist,abs,band
+0984,rotación interna de cadera acostado con banda,band lying hip internal rotation,upper legs,glutes,band
+1002,elevación de pierna recta acostado con banda,band lying straight leg raise,waist,abs,band
+0986,curl de bíceps a un brazo por encima de la cabeza con banda,band one arm overhead biceps curl,upper arms,biceps,band
+0987,sentadilla búlgara a un brazo y una pierna con banda,band one arm single leg split squat,upper legs,quads,band
+0988,remo bajo a un brazo de pie con banda,band one arm standing low row,back,upper back,band
+0989,press de pecho a un brazo con giro con banda,band one arm twisting chest press,chest,pectorals,band
+0990,remo sentado a un brazo con giro con banda,band one arm twisting seated row,back,upper back,band
+0991,pull through con banda,band pull through,upper legs,glutes,band
+0992,abdominal con empuje con banda,band push sit-up,waist,abs,band
+0993,apertura posterior con banda,band reverse fly,shoulders,delts,band
+0994,curl invertido de muñeca con banda,band reverse wrist curl,lower arms,forearms,band
+0996,rotación interna de cadera sentado con banda,band seated hip internal rotation,upper legs,glutes,band
+1011,giro sentado con banda,band seated twist,waist,abs,band
+0997,press de hombros con banda,band shoulder press,shoulders,delts,band
+1018,encogimiento de hombros con banda,band shrug,back,traps,band
+0998,extensión lateral de tríceps con banda,band side triceps extension,upper arms,triceps,band
+0999,elevación de gemelo a una pierna con banda,band single leg calf raise,lower legs,calves,band
+1000,elevación invertida de gemelo a una pierna con banda,band single leg reverse calf raise,lower legs,calves,band
+1001,sentadilla búlgara a una pierna con banda,band single leg split squat,upper legs,quads,band
+1004,sentadilla con banda,band squat,upper legs,glutes,band
+1003,sentadilla con remo con banda,band squat row,upper legs,glutes,band
+1005,crunch de pie con banda,band standing crunch,waist,abs,band
+1022,remo para deltoides posterior de pie con banda,band standing rear delt row,shoulders,delts,band
+1007,crunch de pie con giro con banda,band standing twisting crunch,waist,abs,band
+1008,subida al cajón con banda,band step-up,upper legs,glutes,band
+1009,peso muerto con piernas rígidas con banda,band stiff leg deadlift,upper legs,glutes,band
+1023,peso muerto con piernas rígidas y espalda recta con banda,band straight back stiff leg deadlift,upper legs,glutes,band
+1010,peso muerto con piernas rectas con banda,band straight leg deadlift,back,spine,band
+1012,press por encima de la cabeza con giro con banda,band twisting overhead press,shoulders,delts,band
+1369,elevación de gemelos a dos piernas con banda (banda bajo ambas piernas) (v. 2),band two legs calf raise - (band under both legs) v. 2,lower legs,calves,band
+1013,jalón con agarre supino con banda,band underhand pulldown,back,lats,band
+1014,v-up con banda,band v-up,waist,abs,band
+1015,press pallof vertical con banda,band vertical pallof press,waist,abs,band
+1016,curl de muñeca con banda,band wrist curl,lower arms,forearms,band
+1017,elevación en Y con banda,band y-raise,shoulders,delts,band
+0023,curl de bíceps alternado con barra,barbell alternate biceps curl,upper arms,biceps,barbell
+0024,sentadilla frontal en banco con barra,barbell bench front squat,upper legs,quads,barbell
+0025,press de banca con barra,barbell bench press,chest,pectorals,barbell
+0026,sentadilla en banco con barra,barbell bench squat,upper legs,quads,barbell
+1316,pullover con brazos flexionados con barra,barbell bent arm pullover,back,lats,barbell
+0027,remo con torso inclinado con barra,barbell bent over row,back,upper back,barbell
+2407,curl de bíceps con barra (con arm blaster),barbell biceps curl (with arm blaster),upper arms,biceps,barbell
+0028,cargada y press con barra,barbell clean and press,upper legs,quads,barbell
+0029,sentadilla frontal con agarre de cargada con barra,barbell clean-grip front squat,upper legs,glutes,barbell
+0030,press de banca con agarre cerrado con barra,barbell close-grip bench press,upper arms,triceps,barbell
+0031,curl de bíceps con barra,barbell curl,upper arms,biceps,barbell
+0032,peso muerto con barra,barbell deadlift,upper legs,glutes,barbell
+0033,press de banca declinado con barra,barbell decline bench press,chest,pectorals,barbell
+0034,pullover declinado con brazos flexionados con barra,barbell decline bent arm pullover,back,lats,barbell
+0035,press declinado con agarre cerrado hacia la frente con barra,barbell decline close grip to skull press,upper arms,triceps,barbell
+1255,pullover declinado con barra,barbell decline pullover,chest,pectorals,barbell
+0036,press declinado con agarre abierto con barra,barbell decline wide-grip press,chest,pectorals,barbell
+0037,pullover declinado con agarre abierto con barra,barbell decline wide-grip pullover,back,lats,barbell
+0038,curl drag con barra,barbell drag curl,upper arms,biceps,barbell
+1370,elevación de gemelos en el piso con barra,barbell floor calf raise,lower legs,calves,barbell
+0039,sentadilla frontal al pecho con barra,barbell front chest squat,upper legs,glutes,barbell
+0041,elevación frontal con barra,barbell front raise,shoulders,delts,barbell
+0040,elevación frontal y pullover con barra,barbell front raise and pullover,chest,pectorals,barbell
+0042,sentadilla frontal con barra,barbell front squat,upper legs,glutes,barbell
+0043,sentadilla profunda con barra,barbell full squat,upper legs,glutes,barbell
+1461,sentadilla profunda con barra (vista posterior),barbell full squat (back pov),upper legs,glutes,barbell
+1462,sentadilla profunda con barra (vista lateral),barbell full squat (side pov),upper legs,glutes,barbell
+1545,sentadilla zercher profunda con barra,barbell full zercher squat,upper legs,glutes,barbell
+1409,puente de glúteos con barra,barbell glute bridge,upper legs,glutes,barbell
+3562,puente de glúteos con ambas piernas en banco con barra,barbell glute bridge two legs on bench (male),upper legs,glutes,barbell
+0044,buenos días con barra,barbell good morning,upper legs,hamstrings,barbell
+0045,press de banca guillotina con barra,barbell guillotine bench press,chest,pectorals,barbell
+0046,hack squat con barra,barbell hack squat,upper legs,glutes,barbell
+1436,sentadilla con barra alta,barbell high bar squat,upper legs,glutes,barbell
+0047,press de banca inclinado con barra,barbell incline bench press,chest,pectorals,barbell
+1719,press de banca inclinado con agarre cerrado con barra,barbell incline close grip bench press,upper arms,triceps,barbell
+0048,press inclinado con agarre invertido con barra,barbell incline reverse-grip press,upper arms,triceps,barbell
+0049,remo inclinado con barra,barbell incline row,back,upper back,barbell
+0050,elevación de hombros inclinado con barra,barbell incline shoulder raise,chest,serratus anterior,barbell
+0051,sentadilla jefferson con barra,barbell jefferson squat,upper legs,glutes,barbell
+0052,press de banca JM con barra,barbell jm bench press,upper arms,triceps,barbell
+0053,sentadilla con salto con barra,barbell jump squat,upper legs,glutes,barbell
+1410,zancada lateral con barra,barbell lateral lunge,upper legs,glutes,barbell
+1435,sentadilla con barra baja,barbell low bar squat,upper legs,glutes,barbell
+0054,zancada con barra,barbell lunge,upper legs,glutes,barbell
+1720,extensión de tríceps tras nuca acostado con barra,barbell lying back of the head tricep extension,upper arms,triceps,barbell
+0055,press acostado con agarre cerrado con barra,barbell lying close-grip press,upper arms,triceps,barbell
+0056,extensión de tríceps acostado con agarre cerrado con barra,barbell lying close-grip triceps extension,upper arms,triceps,barbell
+0057,extensión acostado con barra,barbell lying extension,upper arms,triceps,barbell
+0058,elevación acostado sobre la cadera con barra,barbell lying lifting (on hip),upper legs,glutes,barbell
+0059,curl predicador acostado con barra,barbell lying preacher curl,upper arms,biceps,barbell
+0061,extensión de tríceps acostado con barra,barbell lying triceps extension,upper arms,triceps,barbell
+0060,extensión de tríceps acostado tipo rompecráneos con barra,barbell lying triceps extension skull crusher,upper arms,triceps,barbell
+0063,sentadilla con pies juntos con barra,barbell narrow stance squat,upper legs,glutes,barbell
+0064,remo con torso inclinado a un brazo con barra,barbell one arm bent over row,back,upper back,barbell
+0065,press en el piso a un brazo con barra,barbell one arm floor press,upper arms,triceps,barbell
+0066,peso muerto lateral a un brazo con barra,barbell one arm side deadlift,upper legs,glutes,barbell
+0067,arranque a un brazo con barra,barbell one arm snatch,shoulders,delts,barbell
+0068,sentadilla a una pierna con barra,barbell one leg squat,upper legs,quads,barbell
+0069,sentadilla por encima de la cabeza con barra,barbell overhead squat,upper legs,quads,barbell
+1411,curl de muñeca con palmas abajo sobre un banco con barra,barbell palms down wrist curl over a bench,lower arms,forearms,barbell
+1412,curl de muñeca con palmas arriba sobre un banco con barra,barbell palms up wrist curl over a bench,lower arms,forearms,barbell
+3017,remo pendlay con barra,barbell pendlay row,back,upper back,barbell
+1751,press desde pines con barra,barbell pin presses,upper arms,triceps,barbell
+0070,curl predicador con barra,barbell preacher curl,upper arms,biceps,barbell
+0071,abdominal con press con barra,barbell press sit-up,waist,abs,barbell
+0072,curl inclinado boca abajo con barra,barbell prone incline curl,upper arms,biceps,barbell
+0073,pullover con barra,barbell pullover,back,lats,barbell
+0022,pullover al press con barra,barbell pullover to press,back,lats,barbell
+0074,rack pull con barra,barbell rack pull,upper legs,glutes,barbell
+0075,elevación de deltoides posterior con barra,barbell rear delt raise,shoulders,delts,barbell
+0076,remo para deltoides posterior con barra,barbell rear delt row,shoulders,delts,barbell
+0078,zancada hacia atrás con barra,barbell rear lunge,upper legs,glutes,barbell
+0077,zancada hacia atrás con barra (v. 2),barbell rear lunge v. 2,upper legs,glutes,barbell
+0079,curl invertido de muñeca con barra (v. 2),barbell revers wrist curl v. 2,lower arms,forearms,barbell
+2187,press de banca con agarre cerrado invertido con barra,barbell reverse close-grip bench press,upper arms,triceps,barbell
+0080,curl invertido con barra,barbell reverse curl,upper arms,biceps,barbell
+0118,remo con torso inclinado con agarre invertido con barra,barbell reverse grip bent over row,back,upper back,barbell
+1256,press de banca declinado con agarre invertido con barra,barbell reverse grip decline bench press,chest,pectorals,barbell
+1257,press de banca inclinado con agarre invertido con barra,barbell reverse grip incline bench press,chest,pectorals,barbell
+1317,remo en banco inclinado con agarre invertido con barra,barbell reverse grip incline bench row,back,upper back,barbell
+1721,rompecráneos con agarre invertido con barra,barbell reverse grip skullcrusher,upper arms,triceps,barbell
+0081,curl predicador invertido con barra,barbell reverse preacher curl,upper arms,biceps,barbell
+0082,curl invertido de muñeca con barra,barbell reverse wrist curl,lower arms,forearms,barbell
+0084,rueda abdominal con barra,barbell rollerout,waist,abs,barbell
+0083,rueda abdominal desde el banco con barra,barbell rollerout from bench,waist,abs,barbell
+0085,peso muerto rumano con barra,barbell romanian deadlift,upper legs,glutes,barbell
+0086,press militar tras nuca sentado con barra,barbell seated behind head military press,shoulders,delts,barbell
+0087,press bradford sentado con barra,barbell seated bradford rocky press,shoulders,delts,barbell
+0088,elevación de gemelos sentado con barra,barbell seated calf raise,lower legs,calves,barbell
+1371,elevación de gemelos sentado con barra,barbell seated calf raise,lower legs,calves,barbell
+1718,extensión de tríceps tras nuca sentado con agarre cerrado con barra,barbell seated close grip behind neck triceps extension,upper arms,triceps,barbell
+0089,curl concentrado sentado con agarre cerrado con barra,barbell seated close-grip concentration curl,upper arms,biceps,barbell
+0090,buenos días sentado con barra,barbell seated good morning,upper legs,glutes,barbell
+0091,press por encima de la cabeza sentado con barra,barbell seated overhead press,shoulders,delts,barbell
+0092,extensión de tríceps por encima de la cabeza sentado con barra,barbell seated overhead triceps extension,upper arms,triceps,barbell
+0094,giro sentado con barra,barbell seated twist,waist,abs,barbell
+0095,encogimiento de hombros con barra,barbell shrug,back,traps,barbell
+0096,flexión lateral de tronco con barra (v. 2),barbell side bent v. 2,waist,abs,barbell
+0098,sentadilla búlgara lateral con barra,barbell side split squat,upper legs,quads,barbell
+0097,sentadilla búlgara lateral con barra (v. 2),barbell side split squat v. 2,upper legs,quads,barbell
+1756,peso muerto a una pierna con barra,barbell single leg deadlift,upper legs,glutes,barbell
+0099,sentadilla búlgara a una pierna con barra,barbell single leg split squat,upper legs,quads,barbell
+2799,elevación de piernas alternada sentado con barra,barbell sitted alternate leg raise,waist,abs,barbell
+2800,elevación de piernas alternada sentado con barra,barbell sitted alternate leg raise (female),waist,abs,barbell
+0100,esquiador con barra,barbell skier,shoulders,delts,barbell
+0101,sentadilla de velocidad con barra,barbell speed squat,upper legs,glutes,barbell
+2810,sentadilla búlgara con barra (v. 2),barbell split squat v. 2,upper legs,quads,barbell
+0102,sentadilla de rodillas con barra,barbell squat (on knees),upper legs,quads,barbell
+2798,sentadilla con salto y zancada hacia atrás con barra,barbell squat jump step rear lunge,upper legs,quads,barbell
+0103,rueda abdominal de pie con barra,barbell standing ab rollerout,waist,abs,barbell
+0104,curl de muñeca por detrás de pie con barra,barbell standing back wrist curl,lower arms,forearms,barbell
+0105,press bradford de pie con barra,barbell standing bradford press,shoulders,delts,barbell
+1372,elevación de gemelos de pie con barra,barbell standing calf raise,lower legs,calves,barbell
+0106,curl de pie con agarre cerrado con barra,barbell standing close grip curl,upper arms,biceps,barbell
+1456,press militar de pie con agarre cerrado con barra,barbell standing close grip military press,shoulders,delts,barbell
+2414,curl concentrado de pie con barra,barbell standing concentration curl,upper arms,biceps,barbell
+0107,elevación frontal por encima de la cabeza de pie con barra,barbell standing front raise over head,shoulders,delts,barbell
+0108,elevación de gemelos de pie con barra,barbell standing leg calf raise,lower legs,calves,barbell
+0109,extensión de tríceps por encima de la cabeza de pie con barra,barbell standing overhead triceps extension,upper arms,triceps,barbell
+0110,curl con agarre invertido de pie con barra,barbell standing reverse grip curl,upper arms,biceps,barbell
+0111,elevación de gemelos con balanceo de pie con barra,barbell standing rocking leg calf raise,lower legs,calves,barbell
+0112,giro de pie con barra,barbell standing twist,waist,abs,barbell
+1629,curl de bíceps con agarre abierto de pie con barra,barbell standing wide grip biceps curl,upper arms,biceps,barbell
+1457,press militar de pie con agarre abierto con barra,barbell standing wide military press,shoulders,delts,barbell
+0113,curl de pie con agarre abierto con barra,barbell standing wide-grip curl,upper arms,biceps,barbell
+0114,subida al cajón con barra,barbell step-up,upper legs,glutes,barbell
+0115,buenos días con piernas rígidas con barra,barbell stiff leg good morning,upper legs,glutes,barbell
+0116,peso muerto con piernas rectas con barra,barbell straight leg deadlift,upper legs,hamstrings,barbell
+0117,peso muerto sumo con barra,barbell sumo deadlift,upper legs,glutes,barbell
+3305,thruster con barra,barbell thruster,shoulders,delts,barbell
+0120,remo al mentón con barra,barbell upright row,shoulders,delts,barbell
+0119,remo al mentón con barra (v. 2),barbell upright row v. 2,shoulders,delts,barbell
+0121,remo al mentón con barra (v. 3),barbell upright row v. 3,shoulders,delts,barbell
+0122,press de banca con agarre abierto con barra,barbell wide bench press,chest,pectorals,barbell
+1258,press de banca con agarre invertido abierto con barra,barbell wide reverse grip bench press,chest,pectorals,barbell
+0124,sentadilla con pies bien separados con barra,barbell wide squat,upper legs,quads,barbell
+0123,remo al mentón con agarre abierto con barra,barbell wide-grip upright row,shoulders,delts,barbell
+0126,curl de muñeca con barra,barbell wrist curl,lower arms,forearms,barbell
+0125,curl de muñeca con barra (v. 2),barbell wrist curl v. 2,lower arms,forearms,barbell
+0127,sentadilla zercher con barra,barbell zercher squat,upper legs,glutes,barbell
+3212,toque de punta de pie básico,basic toe touch (male),upper legs,glutes,body weight
+0128,cuerdas de batalla,battling ropes,shoulders,delts,rope
+3360,caminata del oso,bear crawl,cardio,cardiovascular system,body weight
+1259,estiramiento de pecho tras nuca,behind head chest stretch,chest,pectorals,assisted
+0129,fondo en banco (rodillas flexionadas),bench dip (knees bent),upper arms,triceps,body weight
+1399,fondo en banco con pies en el piso,bench dip on floor,upper arms,triceps,body weight
+0130,extensión de cadera en banco,bench hip extension,upper legs,glutes,body weight
+3019,dominadas en banco,bench pull-ups,back,lats,body weight
+3639,giro acostado con rodillas flexionadas,bent knee lying twist (male),upper legs,glutes,body weight
+1770,curl concentrado con la pierna en el bíceps,biceps leg concentration curl,upper arms,biceps,body weight
+0139,dominadas cerradas para bíceps,biceps narrow pull-ups,upper arms,biceps,body weight
+0140,dominada para bíceps,biceps pull-up,upper arms,biceps,body weight
+0137,body-up,body-up,upper arms,triceps,body weight
+3543,sentadilla con salto en caída con peso corporal,bodyweight drop jump squat,upper legs,glutes,body weight
+3544,plancha lateral inclinada con peso corporal,bodyweight incline side plank,waist,abs,body weight
+1771,extensión de tríceps de rodillas con peso corporal,bodyweight kneeling triceps extension,upper arms,triceps,body weight
+1769,curl de bíceps de costado con peso corporal,bodyweight side lying biceps curl,upper arms,biceps,body weight
+3168,remo en sentadilla con peso corporal,bodyweight squatting row,back,upper back,body weight
+3167,remo en sentadilla con peso corporal (con toalla),bodyweight squatting row (with towel),back,upper back,body weight
+1373,elevación de gemelos de pie con peso corporal,bodyweight standing calf raise,lower legs,calves,body weight
+3156,remo a un brazo de pie con agarre cerrado con peso corporal,bodyweight standing close-grip one arm row,back,upper back,body weight
+3158,remo de pie con agarre cerrado con peso corporal,bodyweight standing close-grip row,back,upper back,body weight
+3162,remo a un brazo de pie con peso corporal,bodyweight standing one arm row,back,upper back,body weight
+3161,remo a un brazo de pie con peso corporal (con toalla),bodyweight standing one arm row (with towel),back,upper back,body weight
+3166,remo de pie con peso corporal,bodyweight standing row,back,upper back,body weight
+3165,remo de pie con peso corporal (con toalla),bodyweight standing row (with towel),back,upper back,body weight
+0138,bottoms-up,bottoms-up,waist,abs,body weight
+1374,salto al cajón hacia abajo con estabilización a una pierna,box jump down with one leg stabilization,lower legs,calves,body weight
+2466,puente con escalador (cruzado),bridge - mountain climber (cross body),waist,abs,body weight
+1160,burpee,burpee,cardio,cardiovascular system,body weight
+0870,elevación de glúteos,butt-ups,waist,abs,body weight
+1494,postura de yoga de la mariposa,butterfly yoga pose,upper legs,adductors,body weight
+0148,press de hombros alternado en polea,cable alternate shoulder press,shoulders,delts,cable
+0149,extensión de tríceps alternada en polea,cable alternate triceps extension,upper arms,triceps,cable
+3235,curl femoral invertido asistido en polea,cable assisted inverse leg curl,upper legs,hamstrings,cable
+0150,jalón al pecho con barra en polea,cable bar lateral pulldown,back,lats,cable
+0151,press de banca en polea,cable bench press,chest,pectorals,cable
+1630,curl con agarre cerrado en polea,cable close grip curl,upper arms,biceps,cable
+1631,curl concentrado en polea,cable concentration curl,upper arms,biceps,cable
+0152,extensión concentrada en polea (sobre la rodilla),cable concentration extension (on knee),upper arms,triceps,cable
+0153,jalón al pecho cruzado en polea,cable cross-over lateral pulldown,back,lats,cable
+0154,apertura posterior cruzada en polea,cable cross-over revers fly,shoulders,delts,cable
+0155,cruce de poleas (variante),cable cross-over variation,chest,pectorals,cable
+0868,curl en polea,cable curl,upper arms,biceps,cable
+0157,peso muerto en polea,cable deadlift,upper legs,glutes,cable
+0158,apertura declinada en polea,cable decline fly,chest,pectorals,cable
+1260,press declinado a un brazo en polea,cable decline one arm press,chest,pectorals,cable
+1261,press declinado en polea,cable decline press,chest,pectorals,cable
+0159,remo sentado declinado con agarre abierto en polea,cable decline seated wide-grip row,back,upper back,cable
+1632,curl drag en polea,cable drag curl,upper arms,biceps,cable
+0160,remo sentado en el piso con agarre abierto en polea,cable floor seated wide-grip row,back,upper back,cable
+0161,elevación al frente en polea,cable forward raise,shoulders,delts,cable
+0162,elevación frontal en polea,cable front raise,shoulders,delts,cable
+0164,elevación frontal de hombros en polea,cable front shoulder raise,shoulders,delts,cable
+0165,curl martillo en polea (con soga),cable hammer curl (with rope),upper arms,biceps,cable
+1722,extensión de tríceps por encima de la cabeza en polea alta,cable high pulley overhead tricep extension,upper arms,triceps,cable
+0167,remo alto en polea (de rodillas),cable high row (kneeling),back,upper back,cable
+0168,aducción de cadera en polea,cable hip adduction,upper legs,adductors,cable
+0169,press de banca inclinado en polea,cable incline bench press,chest,pectorals,cable
+1318,remo en banco inclinado en polea,cable incline bench row,back,upper back,cable
+0171,apertura inclinada en polea,cable incline fly,chest,pectorals,cable
+0170,apertura inclinada en polea (sobre pelota suiza),cable incline fly (on stability ball),chest,pectorals,cable
+0172,extensión de tríceps inclinada hacia abajo en polea,cable incline pushdown,back,lats,cable
+0173,extensión de tríceps inclinada en polea,cable incline triceps extension,upper arms,triceps,cable
+0174,giro tipo judo en polea,cable judo flip,waist,abs,cable
+0860,patada de tríceps en polea,cable kickback,upper arms,triceps,cable
+0175,crunch de rodillas en polea,cable kneeling crunch,waist,abs,cable
+3697,remo para deltoides posterior de rodillas en polea (con soga),cable kneeling rear delt row (with rope) (male),shoulders,delts,cable
+0176,extensión de tríceps de rodillas en polea,cable kneeling triceps extension,upper arms,triceps,cable
+2330,jalón al pecho en polea con recorrido completo,cable lat pulldown full range of motion,back,lats,cable
+0177,jalón al pecho en polea (con soga),cable lateral pulldown (with rope attachment),back,lats,cable
+2616,jalón al pecho en polea con barra en V,cable lateral pulldown with v-bar,back,lats,cable
+0178,elevación lateral en polea,cable lateral raise,shoulders,delts,cable
+0179,apertura baja en polea,cable low fly,chest,pectorals,cable
+0180,remo bajo sentado en polea,cable low seated row,back,upper back,cable
+1634,curl de bíceps acostado en polea,cable lying bicep curl,upper arms,biceps,cable
+0182,curl acostado con agarre cerrado en polea,cable lying close-grip curl,upper arms,biceps,cable
+0184,pullover con extensión acostado en polea (con soga),cable lying extension pullover (with rope attachment),back,lats,cable
+0185,apertura acostado en polea,cable lying fly,chest,pectorals,cable
+0186,extensión de tríceps acostado en polea (v. 2),cable lying triceps extension v. 2,upper arms,triceps,cable
+0188,apertura media en polea,cable middle fly,chest,pectorals,cable
+0189,remo con torso inclinado a un brazo en polea,cable one arm bent over row,back,upper back,cable
+0190,curl a un brazo en polea,cable one arm curl,upper arms,biceps,cable
+1262,apertura de pecho declinada a un brazo en polea,cable one arm decline chest fly,chest,pectorals,cable
+1263,apertura a un brazo sobre pelota suiza en polea,cable one arm fly on exercise ball,chest,pectorals,cable
+1264,apertura inclinada a un brazo sobre pelota suiza en polea,cable one arm incline fly on exercise ball,chest,pectorals,cable
+1265,press inclinado a un brazo en polea,cable one arm incline press,chest,pectorals,cable
+1266,press inclinado a un brazo sobre pelota suiza en polea,cable one arm incline press on exercise ball,chest,pectorals,cable
+0191,inclinación lateral a un brazo en polea,cable one arm lateral bent-over,chest,pectorals,cable
+0192,elevación lateral a un brazo en polea,cable one arm lateral raise,shoulders,delts,cable
+1633,curl predicador a un brazo en polea,cable one arm preacher curl,upper arms,biceps,cable
+1267,press a un brazo sobre pelota suiza en polea,cable one arm press on exercise ball,chest,pectorals,cable
+3563,jalón a un brazo en polea,cable one arm pulldown,back,lats,cable
+1635,curl predicador invertido a un brazo en polea,cable one arm reverse preacher curl,upper arms,biceps,cable
+0193,remo alto a un brazo con espalda recta en polea (de rodillas),cable one arm straight back high row (kneeling),back,upper back,cable
+1723,extensión de tríceps a un brazo hacia abajo en polea,cable one arm tricep pushdown,upper arms,triceps,cable
+1636,curl por encima de la cabeza en polea,cable overhead curl,upper arms,biceps,cable
+1637,curl por encima de la cabeza sobre pelota suiza en polea,cable overhead curl on exercise ball,upper arms,biceps,cable
+0194,extensión de tríceps por encima de la cabeza en polea (con soga),cable overhead triceps extension (rope attachment),upper arms,triceps,cable
+1319,remo con rotación de muñeca en polea,cable palm rotational row,back,upper back,cable
+0195,curl predicador en polea,cable preacher curl,upper arms,biceps,cable
+1268,press sobre pelota suiza en polea,cable press on exercise ball,chest,pectorals,cable
+0196,pull through en polea (con soga),cable pull through (with rope),upper legs,glutes,cable
+0198,jalón en polea,cable pulldown,back,lats,cable
+0197,jalón en polea (barra ancha),cable pulldown (pro lat bar),back,lats,cable
+1638,curl de bíceps en jalón de polea,cable pulldown bicep curl,upper arms,biceps,cable
+0201,extensión de tríceps hacia abajo en polea,cable pushdown,upper arms,triceps,cable
+0199,extensión de tríceps hacia abajo con brazo recto en polea (v. 2),cable pushdown (straight arm) v. 2,back,lats,cable
+0200,extensión de tríceps hacia abajo en polea (con soga),cable pushdown (with rope attachment),upper arms,triceps,cable
+0202,remo para deltoides posterior en polea (estribos),cable rear delt row (stirrups),shoulders,delts,cable
+0203,remo para deltoides posterior en polea (con soga),cable rear delt row (with rope),shoulders,delts,cable
+0204,empuje posterior en polea,cable rear drive,upper arms,triceps,cable
+0205,jalón posterior en polea,cable rear pulldown,back,lats,cable
+0873,crunch invertido en polea,cable reverse crunch,waist,abs,cable
+0206,curl invertido en polea,cable reverse curl,upper arms,biceps,cable
+2406,extensión de tríceps hacia abajo con agarre invertido en polea (barra SZ) (con arm blaster),cable reverse grip triceps pushdown (sz-bar) (with arm blaster),upper arms,triceps,cable
+1413,curl invertido a un brazo en polea,cable reverse one arm curl,upper arms,biceps,cable
+0209,curl predicador invertido en polea,cable reverse preacher curl,upper arms,biceps,cable
+0210,curl invertido de muñeca en polea,cable reverse wrist curl,lower arms,forearms,cable
+0207,extensión de tríceps hacia abajo con agarre invertido en polea,cable reverse-grip pushdown,upper arms,triceps,cable
+0208,remo alto sentado con agarre invertido y espalda recta en polea,cable reverse-grip straight back seated high row,back,upper back,cable
+1320,remo sentado con soga cruzada en polea,cable rope crossover seated row,back,upper back,cable
+1321,remo sentado elevado con soga en polea,cable rope elevated seated row,back,upper back,cable
+1322,remo en banco inclinado con extensión de soga en polea,cable rope extension incline bench row,back,upper back,cable
+1639,curl predicador martillo con soga en polea,cable rope hammer preacher curl,upper arms,biceps,cable
+1724,extensión de tríceps por encima de la cabeza con soga en polea alta,cable rope high pulley overhead tricep extension,upper arms,triceps,cable
+1725,extensión de tríceps inclinada con soga en polea,cable rope incline tricep extension,upper arms,triceps,cable
+1726,extensión de tríceps acostado en el piso con soga en polea,cable rope lying on floor tricep extension,upper arms,triceps,cable
+1640,curl predicador martillo a un brazo con soga en polea,cable rope one arm hammer preacher curl,upper arms,biceps,cable
+1323,remo sentado con soga en polea,cable rope seated row,back,upper back,cable
+0211,giros rusos en polea (sobre pelota suiza),cable russian twists (on stability ball),waist,abs,cable
+2144,press de pecho sentado en polea,cable seated chest press,chest,pectorals,cable
+0212,crunch sentado en polea,cable seated crunch,waist,abs,cable
+1641,curl sentado en polea,cable seated curl,upper arms,biceps,cable
+0213,remo alto sentado en polea (barra en V),cable seated high row (v-bar),back,lats,cable
+0214,remo alternado a un brazo sentado en polea,cable seated one arm alternate row,back,upper back,cable
+1642,curl concentrado a un brazo sentado en polea,cable seated one arm concentration curl,upper arms,biceps,cable
+1643,curl por encima de la cabeza sentado en polea,cable seated overhead curl,upper arms,biceps,cable
+0215,elevación posterior sentado en polea,cable seated rear lateral raise,shoulders,delts,cable
+0861,remo sentado en polea,cable seated row,back,upper back,cable
+0216,rotación interna de hombro sentado en polea,cable seated shoulder internal rotation,shoulders,delts,cable
+2399,giro sentado en polea,cable seated twist,waist,abs,cable
+0218,remo sentado con agarre abierto en polea,cable seated wide-grip row,back,upper back,cable
+0219,press de hombros en polea,cable shoulder press,shoulders,delts,cable
+0220,encogimiento de hombros en polea,cable shrug,back,traps,cable
+0222,flexión lateral de tronco en polea,cable side bend,waist,abs,cable
+0221,crunch de flexión lateral en polea (bosu),cable side bend crunch (bosu ball),waist,abs,cable
+0223,crunch lateral en polea,cable side crunch,waist,abs,cable
+1717,sentadilla con remo en polea (con soga),cable squat row (with rope attachment),back,lats,cable
+1644,curl en sentadilla en polea,cable squatting curl,upper arms,biceps,cable
+0224,curl de muñeca por detrás de pie en polea,cable standing back wrist curl,lower arms,forearms,cable
+1375,elevación de gemelos de pie en polea,cable standing calf raise,lower legs,calves,cable
+0225,apertura posterior alta cruzada de pie en polea,cable standing cross-over high reverse fly,shoulders,delts,cable
+0226,crunch de pie en polea,cable standing crunch,waist,abs,cable
+0874,crunch de pie en polea (con soga),cable standing crunch (with rope attachment),waist,abs,cable
+0227,apertura de pie en polea,cable standing fly,chest,pectorals,cable
+0228,extensión de cadera de pie en polea,cable standing hip extension,upper legs,glutes,cable
+0229,curl interno de pie en polea,cable standing inner curl,upper arms,biceps,cable
+0230,elevación de pie en polea,cable standing lift,waist,abs,cable
+0231,extensión de tríceps a un brazo de pie en polea,cable standing one arm triceps extension,upper arms,triceps,cable
+1376,elevación de gemelos a una pierna de pie en polea,cable standing one leg calf raise,lower legs,calves,cable
+0232,jalón de pie en polea (con soga),cable standing pulldown (with rope),upper arms,biceps,cable
+0233,remo para deltoides posterior de pie en polea (con soga),cable standing rear delt row (with rope),shoulders,delts,cable
+1727,extensión de tríceps por encima de la cabeza a un brazo con agarre invertido de pie en polea,cable standing reverse grip one arm overhead tricep extension,upper arms,triceps,cable
+0234,remo de pie en polea (barra en V),cable standing row (v-bar),back,upper back,cable
+0235,rotación externa de hombro de pie en polea,cable standing shoulder external rotation,shoulders,delts,cable
+0236,remo con giro de pie en polea (barra en V),cable standing twist row (v-bar),back,upper back,cable
+1269,cruces de pie erguido en polea,cable standing up straight crossovers,chest,pectorals,cable
+0238,jalón con brazo recto en polea,cable straight arm pulldown,back,lats,cable
+0237,jalón con brazo recto en polea (con soga),cable straight arm pulldown (with rope),back,lats,cable
+0239,remo sentado con espalda recta en polea,cable straight back seated row,back,upper back,cable
+0240,apertura posterior boca arriba en polea,cable supine reverse fly,shoulders,delts,cable
+2464,remo kayak thibaudeau en polea,cable thibaudeau kayak row,back,lats,cable
+0241,extensión de tríceps hacia abajo en polea (barra en V),cable triceps pushdown (v-bar),upper arms,triceps,cable
+2405,extensión de tríceps hacia abajo en polea (barra en V) (con arm blaster),cable triceps pushdown (v-bar) (with arm blaster),upper arms,triceps,cable
+0242,crunch invertido con rodillas al pecho en polea,cable tuck reverse crunch,waist,abs,cable
+0243,giro en polea,cable twist,waist,abs,cable
+0862,giro en polea (arriba y abajo),cable twist (up-down),waist,abs,cable
+0244,jalón con giro en polea,cable twisting pull,back,lats,cable
+1645,curl a dos brazos en banco inclinado en polea,cable two arm curl on incline bench,upper arms,biceps,cable
+1728,patada de tríceps a dos brazos en polea,cable two arm tricep kickback,upper arms,triceps,cable
+0245,jalón con agarre supino en polea,cable underhand pulldown,back,lats,cable
+1270,cruces para pecho alto en polea,cable upper chest crossovers,chest,pectorals,cable
+1324,remo alto en polea,cable upper row,back,upper back,cable
+0246,remo al mentón en polea,cable upright row,shoulders,delts,cable
+1325,jalón posterior tras nuca con agarre abierto en polea,cable wide grip rear pulldown behind neck,back,lats,cable
+0247,curl de muñeca en polea,cable wrist curl,lower arms,forearms,cable
+1407,estiramiento de gemelos con las manos en la pared,calf push stretch with hands against wall,lower legs,calves,body weight
+1377,estiramiento de gemelos con las manos en la pared,calf stretch with hands against wall,lower legs,calves,body weight
+1378,estiramiento de gemelos con soga,calf stretch with rope,lower legs,calves,rope
+0248,remo acostado con barra curva,cambered bar lying row,back,upper back,barbell
+2963,elevación de piernas rectas en silla romana,captains chair straight leg raise,waist,abs,body weight
+1548,estiramiento de pierna extendida en silla,chair leg extended stretch,upper legs,quads,body weight
+1271,estiramiento de pecho y parte anterior del hombro,chest and front of shoulder stretch,chest,pectorals,body weight
+0251,fondo de pecho,chest dip,chest,pectorals,body weight
+1430,fondo de pecho (en jaula de dominadas),chest dip (on dip-pull-up cage),chest,pectorals,body weight
+2462,fondo de pecho en barra recta,chest dip on straight bar,chest,pectorals,body weight
+1272,estiramiento de pecho con pelota suiza,chest stretch with exercise ball,chest,pectorals,stability ball
+3216,flexión con toque al pecho,chest tap push-up (male),chest,pectorals,body weight
+1326,dominada supina,chin-up,back,lats,body weight
+0253,dominadas supinas (agarre paralelo cerrado),chin-ups (narrow parallel grip),back,upper back,body weight
+0257,estiramiento de rodilla en círculos,circles knee stretch,lower legs,calves,body weight
+1273,flexión con palmada,clap push up,chest,pectorals,body weight
+0258,flexión del reloj,clock push-up,chest,pectorals,body weight
+1327,dominada supina con agarre cerrado,close grip chin-up,back,lats,body weight
+0259,flexión con agarre cerrado,close-grip push-up,upper arms,triceps,body weight
+2398,flexión con agarre cerrado (de rodillas),close-grip push-up (on knees),upper arms,triceps,body weight
+0260,cocoons,cocoons,waist,abs,body weight
+1468,toque de punta de pie con giro tipo cangrejo,crab twist toe touch,waist,abs,body weight
+0262,crunch cruzado,cross body crunch,waist,abs,body weight
+0267,crunch (manos por encima de la cabeza),crunch (hands overhead),waist,abs,body weight
+0271,crunch (sobre pelota suiza),crunch (on stability ball),waist,abs,stability ball
+0272,"crunch (sobre pelota suiza, brazos rectos)","crunch (on stability ball, arms straight)",waist,abs,stability ball
+0274,crunch en el piso,crunch floor,waist,abs,body weight
+3016,curl-up,curl-up,waist,abs,body weight
+3769,sentadilla curtsy,curtsey squat,upper legs,glutes,body weight
+2331,elíptica,cycle cross trainer,cardio,cardiovascular system,leverage machine
+0276,dead bug,dead bug,waist,abs,body weight
+0277,crunch declinado,decline crunch,waist,abs,body weight
+0279,flexión declinada,decline push-up,chest,pectorals,body weight
+0282,abdominal declinado,decline sit-up,waist,abs,body weight
+1274,flexión profunda,deep push up,chest,pectorals,dumbbell
+0283,flexión diamante,diamond push-up,upper arms,triceps,body weight
+0284,elevación de gemelos tipo burro,donkey calf raise,lower legs,calves,body weight
+1275,flexión en caída,drop push up,chest,pectorals,body weight
+0285,curl de bíceps alternado con mancuernas,dumbbell alternate biceps curl,upper arms,biceps,dumbbell
+2403,curl de bíceps alternado con mancuernas (con arm blaster),dumbbell alternate biceps curl (with arm blaster),upper arms,biceps,dumbbell
+1646,curl predicador martillo alternado con mancuernas,dumbbell alternate hammer preacher curl,upper arms,biceps,dumbbell
+1647,curl predicador alternado con mancuernas,dumbbell alternate preacher curl,upper arms,biceps,dumbbell
+1648,curl martillo alternado sentado con mancuernas,dumbbell alternate seated hammer curl,upper arms,biceps,dumbbell
+0286,press lateral alternado con mancuernas,dumbbell alternate side press,shoulders,delts,dumbbell
+1649,curl de bíceps alternado con pierna elevada sobre pelota suiza con mancuernas,dumbbell alternating bicep curl with leg raised on exercise ball,upper arms,biceps,dumbbell
+1650,curl de bíceps alternado sentado sobre pelota suiza con mancuernas,dumbbell alternating seated bicep curl on exercise ball,upper arms,biceps,dumbbell
+2137,press arnold con mancuernas,dumbbell arnold press,shoulders,delts,dumbbell
+0287,press arnold con mancuernas (v. 2),dumbbell arnold press v. 2,shoulders,delts,dumbbell
+0288,pullover circular con mancuerna,dumbbell around pullover,chest,pectorals,dumbbell
+0289,press de banca con mancuernas,dumbbell bench press,chest,pectorals,dumbbell
+0290,press sentado en banco con mancuernas,dumbbell bench seated press,shoulders,delts,dumbbell
+0291,sentadilla en banco con mancuernas,dumbbell bench squat,upper legs,glutes,dumbbell
+0293,remo con torso inclinado con mancuernas,dumbbell bent over row,back,upper back,dumbbell
+1651,curl de bíceps en zancada con movimiento de bowling con mancuerna,dumbbell bicep curl lunge with bowling motion,upper arms,biceps,dumbbell
+1652,curl de bíceps sobre pelota suiza con pierna elevada con mancuerna,dumbbell bicep curl on exercise ball with leg raised,upper arms,biceps,dumbbell
+1653,curl de bíceps en apoyo unipodal con mancuerna,dumbbell bicep curl with stork stance,upper arms,biceps,dumbbell
+0294,curl de bíceps con mancuernas,dumbbell biceps curl,upper arms,biceps,dumbbell
+2401,curl de bíceps con mancuernas (con arm blaster),dumbbell biceps curl (with arm blaster),upper arms,biceps,dumbbell
+1654,curl de bíceps invertido con mancuernas,dumbbell biceps curl reverse,upper arms,biceps,dumbbell
+1655,curl de bíceps en sentadilla con mancuernas,dumbbell biceps curl squat,upper arms,biceps,dumbbell
+1656,curl de bíceps en V-sit sobre bosu con mancuernas,dumbbell biceps curl v sit on bosu ball,upper arms,biceps,dumbbell
+1201,burpee con mancuernas,dumbbell burpee,cardio,cardiovascular system,dumbbell
+0295,cargada con mancuernas,dumbbell clean,upper legs,glutes,dumbbell
+1731,press con agarre cerrado con mancuernas,dumbbell close grip press,upper arms,triceps,dumbbell
+0296,press con agarre cerrado con mancuernas,dumbbell close-grip press,upper arms,triceps,dumbbell
+0297,curl concentrado con mancuerna,dumbbell concentration curl,upper arms,biceps,dumbbell
+3635,zancada adelante contralateral con mancuerna,dumbbell contralateral forward lunge,upper legs,glutes,dumbbell
+0298,curl martillo cruzado con mancuerna,dumbbell cross body hammer curl,upper arms,biceps,dumbbell
+1657,curl martillo cruzado con mancuerna (v. 2),dumbbell cross body hammer curl v. 2,upper arms,biceps,dumbbell
+0299,press cubano con mancuernas,dumbbell cuban press,shoulders,delts,dumbbell
+2136,press cubano con mancuernas (v. 2),dumbbell cuban press v. 2,shoulders,delts,dumbbell
+0300,peso muerto con mancuernas,dumbbell deadlift,upper legs,glutes,dumbbell
+0301,press de banca declinado con mancuernas,dumbbell decline bench press,chest,pectorals,dumbbell
+0302,apertura declinada con mancuernas,dumbbell decline fly,chest,pectorals,dumbbell
+0303,press martillo declinado con mancuernas,dumbbell decline hammer press,chest,pectorals,dumbbell
+1276,apertura declinada a un brazo con mancuerna,dumbbell decline one arm fly,chest,pectorals,dumbbell
+1617,press martillo declinado a un brazo con mancuerna,dumbbell decline one arm hammer press,upper arms,triceps,dumbbell
+0305,encogimiento de hombros declinado con mancuernas,dumbbell decline shrug,back,traps,dumbbell
+0304,encogimiento de hombros declinado con mancuernas (v. 2),dumbbell decline shrug v. 2,back,traps,dumbbell
+0306,extensión de tríceps declinada con mancuernas,dumbbell decline triceps extension,upper arms,triceps,dumbbell
+0307,apertura declinada con giro con mancuernas,dumbbell decline twist fly,chest,pectorals,dumbbell
+1437,curl de dedos con mancuernas,dumbbell finger curls,lower arms,forearms,dumbbell
+0308,apertura con mancuernas,dumbbell fly,chest,pectorals,dumbbell
+1277,apertura sobre pelota suiza con mancuernas,dumbbell fly on exercise ball,chest,pectorals,dumbbell
+1732,extensión de tríceps en zancada adelante con mancuernas,dumbbell forward lunge triceps extension,upper arms,triceps,dumbbell
+0310,elevación frontal con mancuernas,dumbbell front raise,shoulders,delts,dumbbell
+0309,elevación frontal con mancuernas (v. 2),dumbbell front raise v. 2,shoulders,delts,dumbbell
+0311,elevación lateral tipo full can con mancuernas,dumbbell full can lateral raise,shoulders,delts,dumbbell
+1760,sentadilla goblet con mancuerna,dumbbell goblet squat,upper legs,quads,dumbbell
+0313,curl martillo con mancuernas,dumbbell hammer curl,upper arms,biceps,dumbbell
+1659,curl martillo sobre pelota suiza con mancuernas,dumbbell hammer curl on exercise ball,upper arms,biceps,dumbbell
+0312,curl martillo con mancuernas (v. 2),dumbbell hammer curl v. 2,upper arms,biceps,dumbbell
+2402,curl martillo con mancuernas (con arm blaster),dumbbell hammer curls (with arm blaster),upper arms,biceps,dumbbell
+1664,curl alto con mancuernas,dumbbell high curl,upper arms,biceps,dumbbell
+3545,press inclinado alternado con mancuernas,dumbbell incline alternate press,chest,pectorals,dumbbell
+0314,press de banca inclinado con mancuernas,dumbbell incline bench press,chest,pectorals,dumbbell
+0315,curl de bíceps inclinado con mancuernas,dumbbell incline biceps curl,upper arms,biceps,dumbbell
+0316,aperturas inclinadas con mancuernas,dumbbell incline breeding,chest,pectorals,dumbbell
+0318,curl inclinado con mancuernas,dumbbell incline curl,upper arms,biceps,dumbbell
+0317,curl inclinado con mancuernas (v. 2),dumbbell incline curl v. 2,upper arms,biceps,dumbbell
+0319,apertura inclinada con mancuernas,dumbbell incline fly,chest,pectorals,dumbbell
+1278,apertura inclinada sobre pelota suiza con mancuernas,dumbbell incline fly on exercise ball,chest,pectorals,dumbbell
+0320,curl martillo inclinado con mancuernas,dumbbell incline hammer curl,upper arms,biceps,dumbbell
+0321,press martillo inclinado con mancuernas,dumbbell incline hammer press,chest,pectorals,dumbbell
+1618,press martillo inclinado sobre pelota suiza con mancuernas,dumbbell incline hammer press on exercise ball,upper arms,triceps,dumbbell
+0322,curl de bíceps interno inclinado con mancuernas,dumbbell incline inner biceps curl,upper arms,biceps,dumbbell
+1279,apertura inclinada a un brazo con mancuerna,dumbbell incline one arm fly,chest,pectorals,dumbbell
+1280,apertura inclinada a un brazo sobre pelota suiza con mancuerna,dumbbell incline one arm fly on exercise ball,chest,pectorals,dumbbell
+1619,press martillo inclinado a un brazo con mancuerna,dumbbell incline one arm hammer press,upper arms,triceps,dumbbell
+1620,press martillo inclinado a un brazo sobre pelota suiza con mancuerna,dumbbell incline one arm hammer press on exercise ball,upper arms,triceps,dumbbell
+0323,elevación lateral inclinada a un brazo con mancuerna,dumbbell incline one arm lateral raise,shoulders,delts,dumbbell
+1281,press inclinado a un brazo con mancuerna,dumbbell incline one arm press,chest,pectorals,dumbbell
+1282,press inclinado a un brazo sobre pelota suiza con mancuerna,dumbbell incline one arm press on exercise ball,chest,pectorals,dumbbell
+0324,press inclinado con palmas enfrentadas con mancuernas,dumbbell incline palm-in press,chest,pectorals,dumbbell
+1283,press inclinado sobre pelota suiza con mancuernas,dumbbell incline press on exercise ball,chest,pectorals,dumbbell
+0325,elevación inclinada con mancuernas,dumbbell incline raise,shoulders,delts,dumbbell
+0326,elevación posterior inclinada con mancuernas,dumbbell incline rear lateral raise,shoulders,delts,dumbbell
+0327,remo inclinado con mancuernas,dumbbell incline row,back,upper back,dumbbell
+0328,elevación de hombros inclinada con mancuernas,dumbbell incline shoulder raise,chest,serratus anterior,dumbbell
+0329,encogimiento de hombros inclinado con mancuernas,dumbbell incline shrug,back,traps,dumbbell
+3542,elevación en T inclinada con mancuernas,dumbbell incline t-raise,shoulders,delts,dumbbell
+0330,extensión de tríceps inclinada con mancuernas,dumbbell incline triceps extension,upper arms,triceps,dumbbell
+0331,aperturas inclinadas con giro con mancuernas,dumbbell incline twisted flyes,chest,pectorals,dumbbell
+1733,extensión a dos brazos inclinada con mancuerna,dumbbell incline two arm extension,upper arms,triceps,dumbbell
+3541,elevación en Y inclinada con mancuernas,dumbbell incline y-raise,back,upper back,dumbbell
+0332,cruz de hierro con mancuernas,dumbbell iron cross,shoulders,delts,dumbbell
+0333,patada de tríceps con mancuernas,dumbbell kickback,upper arms,triceps,dumbbell
+1734,patadas de tríceps sobre pelota suiza con mancuernas,dumbbell kickbacks on exercise ball,upper arms,triceps,dumbbell
+1660,curl de bíceps de rodillas sobre pelota suiza con mancuernas,dumbbell kneeling bicep curl exercise ball,upper arms,biceps,dumbbell
+0334,elevación lateral con mancuernas,dumbbell lateral raise,shoulders,delts,dumbbell
+0335,elevación lateral y frontal con mancuernas,dumbbell lateral to front raise,shoulders,delts,dumbbell
+0336,zancada con mancuernas,dumbbell lunge,upper legs,glutes,dumbbell
+1658,zancada con curl de bíceps con mancuernas,dumbbell lunge with bicep curl,upper arms,biceps,dumbbell
+0337,extensión acostado con mancuerna (por delante de la cara),dumbbell lying extension (across face),upper arms,triceps,dumbbell
+1729,extensión alternada acostado con mancuernas,dumbbell lying alternate extension,upper arms,triceps,dumbbell
+0338,press de codos acostado con mancuernas,dumbbell lying elbow press,upper arms,triceps,dumbbell
+0863,rotación externa de hombro acostado con mancuerna,dumbbell lying external shoulder rotation,shoulders,delts,dumbbell
+0339,curl femoral acostado con mancuerna,dumbbell lying femoral,upper legs,hamstrings,dumbbell
+0340,press martillo acostado con mancuernas,dumbbell lying hammer press,chest,pectorals,dumbbell
+2470,elevación de deltoides posterior acostado en el piso con mancuernas,dumbbell lying on floor rear delt raise,shoulders,delts,dumbbell
+0341,elevación posterior de deltoides a un brazo acostado con mancuerna,dumbbell lying one arm deltoid rear,shoulders,delts,dumbbell
+0343,press a un brazo acostado con mancuerna,dumbbell lying one arm press,chest,pectorals,dumbbell
+0342,press a un brazo acostado con mancuerna (v. 2),dumbbell lying one arm press v. 2,chest,pectorals,dumbbell
+0344,extensión de tríceps a un brazo pronado acostado con mancuerna,dumbbell lying one arm pronated triceps extension,upper arms,triceps,dumbbell
+0345,elevación posterior a un brazo acostado con mancuerna,dumbbell lying one arm rear lateral raise,shoulders,delts,dumbbell
+0346,extensión de tríceps a un brazo supinado acostado con mancuerna,dumbbell lying one arm supinated triceps extension,upper arms,triceps,dumbbell
+0347,pronación acostado con mancuerna,dumbbell lying pronation,lower arms,forearms,dumbbell
+2705,pronación acostado en el piso con mancuerna,dumbbell lying pronation on floor,lower arms,forearms,dumbbell
+1284,pullover acostado sobre pelota suiza con mancuerna,dumbbell lying pullover on exercise ball,chest,pectorals,dumbbell
+1328,remo para deltoides posterior acostado con mancuernas,dumbbell lying rear delt row,back,upper back,dumbbell
+0348,elevación posterior acostado con mancuernas,dumbbell lying rear lateral raise,shoulders,delts,dumbbell
+1735,extensión individual acostado con mancuerna,dumbbell lying single extension,upper arms,triceps,dumbbell
+0349,supinación acostado con mancuerna,dumbbell lying supination,lower arms,forearms,dumbbell
+2706,supinación acostado en el piso con mancuerna,dumbbell lying supination on floor,lower arms,forearms,dumbbell
+1661,curl de bíceps boca arriba acostado con mancuernas,dumbbell lying supine biceps curl,upper arms,biceps,dumbbell
+0350,curl boca arriba acostado con mancuernas,dumbbell lying supine curl,upper arms,biceps,dumbbell
+0351,extensión de tríceps acostado con mancuernas,dumbbell lying triceps extension,upper arms,triceps,dumbbell
+1662,curl abierto acostado con mancuernas,dumbbell lying wide curl,upper arms,biceps,dumbbell
+0352,press de banca con agarre neutro con mancuernas,dumbbell neutral grip bench press,upper arms,triceps,dumbbell
+1285,apertura a un brazo en banco con mancuerna,dumbbell one arm bench fly,chest,pectorals,dumbbell
+0292,remo con torso inclinado a un brazo con mancuerna,dumbbell one arm bent-over row,back,upper back,dumbbell
+1286,apertura de pecho a un brazo sobre pelota suiza con mancuerna,dumbbell one arm chest fly on exercise ball,chest,pectorals,dumbbell
+0353,curl concentrado a un brazo con mancuerna (sobre pelota suiza),dumbbell one arm concentration curl (on stability ball),upper arms,biceps,dumbbell
+1287,press de pecho declinado a un brazo con mancuerna,dumbbell one arm decline chest press,chest,pectorals,dumbbell
+1288,apertura a un brazo sobre pelota suiza con mancuerna,dumbbell one arm fly on exercise ball,chest,pectorals,dumbbell
+1736,press francés a un brazo sobre pelota suiza con mancuerna,dumbbell one arm french press on exercise ball,upper arms,triceps,dumbbell
+1663,curl predicador martillo a un brazo con mancuerna,dumbbell one arm hammer preacher curl,upper arms,biceps,dumbbell
+1621,press martillo a un brazo sobre pelota suiza con mancuerna,dumbbell one arm hammer press on exercise ball,upper arms,triceps,dumbbell
+1289,press de pecho inclinado a un brazo con mancuerna,dumbbell one arm incline chest press,chest,pectorals,dumbbell
+0354,patada de tríceps a un brazo con mancuerna,dumbbell one arm kickback,upper arms,triceps,dumbbell
+0355,elevación lateral a un brazo con mancuerna,dumbbell one arm lateral raise,shoulders,delts,dumbbell
+0356,elevación lateral a un brazo con apoyo con mancuerna,dumbbell one arm lateral raise with support,shoulders,delts,dumbbell
+1290,press a un brazo sobre pelota suiza con mancuerna,dumbbell one arm press on exercise ball,chest,pectorals,dumbbell
+1665,curl a un brazo boca abajo con mancuerna,dumbbell one arm prone curl,upper arms,biceps,dumbbell
+1666,curl martillo a un brazo boca abajo con mancuerna,dumbbell one arm prone hammer curl,upper arms,biceps,dumbbell
+1291,pullover a un brazo sobre pelota suiza con mancuerna,dumbbell one arm pullover on exercise ball,chest,pectorals,dumbbell
+0358,curl invertido de muñeca a un brazo con mancuerna,dumbbell one arm reverse wrist curl,lower arms,forearms,dumbbell
+0359,apertura posterior a un brazo con apoyo con mancuerna,dumbbell one arm reverse fly (with support),shoulders,delts,dumbbell
+1622,press con agarre invertido a un brazo con mancuerna,dumbbell one arm reverse grip press,chest,pectorals,dumbbell
+1414,curl predicador invertido a un brazo con mancuerna,dumbbell one arm reverse preacher curl,upper arms,biceps,dumbbell
+1667,curl araña invertido a un brazo con mancuerna,dumbbell one arm reverse spider curl,upper arms,biceps,dumbbell
+1668,curl de bíceps a un brazo sentado sobre pelota suiza con mancuerna,dumbbell one arm seated bicep curl on exercise ball,upper arms,biceps,dumbbell
+1669,curl martillo a un brazo sentado con mancuerna,dumbbell one arm seated hammer curl,upper arms,biceps,dumbbell
+1415,curl de muñeca neutro a un brazo sentado con mancuerna,dumbbell one arm seated neutral wrist curl,lower arms,forearms,dumbbell
+0361,press de hombros a un brazo con mancuerna,dumbbell one arm shoulder press,shoulders,delts,dumbbell
+0360,press de hombros a un brazo con mancuerna (v. 2),dumbbell one arm shoulder press v. 2,shoulders,delts,dumbbell
+3888,arranque a un brazo con mancuerna,dumbbell one arm snatch,upper legs,glutes,dumbbell
+1670,curl a un brazo de pie con mancuerna,dumbbell one arm standing curl,upper arms,biceps,dumbbell
+1671,curl martillo a un brazo de pie con mancuerna,dumbbell one arm standing hammer curl,upper arms,biceps,dumbbell
+0362,extensión de tríceps a un brazo con mancuerna (en banco),dumbbell one arm triceps extension (on bench),upper arms,triceps,dumbbell
+0363,remo al mentón a un brazo con mancuerna,dumbbell one arm upright row,shoulders,delts,dumbbell
+0364,curl de muñeca a un brazo con mancuerna,dumbbell one arm wrist curl,lower arms,forearms,dumbbell
+1672,curl predicador zottman a un brazo con mancuerna,dumbbell one arm zottman preacher curl,upper arms,biceps,dumbbell
+1292,apertura a una pierna sobre pelota suiza con mancuerna,dumbbell one leg fly on exercise ball,chest,pectorals,dumbbell
+0365,curl de muñeca neutro sobre banco con mancuerna,dumbbell over bench neutral wrist curl,upper arms,biceps,dumbbell
+0366,curl de muñeca neutro a un brazo sobre banco con mancuerna,dumbbell over bench one arm neutral wrist curl,upper arms,biceps,dumbbell
+1441,curl invertido de muñeca a un brazo sobre banco con mancuerna,dumbbell over bench one arm reverse wrist curl,lower arms,forearms,dumbbell
+0367,curl de muñeca a un brazo sobre banco con mancuerna,dumbbell over bench one arm wrist curl,lower arms,forearms,dumbbell
+0368,curl invertido de muñeca sobre banco con mancuerna,dumbbell over bench revers wrist curl,lower arms,forearms,dumbbell
+0369,curl de muñeca sobre banco con mancuerna,dumbbell over bench wrist curl,lower arms,forearms,dumbbell
+1329,remo con torso inclinado y rotación de muñeca con mancuernas,dumbbell palm rotational bent over row,back,upper back,dumbbell
+1623,press de banca inclinado con palmas enfrentadas con mancuernas,dumbbell palms in incline bench press,upper arms,triceps,dumbbell
+0370,curl predicador martillo con mancuerna,dumbbell peacher hammer curl,upper arms,biceps,dumbbell
+0371,sentadilla pliométrica con mancuernas,dumbbell plyo squat,upper legs,glutes,dumbbell
+0372,curl predicador con mancuernas,dumbbell preacher curl,upper arms,biceps,dumbbell
+1673,curl predicador sobre pelota suiza con mancuernas,dumbbell preacher curl over exercise ball,upper arms,biceps,dumbbell
+1293,press sobre pelota suiza con mancuernas,dumbbell press on exercise ball,chest,pectorals,dumbbell
+0373,extensión de tríceps con agarre pronado con mancuernas,dumbbell pronate-grip triceps extension,upper arms,triceps,dumbbell
+0374,curl inclinado boca abajo con mancuernas,dumbbell prone incline curl,upper arms,biceps,dumbbell
+1674,curl martillo inclinado boca abajo con mancuernas,dumbbell prone incline hammer curl,upper arms,biceps,dumbbell
+0375,pullover con mancuerna,dumbbell pullover,chest,pectorals,dumbbell
+1294,pullover con extensión de cadera sobre pelota suiza con mancuerna,dumbbell pullover hip extension on exercise ball,chest,pectorals,dumbbell
+1295,pullover sobre pelota suiza con mancuerna,dumbbell pullover on exercise ball,chest,pectorals,dumbbell
+1700,push press con mancuernas,dumbbell push press,shoulders,delts,dumbbell
+0376,elevación con mancuernas,dumbbell raise,shoulders,delts,dumbbell
+2292,elevación de deltoides posterior con mancuernas,dumbbell rear delt raise,shoulders,delts,dumbbell
+0377,remo para deltoides posterior con mancuernas,dumbbell rear delt row_shoulder,shoulders,delts,dumbbell
+0378,apertura posterior con mancuernas,dumbbell rear fly,shoulders,delts,dumbbell
+0380,elevación posterior con mancuernas,dumbbell rear lateral raise,shoulders,delts,dumbbell
+0379,elevación posterior con mancuernas (cabeza apoyada),dumbbell rear lateral raise (support head),shoulders,delts,dumbbell
+0381,zancada hacia atrás con mancuernas,dumbbell rear lunge,upper legs,glutes,dumbbell
+0382,curl de bíceps con agarre invertido con mancuernas,dumbbell revers grip biceps curl,upper arms,biceps,dumbbell
+1624,press de banca invertido con mancuernas,dumbbell reverse bench press,chest,pectorals,dumbbell
+0383,apertura posterior con mancuernas,dumbbell reverse fly,shoulders,delts,dumbbell
+1330,remo a un brazo en banco inclinado con agarre invertido con mancuerna,dumbbell reverse grip incline bench one arm row,back,upper back,dumbbell
+1331,remo a dos brazos en banco inclinado con agarre invertido con mancuernas,dumbbell reverse grip incline bench two arm row,back,upper back,dumbbell
+2327,remo con agarre invertido con mancuernas,dumbbell reverse grip row (female),back,upper back,dumbbell
+0384,curl predicador invertido con mancuernas,dumbbell reverse preacher curl,upper arms,biceps,dumbbell
+1675,curl araña invertido con mancuernas,dumbbell reverse spider curl,upper arms,biceps,dumbbell
+0385,curl invertido de muñeca con mancuernas,dumbbell reverse wrist curl,lower arms,forearms,dumbbell
+1459,peso muerto rumano con mancuernas,dumbbell romanian deadlift,upper legs,glutes,dumbbell
+0386,apertura posterior con rotación con mancuernas,dumbbell rotation reverse fly,shoulders,delts,dumbbell
+2397,press scott con mancuernas,dumbbell scott press,shoulders,delts,dumbbell
+0387,elevación frontal alternada sentado con mancuernas,dumbbell seated alternate front raise,shoulders,delts,dumbbell
+1676,curl martillo alternado sentado sobre pelota suiza con mancuernas,dumbbell seated alternate hammer curl on exercise ball,upper arms,biceps,dumbbell
+0388,press alternado sentado con mancuernas,dumbbell seated alternate press,shoulders,delts,dumbbell
+3546,press de hombros alternado sentado con mancuernas,dumbbell seated alternate shoulder,shoulders,delts,dumbbell
+0389,extensión sentado en banco con mancuernas,dumbbell seated bench extension,upper arms,triceps,dumbbell
+2317,elevación lateral con brazos flexionados sentado con mancuernas,dumbbell seated bent arm lateral raise,shoulders,delts,dumbbell
+1730,patada de tríceps alternada con torso inclinado sentado con mancuernas,dumbbell seated bent over alternate kickback,upper arms,triceps,dumbbell
+1737,extensión de tríceps con torso inclinado sentado con mancuernas,dumbbell seated bent over triceps extension,upper arms,triceps,dumbbell
+1677,curl de bíceps sentado con mancuernas,dumbbell seated bicep curl,upper arms,biceps,dumbbell
+0390,curl de bíceps sentado con mancuernas (sobre pelota suiza),dumbbell seated biceps curl (on stability ball),upper arms,biceps,dumbbell
+3547,curl de bíceps al press de hombros sentado con mancuernas,dumbbell seated biceps curl to shoulder press,upper arms,biceps,dumbbell
+1379,elevación de gemelos sentado con mancuernas,dumbbell seated calf raise,lower legs,calves,dumbbell
+0391,curl sentado con mancuernas,dumbbell seated curl,upper arms,biceps,dumbbell
+0392,elevación frontal sentado con mancuernas,dumbbell seated front raise,shoulders,delts,dumbbell
+1678,curl martillo sentado con mancuernas,dumbbell seated hammer curl,upper arms,biceps,dumbbell
+0393,curl de bíceps interno sentado con mancuernas,dumbbell seated inner biceps curl,upper arms,biceps,dumbbell
+0394,patada de tríceps sentado con mancuernas,dumbbell seated kickback,upper arms,triceps,dumbbell
+0396,elevación lateral sentado con mancuernas,dumbbell seated lateral raise,shoulders,delts,dumbbell
+0395,elevación lateral sentado con mancuernas (v. 2),dumbbell seated lateral raise v. 2,shoulders,delts,dumbbell
+0397,curl de muñeca neutro sentado con mancuernas,dumbbell seated neutral wrist curl,upper arms,biceps,dumbbell
+1679,curl de bíceps a un brazo sentado sobre pelota suiza con pierna elevada con mancuerna,dumbbell seated one arm bicep curl on exercise ball with leg raised,upper arms,biceps,dumbbell
+0398,patada de tríceps a un brazo sentado con mancuerna,dumbbell seated one arm kickback,upper arms,triceps,dumbbell
+0399,rotación a un brazo sentado con mancuerna,dumbbell seated one arm rotate,lower arms,forearms,dumbbell
+0400,elevación de gemelo a una pierna sentado con mancuerna,dumbbell seated one leg calf raise,lower legs,calves,dumbbell
+1380,elevación de gemelo a una pierna sentado con mancuerna (agarre martillo),dumbbell seated one leg calf raise - hammer grip,lower legs,calves,dumbbell
+1381,elevación de gemelo a una pierna sentado con mancuerna (palma arriba),dumbbell seated one leg calf raise - palm up,lower legs,calves,dumbbell
+0401,curl de muñeca con palmas arriba sentado con mancuernas,dumbbell seated palms up wrist curl,lower arms,forearms,dumbbell
+0402,curl predicador sentado con mancuernas,dumbbell seated preacher curl,upper arms,biceps,dumbbell
+0403,curl concentrado con agarre invertido sentado con mancuerna,dumbbell seated revers grip concentration curl,upper arms,biceps,dumbbell
+1738,extensión de tríceps por encima de la cabeza a un brazo con agarre invertido sentado con mancuerna,dumbbell seated reverse grip one arm overhead tricep extension,upper arms,triceps,dumbbell
+0405,press de hombros sentado con mancuernas,dumbbell seated shoulder press,shoulders,delts,dumbbell
+0404,press de hombros sentado con mancuernas (agarre paralelo),dumbbell seated shoulder press (parallel grip),shoulders,delts,dumbbell
+2188,extensión de tríceps sentado con mancuerna,dumbbell seated triceps extension,upper arms,triceps,dumbbell
+0406,encogimiento de hombros con mancuernas,dumbbell shrug,back,traps,dumbbell
+0407,flexión lateral de tronco con mancuerna,dumbbell side bend,waist,abs,dumbbell
+0408,elevación a una mano de costado con mancuerna,dumbbell side lying one hand raise,shoulders,delts,dumbbell
+3664,plancha lateral con apertura posterior con mancuerna,dumbbell side plank with rear fly,back,upper back,dumbbell
+3548,traslado por encima de la cabeza a un brazo con mancuerna,dumbbell single arm overhead carry,shoulders,delts,dumbbell
+0409,elevación de gemelo a una pierna con mancuerna,dumbbell single leg calf raise,lower legs,calves,dumbbell
+1757,peso muerto a una pierna con mancuerna,dumbbell single leg deadlift,upper legs,glutes,dumbbell
+2805,peso muerto a una pierna con apoyo en cajón con mancuerna,dumbbell single leg deadlift with stepbox support,upper legs,glutes,dumbbell
+0410,sentadilla búlgara a una pierna con mancuernas,dumbbell single leg split squat,upper legs,quads,dumbbell
+0411,sentadilla a una pierna con mancuerna,dumbbell single leg squat,upper legs,glutes,dumbbell
+0413,sentadilla con mancuernas,dumbbell squat,upper legs,glutes,dumbbell
+3560,curl martillo alternado y press de pie con mancuernas,dumbbell standing alternate hammer curl and press,upper arms,biceps,dumbbell
+0414,press alternado por encima de la cabeza de pie con mancuernas,dumbbell standing alternate overhead press,shoulders,delts,dumbbell
+0415,elevación alternada de pie con mancuernas,dumbbell standing alternate raise,shoulders,delts,dumbbell
+1739,patada de tríceps alternada de pie con mancuernas,dumbbell standing alternating tricep kickback,upper arms,triceps,dumbbell
+2143,círculos alrededor del cuerpo de pie con mancuerna,dumbbell standing around world,shoulders,delts,dumbbell
+1740,extensión de tríceps a un brazo con torso inclinado de pie con mancuerna,dumbbell standing bent over one arm triceps extension,upper arms,triceps,dumbbell
+1741,extensión de tríceps a dos brazos con torso inclinado de pie con mancuernas,dumbbell standing bent over two arm triceps extension,upper arms,triceps,dumbbell
+0416,curl de bíceps de pie con mancuernas,dumbbell standing biceps curl,upper arms,biceps,dumbbell
+0417,elevación de gemelos de pie con mancuernas,dumbbell standing calf raise,lower legs,calves,dumbbell
+0418,curl concentrado de pie con mancuerna,dumbbell standing concentration curl,upper arms,biceps,dumbbell
+0419,elevación frontal por encima de la cabeza de pie con mancuernas,dumbbell standing front raise above head,shoulders,delts,dumbbell
+2321,curl de bíceps interno de pie con mancuernas (v. 2),dumbbell standing inner biceps curl v. 2,upper arms,biceps,dumbbell
+0420,patada de tríceps de pie con mancuernas,dumbbell standing kickback,upper arms,triceps,dumbbell
+0421,curl concentrado a un brazo de pie con mancuerna,dumbbell standing one arm concentration curl,upper arms,biceps,dumbbell
+0422,curl a un brazo de pie con mancuerna (sobre banco inclinado),dumbbell standing one arm curl (over incline bench),upper arms,biceps,dumbbell
+1680,curl a un brazo de pie sobre banco inclinado con mancuerna,dumbbell standing one arm curl over incline bench,upper arms,biceps,dumbbell
+0423,extensión a un brazo de pie con mancuerna,dumbbell standing one arm extension,upper arms,triceps,dumbbell
+0424,press a un brazo con palma adentro de pie con mancuerna,dumbbell standing one arm palm in press,shoulders,delts,dumbbell
+0425,curl invertido a un brazo de pie con mancuerna,dumbbell standing one arm reverse curl,upper arms,biceps,dumbbell
+0426,press por encima de la cabeza de pie con mancuernas,dumbbell standing overhead press,shoulders,delts,dumbbell
+0427,press con palmas enfrentadas de pie con mancuernas,dumbbell standing palms in press,shoulders,delts,dumbbell
+0428,curl predicador de pie con mancuernas,dumbbell standing preacher curl,upper arms,biceps,dumbbell
+0429,curl invertido de pie con mancuernas,dumbbell standing reverse curl,upper arms,biceps,dumbbell
+0430,extensión de tríceps de pie con mancuernas,dumbbell standing triceps extension,upper arms,triceps,dumbbell
+2293,curl predicador zottman de pie con mancuernas,dumbbell standing zottman preacher curl,upper arms,biceps,dumbbell
+1684,subida al cajón con equilibrio a una pierna y curl de bíceps con mancuernas,dumbbell step up single leg balance with bicep curl,upper arms,biceps,dumbbell
+0431,subida al cajón con mancuernas,dumbbell step-up,upper legs,glutes,dumbbell
+2796,subida al cajón con zancada con mancuernas,dumbbell step-up lunge,upper legs,quads,dumbbell
+2812,subida al cajón con sentadilla búlgara con mancuernas,dumbbell step-up split squat,upper legs,quads,dumbbell
+0432,peso muerto con piernas rígidas con mancuernas,dumbbell stiff leg deadlift,upper legs,glutes,dumbbell
+0433,pullover con brazos rectos con mancuerna,dumbbell straight arm pullover,chest,pectorals,dumbbell
+0434,peso muerto con piernas rectas con mancuernas,dumbbell straight leg deadlift,upper legs,glutes,dumbbell
+2808,pull through sumo con mancuerna,dumbbell sumo pull through,upper legs,glutes,dumbbell
+2803,sentadilla con apoyo con mancuernas,dumbbell supported squat,upper legs,quads,dumbbell
+0436,press tate con mancuernas,dumbbell tate press,upper arms,triceps,dumbbell
+1742,patada de tríceps en apoyo unipodal con mancuerna,dumbbell tricep kickback with stork stance,upper arms,triceps,dumbbell
+1743,press de banca con giro con mancuernas,dumbbell twisting bench press,upper arms,triceps,dumbbell
+0437,remo al mentón con mancuernas,dumbbell upright row,shoulders,delts,dumbbell
+1765,remo al mentón con mancuernas (vista posterior),dumbbell upright row (back pov),shoulders,delts,dumbbell
+0864,rotación externa de hombro al mentón con mancuerna,dumbbell upright shoulder external rotation,shoulders,delts,dumbbell
+5201,curl de bíceps tipo mozo con mancuerna,dumbbell waiter biceps curl,upper arms,biceps,dumbbell
+0438,press en W con mancuernas,dumbbell w-press,shoulders,delts,dumbbell
+0439,curl zottman con mancuernas,dumbbell zottman curl,upper arms,biceps,dumbbell
+2294,curl predicador zottman con mancuernas,dumbbell zottman preacher curl,upper arms,biceps,dumbbell
+2189,extensión de tríceps sentado con mancuernas,dumbbells seated triceps extension,upper arms,triceps,dumbbell
+1167,estiramiento dinámico de pecho,dynamic chest stretch (male),chest,pectorals,body weight
+3287,fondos de codos,elbow dips,upper arms,triceps,body weight
+1772,elevación de codos - flexión invertida,elbow lift - reverse push-up,back,upper back,body weight
+0443,codo a rodilla,elbow-to-knee,waist,abs,body weight
+3292,ascensor,elevator,back,upper back,body weight
+1332,elevaciones de brazos alternadas sobre pelota suiza,exercise ball alternating arm ups,back,lats,stability ball
+1333,extensión de espalda con brazos extendidos sobre pelota suiza,exercise ball back extension with arms extended,back,spine,stability ball
+1334,extensión de espalda con manos tras nuca sobre pelota suiza,exercise ball back extension with hands behind head,back,spine,stability ball
+1335,extensión de espalda con rodillas sin apoyo sobre pelota suiza,exercise ball back extension with knees off ground,back,spine,stability ball
+1336,extensión de espalda con rotación sobre pelota suiza,exercise ball back extension with rotation,back,spine,stability ball
+1744,fondo sobre pelota suiza,exercise ball dip,upper arms,triceps,stability ball
+1559,estiramiento de flexor de cadera sobre pelota suiza,exercise ball hip flexor stretch,upper legs,glutes,stability ball
+1338,abrazo sobre pelota suiza,exercise ball hug,back,spine,stability ball
+1339,estiramiento de dorsal sobre pelota suiza,exercise ball lat stretch,back,lats,stability ball
+1341,estiramiento de zona lumbar sobre pelota suiza (pirámide),exercise ball lower back stretch (pyramid),back,lats,stability ball
+1342,estiramiento lateral de dorsal acostado sobre pelota suiza,exercise ball lying side lat stretch,back,lats,stability ball
+1382,elevación de gemelos contra la pared sobre pelota suiza,exercise ball on the wall calf raise,lower legs,calves,dumbbell
+3241,elevación de gemelos contra la pared sobre pelota suiza (pelota de tenis entre los tobillos),exercise ball on the wall calf raise (tennis ball between ankles),lower legs,calves,dumbbell
+3240,elevación de gemelos contra la pared sobre pelota suiza (pelota de tenis entre las rodillas),exercise ball on the wall calf raise (tennis ball between knees),lower legs,calves,dumbbell
+1416,rotación del tren inferior a una pierna boca abajo sobre pelota suiza,exercise ball one leg prone lower body rotation,upper legs,glutes,stability ball
+1417,curl femoral con patada diagonal a una pierna sobre pelota suiza,exercise ball one legged diagonal kick hamstring curl,upper legs,glutes,stability ball
+1296,flexión pike sobre pelota suiza,exercise ball pike push up,chest,pectorals,stability ball
+1343,elevación de piernas boca abajo sobre pelota suiza,exercise ball prone leg raise,back,spine,stability ball
+1560,estiramiento de femorales sentado sobre pelota suiza,exercise ball seated hamstring stretch,upper legs,hamstrings,stability ball
+1745,estiramiento de tríceps sentado sobre pelota suiza,exercise ball seated triceps stretch,upper arms,triceps,stability ball
+1746,extensión de tríceps boca arriba sobre pelota suiza,exercise ball supine triceps extension,upper arms,triceps,dumbbell
+1747,press francés sobre pelota suiza con barra Z,ez bar french press on exercise ball,upper arms,triceps,ez barbell
+3010,pullover acostado con brazos flexionados con barra Z,ez bar lying bent arms pullover,back,lats,ez barbell
+1748,extensión de tríceps acostado con agarre cerrado tras nuca con barra Z,ez bar lying close grip triceps extension behind head,upper arms,triceps,ez barbell
+1344,remo con torso inclinado con agarre invertido con barra Z,ez bar reverse grip bent over row,back,upper back,ez barbell
+1682,curl concentrado sentado con agarre cerrado con barra Z,ez bar seated close grip concentration curl,upper arms,biceps,ez barbell
+1749,press francés de pie con barra Z,ez bar standing french press,upper arms,triceps,ez barbell
+0445,press antigravedad con barra Z,ez barbell anti gravity press,shoulders,delts,ez barbell
+1627,curl predicador con agarre cerrado con barra Z,ez barbell close grip preacher curl,upper arms,biceps,ez barbell
+0446,curl con agarre cerrado con barra Z,ez barbell close-grip curl,upper arms,biceps,ez barbell
+0447,curl con barra Z,ez barbell curl,upper arms,biceps,ez barbell
+0448,press hacia la cara declinado con agarre cerrado con barra Z,ez barbell decline close grip face press,upper arms,triceps,ez barbell
+2186,extensión de tríceps declinada con barra Z,ez barbell decline triceps extension,upper arms,triceps,ez barbell
+0449,extensión de tríceps inclinada con barra Z,ez barbell incline triceps extension,upper arms,triceps,ez barbell
+0450,press de banca JM con barra Z,ez barbell jm bench press,upper arms,triceps,ez barbell
+0451,curl con agarre invertido con barra Z,ez barbell reverse grip curl,upper arms,biceps,ez barbell
+0452,curl predicador con agarre invertido con barra Z,ez barbell reverse grip preacher curl,upper arms,biceps,ez barbell
+1458,curls sentado con barra Z,ez barbell seated curls,upper arms,biceps,ez barbell
+0453,extensión de tríceps sentado con barra Z,ez barbell seated triceps extension,upper arms,triceps,ez barbell
+0454,curl araña con barra Z,ez barbell spider curl,upper arms,biceps,ez barbell
+1628,curl araña con barra Z,ez barbell spider curl,upper arms,biceps,ez barbell
+2404,curl de bíceps con barra Z (con arm blaster),ez-bar biceps curl (with arm blaster),upper arms,biceps,ez barbell
+2432,press de banca con agarre cerrado con barra Z,ez-bar close-grip bench press,upper arms,triceps,ez barbell
+2741,curl de bíceps con agarre abierto de pie con barra Z,ez-barbell standing wide grip biceps curl,upper arms,biceps,ez barbell
+2133,caminata del granjero,farmers walk,upper legs,quads,dumbbell
+0455,curl de dedos,finger curls,lower arms,forearms,barbell
+3303,la bandera,flag,waist,abs,body weight
+0456,abdominal con piernas flexionadas (rodilla flexionada),flexion leg sit up (bent knee),waist,abs,body weight
+0457,abdominal con piernas flexionadas (brazo recto),flexion leg sit up (straight arm),waist,abs,body weight
+0458,apertura en el piso (con barra),floor fly (with barbell),chest,pectorals,barbell
+0459,patadas de tijera,flutter kicks,upper legs,glutes,body weight
+1472,salto hacia adelante,forward jump,upper legs,quads,body weight
+3470,zancada hacia adelante,forward lunge (male),upper legs,glutes,body weight
+3194,sentadilla frankenstein,frankenstein squat,upper legs,glutes,barbell
+2429,crunch rana,frog crunch,waist,abs,body weight
+3301,planche rana,frog planche,waist,abs,body weight
+3296,front lever,front lever,waist,abs,body weight
+3295,repeticiones de front lever,front lever reps,back,upper back,body weight
+0464,plancha frontal con giro,front plank with twist,waist,abs,body weight
+3315,maltés completo,full maltese,waist,abs,body weight
+3299,planche completo,full planche,waist,abs,body weight
+3327,flexión en planche completo,full planche push-up,chest,pectorals,body weight
+0466,dominada al esternón de gironda,gironda sternum chin,back,lats,body weight
+3561,marcha en puente de glúteos,glute bridge march,upper legs,glutes,body weight
+3523,puente de glúteos con ambas piernas en banco,glute bridge two legs on bench (male),upper legs,glutes,body weight
+3193,elevación glúteo-femoral,glute-ham raise,upper legs,hamstrings,body weight
+0467,dominada de gorila,gorilla chin,waist,abs,body weight
+0469,crunch de ingle,groin crunch,waist,abs,body weight
+1383,elevación de gemelos en hack,hack calf raise,lower legs,calves,sled machine
+1384,elevación de gemelo a una pierna en hack,hack one leg calf raise,lower legs,calves,sled machine
+3221,medias flexiones de rodilla,half knee bends (male),cardio,cardiovascular system,body weight
+3202,medio abdominal,half sit-up (male),waist,abs,body weight
+1511,estiramiento de femorales,hamstring stretch,upper legs,hamstrings,body weight
+2139,bicicleta de brazos,hands bike,chest,pectorals,upper body ergometer
+3218,toque de punta de pie en círculo con manos entrelazadas,hands clasped circular toe touch (male),upper legs,glutes,body weight
+3215,toque de punta de pie en círculo con manos entrelazadas al revés,hands reversed clasped circular toe touch (male),upper legs,glutes,body weight
+3302,parada de manos,handstand,upper arms,triceps,body weight
+0471,flexión en parada de manos,handstand push-up,upper arms,triceps,body weight
+1764,elevación de cadera y piernas colgado,hanging leg hip raise,waist,abs,body weight
+0472,elevación de piernas colgado,hanging leg raise,waist,abs,body weight
+1761,elevación oblicua de rodillas colgado,hanging oblique knee raise,waist,abs,body weight
+0473,pike colgado,hanging pike,waist,abs,body weight
+0474,elevación de cadera con piernas rectas colgado,hanging straight leg hip raise,waist,abs,body weight
+0475,elevación de piernas rectas colgado,hanging straight leg raise,waist,abs,body weight
+0476,elevación de cadera con piernas rectas y giro colgado,hanging straight twisting leg hip raise,waist,abs,body weight
+3636,rodilla alta contra la pared,high knee against wall,cardio,cardiovascular system,body weight
+0484,elevación de cadera (rodilla flexionada),hip raise (bent knee),waist,abs,body weight
+1418,abrazo de rodillas al pecho,hug keens to chest,upper legs,glutes,body weight
+3234,apertura hyght con mancuernas,hyght dumbbell fly,chest,pectorals,dumbbell
+0489,hiperextensión,hyperextension,back,spine,body weight
+0488,hiperextensión (en banco),hyperextension (on bench),back,spine,body weight
+3289,fondos imposibles,impossible dips,upper arms,triceps,body weight
+1471,gusano (inchworm),inchworm,waist,abs,body weight
+3698,gusano (inchworm) (v. 2),inchworm v. 2,waist,abs,body weight
+0490,flexión inclinada con agarre cerrado,incline close-grip push-up,upper arms,triceps,body weight
+0491,elevación de cadera con pierna inclinada (pierna recta),incline leg hip raise (leg straight),waist,abs,body weight
+0492,flexión inclinada con salto en profundidad,incline push up depth jump,chest,pectorals,body weight
+0493,flexión inclinada,incline push-up,chest,pectorals,body weight
+3785,flexión inclinada (sobre cajón),incline push-up (on box),chest,pectorals,body weight
+0494,flexión inclinada con agarre invertido,incline reverse grip push-up,chest,pectorals,body weight
+3011,flexión escapular inclinada,incline scapula push up,chest,serratus anterior,body weight
+0495,abdominal inclinado con giro,incline twisting sit-up,waist,abs,body weight
+1564,estiramiento intermedio de flexor de cadera y cuádriceps,intermediate hip flexor and quad stretch,upper legs,quads,rope
+0496,curl femoral invertido (apoyo en banco),inverse leg curl (bench support),upper legs,hamstrings,body weight
+2400,curl femoral invertido (en máquina de dominadas),inverse leg curl (on pull-up cable machine),upper legs,hamstrings,body weight
+0499,remo invertido,inverted row,back,upper back,body weight
+2300,remo invertido con rodillas flexionadas,inverted row bent knees,back,upper back,body weight
+2298,remo invertido en banco,inverted row on bench,back,upper back,body weight
+0497,remo invertido (v. 2),inverted row v. 2,back,upper back,body weight
+0498,remo invertido con correas,inverted row with straps,back,upper back,body weight
+1419,estiramiento cruz de hierro,iron cross stretch,upper legs,glutes,body weight
+1297,compresión isométrica de pecho,isometric chest squeeze,chest,pectorals,body weight
+0500,limpiaparabrisas isométrico,isometric wipers,chest,pectorals,body weight
+0501,burpee con salto de tijera,jack burpee,cardio,cardiovascular system,body weight
+3224,salto de tijera (jack jump),jack jump (male),cardio,cardiovascular system,body weight
+0507,abdominal navaja,jackknife sit-up,waist,abs,body weight
+0508,abdominal janda,janda sit-up,waist,abs,body weight
+2612,saltar la cuerda,jump rope,cardio,cardiovascular system,rope
+0514,sentadilla con salto,jump squat,upper legs,glutes,body weight
+0513,sentadilla con salto (v. 2),jump squat v. 2,upper legs,glutes,body weight
+0517,molino de viento avanzado con kettlebell,kettlebell advanced windmill,waist,abs,kettlebell
+0518,cargada colgante alternada con kettlebell,kettlebell alternating hang clean,lower arms,forearms,kettlebell
+0520,press alternado con kettlebell,kettlebell alternating press,shoulders,delts,kettlebell
+0519,press alternado en el piso con kettlebell,kettlebell alternating press on floor,chest,pectorals,kettlebell
+0521,remo renegado alternado con kettlebell,kettlebell alternating renegade row,back,upper back,kettlebell
+0522,remo alternado con kettlebell,kettlebell alternating row,back,upper back,kettlebell
+0523,press arnold con kettlebell,kettlebell arnold press,shoulders,delts,kettlebell
+0524,press inclinado (bent press) con kettlebell,kettlebell bent press,waist,abs,kettlebell
+0525,cargada bottoms-up desde posición colgante con kettlebell,kettlebell bottoms up clean from the hang position,upper arms,biceps,kettlebell
+0526,cargada colgante alternada doble con kettlebell,kettlebell double alternating hang clean,upper arms,biceps,kettlebell
+0527,envión doble con kettlebell,kettlebell double jerk,shoulders,delts,kettlebell
+0528,push press doble con kettlebell,kettlebell double push press,shoulders,delts,kettlebell
+0529,arranque doble con kettlebell,kettlebell double snatch,shoulders,delts,kettlebell
+0530,molino de viento doble con kettlebell,kettlebell double windmill,waist,abs,kettlebell
+0531,press a un brazo con rango extendido en el piso con kettlebell,kettlebell extended range one arm press on floor,chest,pectorals,kettlebell
+0532,figura 8 con kettlebell,kettlebell figure 8,waist,abs,kettlebell
+0533,sentadilla frontal con kettlebell,kettlebell front squat,upper legs,glutes,kettlebell
+0534,sentadilla goblet con kettlebell,kettlebell goblet squat,upper legs,glutes,kettlebell
+0535,cargada colgante con kettlebell,kettlebell hang clean,upper legs,hamstrings,kettlebell
+0536,zancada con pase por debajo con kettlebell,kettlebell lunge pass through,upper legs,glutes,kettlebell
+0537,cargada y envión a un brazo con kettlebell,kettlebell one arm clean and jerk,shoulders,delts,kettlebell
+1298,press en el piso a un brazo con kettlebell,kettlebell one arm floor press,chest,pectorals,kettlebell
+0538,envión a un brazo con kettlebell,kettlebell one arm jerk,shoulders,delts,kettlebell
+0539,press militar a un brazo hacia el costado con kettlebell,kettlebell one arm military press to the side,shoulders,delts,kettlebell
+0540,push press a un brazo con kettlebell,kettlebell one arm push press,shoulders,delts,kettlebell
+0541,remo a un brazo con kettlebell,kettlebell one arm row,back,upper back,kettlebell
+0542,arranque a un brazo con kettlebell,kettlebell one arm snatch,shoulders,delts,kettlebell
+0543,piernas de pirata con kettlebell,kettlebell pirate supper legs,shoulders,delts,kettlebell
+0544,sentadilla pistol con kettlebell,kettlebell pistol squat,upper legs,glutes,kettlebell
+0545,flexión pliométrica con kettlebell,kettlebell plyo push-up,chest,pectorals,kettlebell
+0546,press sentado con kettlebell,kettlebell seated press,shoulders,delts,kettlebell
+1438,press militar a dos brazos sentado con kettlebell,kettlebell seated two arm military press,shoulders,delts,kettlebell
+0547,press tipo balancín con kettlebell,kettlebell seesaw press,shoulders,delts,kettlebell
+0548,tirón alto sumo con kettlebell,kettlebell sumo high pull,back,traps,kettlebell
+0549,swing con kettlebell,kettlebell swing,upper legs,glutes,kettlebell
+0550,thruster con kettlebell,kettlebell thruster,shoulders,delts,kettlebell
+0551,turkish get-up con kettlebell (estilo sentadilla),kettlebell turkish get up (squat style),upper legs,glutes,kettlebell
+0552,cargada a dos brazos con kettlebell,kettlebell two arm clean,shoulders,delts,kettlebell
+0553,press militar a dos brazos con kettlebell,kettlebell two arm military press,shoulders,delts,kettlebell
+1345,remo a dos brazos con kettlebell,kettlebell two arm row,back,upper back,kettlebell
+0554,molino de viento con kettlebell,kettlebell windmill,waist,abs,kettlebell
+0555,kick out sit,kick out sit,upper legs,hamstrings,body weight
+0558,muscle up con kipping,kipping muscle up,back,lats,body weight
+3640,crunch con toque a la rodilla,knee touch crunch,waist,abs,body weight
+1420,sentadilla con salto de rodillas,kneeling jump squat,upper legs,glutes,barbell
+1346,estiramiento de dorsal de rodillas,kneeling lat stretch,back,lats,body weight
+3239,plancha de rodillas con toque al hombro,kneeling plank tap shoulder (male),waist,abs,body weight
+3211,flexión de rodillas,kneeling push-up (male),chest,pectorals,body weight
+3288,fondos coreanos,korean dips,chest,pectorals,body weight
+3418,dominada en L,l-pull-up,back,lats,body weight
+3419,L-sit en el piso,l-sit on floor,waist,abs,body weight
+0562,landmine 180,landmine 180,waist,abs,barbell
+3237,elevación lateral con landmine,landmine lateral raise,shoulders,delts,barbell
+3300,planche inclinado,lean planche,waist,abs,body weight
+2271,gancho de izquierda (boxeo),left hook. boxing,shoulders,delts,body weight
+0570,elevación de piernas al pecho en banco plano,leg pull in flat bench,waist,abs,body weight
+1576,estiramiento de femorales con pierna elevada,leg up hamstring stretch,upper legs,hamstrings,body weight
+2287,prensa de piernas alternada en máquina,lever alternate leg press,upper legs,quads,leverage machine
+0571,remo sentado alternado con agarre cerrado en máquina,lever alternating narrow grip seated row,back,upper back,leverage machine
+0572,dominada supina asistida en máquina,lever assisted chin-up,back,lats,leverage machine
+0573,extensión de espalda en máquina,lever back extension,back,spine,leverage machine
+0574,remo con torso inclinado en máquina,lever bent over row,back,upper back,barbell
+3200,remo con torso inclinado con barra en V en máquina,lever bent-over row with v-bar,back,upper back,leverage machine
+0575,curl de bíceps en máquina,lever bicep curl,upper arms,biceps,leverage machine
+2289,prensa de gemelos en máquina,lever calf press,lower legs,calves,leverage machine
+0577,press de pecho en máquina,lever chest press,chest,pectorals,leverage machine
+0576,press de pecho en máquina,lever chest press,chest,pectorals,leverage machine
+0578,peso muerto en máquina,lever deadlift,upper legs,glutes,leverage machine
+1300,press de pecho declinado en máquina,lever decline chest press,chest,pectorals,leverage machine
+1253,elevación de gemelos tipo burro en máquina,lever donkey calf raise,lower legs,calves,leverage machine
+0579,jalón al pecho frontal en máquina,lever front pulldown,back,lats,leverage machine
+0580,encogimiento de hombros sin agarre en máquina,lever gripless shrug,back,traps,leverage machine
+1439,encogimiento de hombros sin agarre en máquina (v. 2),lever gripless shrug v. 2,back,traps,leverage machine
+2288,cierre de manos en máquina,lever gripper hands,lower arms,forearms,leverage machine
+1615,curl predicador con agarre martillo en máquina,lever hammer grip preacher curl,upper arms,biceps,leverage machine
+0581,remo alto en máquina,lever high row,back,upper back,leverage machine
+2286,extensión de cadera en máquina (v. 2),lever hip extension v. 2,upper legs,glutes,leverage machine
+2611,prensa de piernas horizontal a una pierna en máquina,lever horizontal one leg press,upper legs,glutes,leverage machine
+1299,press de pecho inclinado en máquina,lever incline chest press,chest,pectorals,leverage machine
+1479,press de pecho inclinado en máquina (v. 2),lever incline chest press v. 2,chest,pectorals,leverage machine
+0582,curl femoral de rodillas en máquina,lever kneeling leg curl,upper legs,hamstrings,leverage machine
+0583,giro de rodillas en máquina,lever kneeling twist,waist,abs,leverage machine
+0584,elevación lateral en máquina,lever lateral raise,shoulders,delts,leverage machine
+0585,extensión de cuádriceps en máquina,lever leg extension,upper legs,quads,leverage machine
+0586,curl femoral acostado en máquina,lever lying leg curl,upper legs,hamstrings,leverage machine
+3195,curl femoral acostado de dos a una pierna en máquina,lever lying two-one leg curl,upper legs,hamstrings,leverage machine
+0587,press militar en máquina,lever military press,shoulders,delts,leverage machine
+0588,remo sentado con agarre cerrado en máquina,lever narrow grip seated row,back,upper back,leverage machine
+0589,remo con torso inclinado a un brazo en máquina,lever one arm bent over row,back,upper back,barbell
+1356,remo alto lateral a un brazo en máquina,lever one arm lateral high row,back,upper back,leverage machine
+1347,jalón lateral abierto a un brazo en máquina,lever one arm lateral wide pulldown,back,lats,leverage machine
+0590,press de hombros a un brazo en máquina,lever one arm shoulder press,shoulders,delts,leverage machine
+0591,fondo de tríceps con agarre prono en máquina,lever overhand triceps dip,upper arms,triceps,leverage machine
+0592,curl predicador en máquina,lever preacher curl,upper arms,biceps,leverage machine
+1614,curl predicador en máquina (v. 2),lever preacher curl v. 2,upper arms,biceps,leverage machine
+2285,pullover en máquina,lever pullover,back,lats,leverage machine
+2736,jalón al pecho con agarre invertido en máquina,lever reverse grip lateral pulldown,back,lats,leverage machine
+1616,curl predicador con agarre invertido en máquina,lever reverse grip preacher curl,upper arms,biceps,leverage machine
+1348,remo vertical con agarre invertido en máquina,lever reverse grip vertical row,back,upper back,leverage machine
+0593,hiperextensión invertida en máquina,lever reverse hyperextension,upper legs,glutes,leverage machine
+1349,remo en punta invertido en máquina,lever reverse t-bar row,back,upper back,leverage machine
+2315,gemelo rotatorio en máquina,lever rotary calf,lower legs,calves,leverage machine
+2335,prensa de gemelos sentado en máquina,lever seated calf press,lower legs,calves,leverage machine
+0594,elevación de gemelos sentado en máquina,lever seated calf raise,lower legs,calves,leverage machine
+1452,crunch sentado en máquina,lever seated crunch,waist,abs,leverage machine
+0595,crunch sentado en máquina (apoyo en el pecho),lever seated crunch (chest pad),waist,abs,leverage machine
+3760,crunch sentado en máquina (v. 2),lever seated crunch v. 2,waist,abs,leverage machine
+1451,fondo sentado en máquina,lever seated dip,upper arms,triceps,leverage machine
+0596,apertura sentado en máquina,lever seated fly,chest,pectorals,leverage machine
+3759,buenos días sentado en máquina,lever seated good morning,upper legs,glutes,leverage machine
+0597,abducción de cadera sentado en máquina,lever seated hip abduction,upper legs,abductors,leverage machine
+0598,aducción de cadera sentado en máquina,lever seated hip adduction,upper legs,adductors,leverage machine
+0599,curl femoral sentado en máquina,lever seated leg curl,upper legs,hamstrings,leverage machine
+0600,crunch con elevación de piernas sentado en máquina,lever seated leg raise crunch,waist,abs,leverage machine
+0602,apertura posterior sentado en máquina,lever seated reverse fly,shoulders,delts,leverage machine
+0601,apertura posterior sentado en máquina (agarre paralelo),lever seated reverse fly (parallel grip),shoulders,delts,leverage machine
+1350,remo sentado en máquina,lever seated row,back,upper back,leverage machine
+1385,elevación de gemelos en sentadilla sentado en la prensa de piernas,lever seated squat calf raise on leg press machine,lower legs,calves,leverage machine
+0603,press de hombros en máquina,lever shoulder press,shoulders,delts,leverage machine
+0869,press de hombros en máquina (v. 2),lever shoulder press v. 2,shoulders,delts,leverage machine
+2318,press de hombros en máquina (v. 3),lever shoulder press v. 3,shoulders,delts,leverage machine
+0604,encogimiento de hombros en máquina,lever shrug,back,traps,leverage machine
+0605,elevación de gemelos de pie en máquina,lever standing calf raise,lower legs,calves,leverage machine
+3758,press de pecho de pie en máquina,lever standing chest press,chest,pectorals,leverage machine
+0606,remo en punta en máquina,lever t bar row,back,upper back,leverage machine
+1351,remo en punta con agarre invertido en máquina,lever t-bar reverse grip row,back,upper back,leverage machine
+0607,extensión de tríceps en máquina,lever triceps extension,upper arms,triceps,leverage machine
+1313,remo unilateral en máquina,lever unilateral row,back,upper back,leverage machine
+0609,puente de londres,london bridge,back,upper back,rope
+3013,puente de glúteos bajo en el piso,low glute bridge on floor,upper legs,glutes,body weight
+1352,curl de zona lumbar,lower back curl,back,spine,body weight
+3582,zancada con salto,lunge with jump,upper legs,glutes,body weight
+1688,zancada con giro,lunge with twist,waist,abs,body weight
+0613,estiramiento de cuádriceps acostado (de costado),lying (side) quads stretch,upper legs,quads,body weight
+2312,codo a rodilla acostado,lying elbow to knee,waist,abs,body weight
+0620,elevación de piernas acostado en banco plano,lying leg raise flat bench,waist,abs,body weight
+0865,elevación de piernas y cadera acostado,lying leg-hip raise,waist,abs,body weight
+1301,press de pecho interno en máquina,machine inner chest press,chest,pectorals,leverage machine
+0624,sentadilla isométrica en la pared con marcha,march sit (wall),upper legs,glutes,body weight
+1353,recepción y lanzamiento por encima de la cabeza con balón medicinal,medicine ball catch and overhead throw,back,lats,medicine ball
+1302,pase de pecho con balón medicinal,medicine ball chest pass,chest,pectorals,medicine ball
+1303,empuje de pecho desde posición de 3 apoyos con balón medicinal,medicine ball chest push from 3 point stance,chest,pectorals,medicine ball
+1304,empuje de pecho de respuesta múltiple con balón medicinal,medicine ball chest push multiple response,chest,pectorals,medicine ball
+1305,empuje de pecho de respuesta única con balón medicinal,medicine ball chest push single response,chest,pectorals,medicine ball
+1312,empuje de pecho con carrera de liberación con balón medicinal,medicine ball chest push with run release,chest,pectorals,medicine ball
+1701,flexión con agarre cerrado con balón medicinal,medicine ball close grip push up,upper arms,triceps,medicine ball
+1354,golpe por encima de la cabeza con balón medicinal,medicine ball overhead slam,back,upper back,medicine ball
+1750,lanzamiento de pecho boca arriba con balón medicinal,medicine ball supine chest throw,upper arms,triceps,medicine ball
+0627,dominada supina con agarre mixto,mixed grip chin-up,back,lats,body weight
+3217,flexión hindú modificada,modified hindu push-up (male),chest,pectorals,body weight
+1421,flexión modificada bajando a los antebrazos,modified push up to lower arms,lower arms,forearms,body weight
+0628,caminata del monstruo,monster walk,upper legs,glutes,body weight
+0630,escalador,mountain climber,cardio,cardiovascular system,body weight
+0631,muscle up,muscle up,back,lats,body weight
+1401,muscle up (en barra vertical),muscle-up (on vertical bar),back,lats,body weight
+2328,flexión cerrada sobre pelota suiza,narrow push-up on exercise ball,upper arms,triceps,stability ball
+1403,estiramiento lateral de cuello,neck side stretch,neck,levator scapulae,body weight
+0634,crunch negativo,negative crunch,waist,abs,body weight
+1495,crunch oblicuo (v. 2),oblique crunch v. 2,waist,abs,body weight
+0635,crunches oblicuos en el piso,oblique crunches floor,waist,abs,body weight
+0636,curl martillo con barra olímpica,olympic barbell hammer curl,upper arms,biceps,olympic barbell
+0637,extensión de tríceps con barra olímpica,olympic barbell triceps extension,upper arms,triceps,olympic barbell
+1355,un brazo contra la pared,one arm against wall,back,lats,body weight
+0638,dominada supina a un brazo,one arm chin-up,back,lats,body weight
+0639,fondo a un brazo,one arm dip,upper arms,triceps,body weight
+0640,golpe a un brazo (con balón medicinal),one arm slam (with medicine ball),waist,abs,medicine ball
+1773,remo a un brazo con toalla,one arm towel row,back,upper back,body weight
+1386,elevación de gemelo tipo burro a una pierna,one leg donkey calf raise,lower legs,calves,body weight
+1387,elevación de gemelo en el piso a una pierna,one leg floor calf raise,lower legs,calves,body weight
+1476,sentadilla a una pierna,one leg squat,upper legs,glutes,body weight
+0641,otis up,otis up,waist,abs,weighted
+0642,flexión con patada de pierna hacia afuera,outside leg kick push-up,upper legs,glutes,body weight
+0643,estiramiento de tríceps por encima de la cabeza,overhead triceps stretch,upper arms,triceps,body weight
+3147,báscula pélvica,pelvic tilt,waist,abs,body weight
+1422,báscula pélvica a puente,pelvic tilt into bridge,upper legs,glutes,body weight
+1388,estiramiento de peroneos,peroneals stretch,lower legs,calves,rope
+3662,flexión de pike a cobra,pike-to-cobra push-up,upper legs,glutes,body weight
+1306,flexión pliométrica,plyo push up,chest,pectorals,body weight
+1687,paso hacia atrás con alcance por encima de la cabeza,posterior step to overhead reach,waist,abs,body weight
+1389,estiramiento de tibial posterior,posterior tibialis stretch,lower legs,calves,rope
+3119,sentadilla profunda tipo potty,potty squat,waist,abs,body weight
+3132,sentadilla profunda tipo potty con apoyo,potty squat with support,upper legs,glutes,body weight
+0648,cargada de potencia,power clean,upper legs,hamstrings,barbell
+3665,plancha power point,power point plank,waist,abs,body weight
+3203,medio abdominal de prisionero,prisoner half sit-up (male),waist,abs,body weight
+1707,giro boca abajo sobre pelota suiza,prone twist on stability ball,waist,abs,stability ball
+0651,dominada (agarre neutro),pull up (neutral grip),back,lats,body weight
+0650,pull-in (sobre pelota suiza),pull-in (on stability ball),waist,abs,stability ball
+0652,dominada,pull-up,back,lats,body weight
+1689,empujar y traccionar con peso corporal,push and pull bodyweight,chest,pectorals,body weight
+3638,de flexión a carrera,push to run,cardio,cardiovascular system,body weight
+1307,flexión sobre bosu,push up on bosu ball,chest,pectorals,bosu ball
+0662,flexión de brazos,push-up,chest,pectorals,body weight
+0653,flexión (bosu),push-up (bosu ball),chest,pectorals,bosu ball
+0655,flexión (sobre pelota suiza),push-up (on stability ball),chest,pectorals,stability ball
+0656,flexión (sobre pelota suiza),push-up (on stability ball),chest,pectorals,stability ball
+0659,flexión (pared),push-up (wall),chest,pectorals,body weight
+0658,flexión (pared) (v. 2),push-up (wall) v. 2,chest,pectorals,body weight
+0660,flexión con agarre cerrado sobre mancuernas,push-up close-grip off dumbbell,upper arms,triceps,dumbbell
+0661,flexión con patada de pierna hacia adentro,push-up inside leg kick,upper legs,glutes,body weight
+0663,flexión sobre balón medicinal,push-up medicine ball,chest,pectorals,medicine ball
+1467,flexión sobre los antebrazos,push-up on lower arms,upper arms,triceps,body weight
+3145,flexión plus,push-up plus,chest,pectorals,body weight
+0664,flexión a plancha lateral,push-up to side plank,waist,abs,body weight
+3533,cuádriceps,quads,upper legs,quads,body weight
+3201,cuarto de abdominal,quarter sit-up,waist,abs,body weight
+3552,pies rápidos (v. 2),quick feet v. 2,upper legs,quads,body weight
+0666,flexión con elevación de un brazo,raise single arm push-up,chest,pectorals,body weight
+0668,puente declinado posterior,rear decline bridge,upper legs,glutes,body weight
+0669,estiramiento de deltoides posterior,rear deltoid stretch,shoulders,delts,body weight
+0670,dominada posterior,rear pull-up,back,lats,body weight
+1582,postura del dedo gordo reclinada con soga,reclining big toe pose with rope,upper legs,hamstrings,rope
+3236,empujes de cadera de rodillas con banda elástica,resistance band hip thrusts on knees (female),upper legs,glutes,resistance band
+3007,extensión de cuádriceps con banda elástica,resistance band leg extension,upper legs,quads,resistance band
+3123,curl de bíceps sentado con banda elástica,resistance band seated biceps curl,upper arms,biceps,resistance band
+3124,press de pecho sentado con banda elástica,resistance band seated chest press,chest,pectorals,resistance band
+3006,abducción de cadera sentado con banda elástica,resistance band seated hip abduction,upper legs,abductors,resistance band
+3122,press de hombros sentado con banda elástica,resistance band seated shoulder press,shoulders,delts,resistance band
+3144,remo sentado con espalda recta con banda elástica,resistance band seated straight back row,back,upper back,resistance band
+0872,crunch invertido,reverse crunch,waist,abs,body weight
+0672,fondo invertido,reverse dip,upper arms,triceps,body weight
+0673,jalón al pecho con agarre invertido en máquina,reverse grip machine lat pulldown,back,lats,leverage machine
+0674,dominada con agarre invertido,reverse grip pull-up,back,lats,body weight
+0675,hiperextensión invertida (sobre pelota suiza),reverse hyper extension (on stability ball),upper legs,glutes,stability ball
+1423,hiperextensión invertida en banco plano,reverse hyper on flat bench,upper legs,glutes,body weight
+3663,plancha invertida con elevación de pierna,reverse plank with leg lift,waist,abs,body weight
+0677,fondos en anillas,ring dips,upper arms,triceps,body weight
+2571,estiramiento de rana con balanceo,rocking frog stretch,upper legs,glutes,body weight
+0678,dominada a jalón rocky,rocky pull-up pulldown,back,lats,body weight
+2208,estiramiento de espalda con rodillo,roller back stretch,back,spine,roller
+2204,body saw con rodillo,roller body saw,waist,abs,roller
+2205,estiramiento de cadera y dorsal con rodillo,roller hip lat stretch,upper legs,glutes,roller
+2202,estiramiento de cadera con rodillo,roller hip stretch,upper legs,glutes,roller
+2206,crunch invertido con rodillo,roller reverse crunch,waist,abs,roller
+2203,movilidad de hombros sentado con rodillo,roller seated shoulder flexor depresor retractor,chest,pectorals,roller
+2209,movilidad de hombros a una pierna sentado con rodillo,roller seated single leg shoulder flexor depresor retractor,chest,pectorals,roller
+2207,estiramiento lateral de dorsal con rodillo,roller side lat stretch,back,lats,roller
+0680,trepa de cuerda,rope climb,back,upper back,rope
+0685,correr,run,cardio,cardiovascular system,body weight
+0684,correr (equipo),run (equipment),cardio,cardiovascular system,body weight
+1585,estiramiento del corredor,runners stretch,upper legs,hamstrings,body weight
+0687,giro ruso,russian twist,waist,abs,body weight
+3012,fondos escapulares,scapula dips,back,traps,body weight
+3021,flexión escapular,scapula push-up,chest,serratus anterior,body weight
+0688,dominada escapular,scapular pull-up,back,traps,body weight
+3219,saltos de tijera,scissor jumps (male),cardio,cardiovascular system,body weight
+1390,estiramiento de gemelos sentado,seated calf stretch (male),lower legs,calves,body weight
+1424,estiramiento de glúteos sentado,seated glute stretch,upper legs,glutes,body weight
+0689,elevación de piernas sentado,seated leg raise,waist,abs,body weight
+0690,estiramiento de zona lumbar sentado,seated lower back stretch,back,lats,body weight
+2567,estiramiento de piriforme sentado,seated piriformis stretch,upper legs,glutes,body weight
+0691,crunch lateral sentado (pared),seated side crunch (wall),waist,abs,body weight
+1587,secuencia de postura de ángulo abierto sentado,seated wide angle pose sequence,upper legs,hamstrings,body weight
+0697,curl femoral invertido autoasistido,self assisted inverse leg curl,upper legs,hamstrings,body weight
+1766,curl femoral invertido autoasistido,self assisted inverse leg curl,upper legs,hamstrings,body weight
+0696,curl femoral invertido autoasistido (en el piso),self assisted inverse leg curl (on floor),upper legs,hamstrings,body weight
+3222,salto en media sentadilla,semi squat jump (male),cardio,cardiovascular system,body weight
+3656,carrera de zancada corta,short stride run,cardio,cardiovascular system,body weight
+1763,dominada con agarre a la altura de los hombros,shoulder grip pull-up,back,lats,body weight
+3699,toque al hombro,shoulder tap,waist,abs,body weight
+0699,flexión con toque al hombro,shoulder tap push-up,chest,pectorals,body weight
+1774,abducción de cadera en plancha lateral,side bridge hip abduction,upper legs,abductors,body weight
+0705,plancha lateral (v. 2),side bridge v. 2,waist,abs,body weight
+0709,elevación de cadera lateral (en paralelas),side hip (on parallel bars),waist,abs,body weight
+0710,abducción de cadera lateral,side hip abduction,upper legs,abductors,body weight
+1358,estiramiento en el piso de costado,side lying floor stretch,back,lats,body weight
+3667,aducción de cadera acostado de costado,side lying hip adduction (male),upper legs,adductors,body weight
+1775,aducción de cadera en plancha lateral,side plank hip adduction,upper legs,adductors,body weight
+0716,estiramiento de cuello con empuje lateral,side push neck stretch,neck,levator scapulae,body weight
+0717,flexión lateral,side push-up,upper arms,triceps,body weight
+0721,estiramiento de muñeca con tracción lateral,side wrist pull stretch,lower arms,forearms,body weight
+0720,dominada de lado a lado,side-to-side chin,back,lats,body weight
+3213,toque de punta de pie de lado a lado,side-to-side toe touch (male),waist,abs,body weight
+0725,flexión a un brazo,single arm push-up,chest,pectorals,body weight
+3645,puente a una pierna con pierna extendida,single leg bridge with outstretched leg,upper legs,glutes,body weight
+0727,elevación de gemelo a una pierna (sobre una mancuerna),single leg calf raise (on a dumbbell),lower legs,calves,dumbbell
+0730,deslizamiento en plataforma a una pierna,single leg platform slide,upper legs,hamstrings,body weight
+1759,sentadilla a una pierna (pistol),single leg squat (pistol) male,upper legs,glutes,body weight
+1489,sentadilla sissy,sissy squat,upper legs,quads,body weight
+0735,abdominal (v. 2),sit-up v. 2,waist,abs,body weight
+3679,abdominal con brazos sobre el pecho,sit-up with arms on chest,waist,abs,body weight
+3361,saltos de patinador,skater hops,cardio,cardiovascular system,body weight
+2142,ergómetro de esquí,ski ergometer,upper arms,triceps,skierg machine
+3671,paso de esquí,ski step,cardio,cardiovascular system,body weight
+3304,skin the cat,skin the cat,back,upper back,body weight
+1425,prensa de piernas a 45° a una pierna,sled 45 degrees one leg press,upper legs,glutes,sled machine
+0738,prensa de gemelos a 45°,sled 45в° calf press,lower legs,calves,sled machine
+0739,prensa de piernas a 45°,sled 45в° leg press,upper legs,glutes,sled machine
+1464,prensa de piernas a 45° (vista posterior),sled 45в° leg press (back pov),upper legs,glutes,sled machine
+1463,prensa de piernas a 45° (vista lateral),sled 45° leg press (side pov),upper legs,glutes,sled machine
+0740,prensa de piernas abierta a 45°,sled 45в° leg wide press,upper legs,glutes,sled machine
+1391,prensa de gemelos en la prensa de piernas,sled calf press on leg press,lower legs,calves,sled machine
+0741,hack squat con pies juntos en prensa,sled closer hack squat,upper legs,glutes,sled machine
+0742,elevación de gemelos con ángulo hacia adelante en prensa,sled forward angled calf raise,lower legs,calves,sled machine
+0743,hack squat en prensa,sled hack squat,upper legs,glutes,sled machine
+2334,prensa de gemelos acostado en prensa,sled lying calf press,lower legs,calves,sled machine
+0744,sentadilla acostado en prensa,sled lying squat,upper legs,glutes,sled machine
+1392,prensa de gemelos a una pierna en la prensa de piernas,sled one leg calf press on leg press,lower legs,calves,sled machine
+1496,martillo de trineo,sledge hammer,waist,abs,hammer
+0746,encogimiento de hombros por detrás en multipower,smith back shrug,back,traps,smith machine
+0747,press tras nuca en multipower,smith behind neck press,shoulders,delts,smith machine
+0748,press de banca en multipower,smith bench press,chest,pectorals,smith machine
+0749,buenos días con rodillas flexionadas en multipower,smith bent knee good morning,upper legs,glutes,smith machine
+1359,remo con torso inclinado en multipower,smith bent over row,back,upper back,smith machine
+0750,sentadilla en silla en multipower,smith chair squat,upper legs,quads,smith machine
+0751,press de banca con agarre cerrado en multipower,smith close-grip bench press,upper arms,triceps,smith machine
+0752,peso muerto en multipower,smith deadlift,upper legs,glutes,smith machine
+0753,press de banca declinado en multipower,smith decline bench press,chest,pectorals,smith machine
+0754,press declinado con agarre invertido en multipower,smith decline reverse-grip press,chest,pectorals,smith machine
+1433,sentadilla frontal en multipower (agarre de cargada),smith front squat (clean grip),upper legs,glutes,smith machine
+3281,sentadilla profunda en multipower,smith full squat,upper legs,glutes,smith machine
+0755,hack squat en multipower,smith hack squat,upper legs,glutes,smith machine
+0756,elevación de cadera en multipower,smith hip raise,waist,abs,smith machine
+0757,press de banca inclinado en multipower,smith incline bench press,chest,pectorals,smith machine
+0758,press inclinado con agarre invertido en multipower,smith incline reverse-grip press,chest,pectorals,smith machine
+0759,elevaciones de hombros inclinado en multipower,smith incline shoulder raises,chest,serratus anterior,smith machine
+0760,prensa de piernas en multipower,smith leg press,upper legs,glutes,smith machine
+1434,sentadilla con barra baja en multipower,smith low bar squat,upper legs,glutes,smith machine
+1683,curl de bíceps en multipower,smith machine bicep curl,upper arms,biceps,smith machine
+1625,press de banca declinado con agarre cerrado en multipower,smith machine decline close grip bench press,upper arms,triceps,smith machine
+1752,extensión de tríceps inclinada en multipower,smith machine incline tricep extension,upper arms,triceps,smith machine
+1626,press de banca declinado invertido con agarre cerrado en multipower,smith machine reverse decline close grip bench press,chest,pectorals,smith machine
+0761,remo cerrado en multipower,smith narrow row,back,upper back,smith machine
+1360,remo a un brazo en multipower,smith one arm row,back,upper back,smith machine
+1393,elevación de gemelo en el piso a una pierna en multipower,smith one leg floor calf raise,lower legs,calves,smith machine
+0762,remo para deltoides posterior en multipower,smith rear delt row,shoulders,delts,smith machine
+0763,elevaciones de gemelos invertidas en multipower,smith reverse calf raises,lower legs,calves,smith machine
+1394,elevaciones de gemelos invertidas en multipower,smith reverse calf raises,lower legs,calves,smith machine
+1361,remo con torso inclinado con agarre invertido en multipower,smith reverse grip bent over row,back,upper back,smith machine
+0764,press con agarre invertido en multipower,smith reverse-grip press,chest,pectorals,smith machine
+1395,elevación de gemelo a una pierna sentado en multipower,smith seated one leg calf raise,lower legs,calves,smith machine
+0765,press de hombros sentado en multipower,smith seated shoulder press,shoulders,delts,smith machine
+1426,curl de muñeca sentado en multipower,smith seated wrist curl,lower arms,forearms,smith machine
+0766,press de hombros en multipower,smith shoulder press,shoulders,delts,smith machine
+0767,encogimiento de hombros en multipower,smith shrug,back,traps,smith machine
+0768,sentadilla búlgara a una pierna en multipower,smith single leg split squat,upper legs,quads,smith machine
+0769,zancada de sprint en multipower,smith sprint lunge,upper legs,glutes,smith machine
+0770,sentadilla en multipower,smith squat,upper legs,glutes,smith machine
+0771,curl de muñeca por detrás de pie en multipower,smith standing back wrist curl,lower arms,forearms,smith machine
+0772,press militar tras nuca de pie en multipower,smith standing behind head military press,shoulders,delts,smith machine
+0773,elevación de gemelos de pie en multipower,smith standing leg calf raise,lower legs,calves,smith machine
+0774,press militar de pie en multipower,smith standing military press,shoulders,delts,smith machine
+3142,sentadilla sumo en multipower,smith sumo squat,upper legs,glutes,smith machine
+1396,elevación de puntas de pie en multipower,smith toe raise,lower legs,calves,smith machine
+0775,remo al mentón en multipower,smith upright row,shoulders,delts,smith machine
+1308,press de banca con agarre abierto en multipower,smith wide grip bench press,chest,pectorals,smith machine
+1309,press de banca declinado con agarre abierto en multipower,smith wide grip decline bench press,chest,pectorals,smith machine
+0776,tirón de arranque,snatch pull,upper legs,quads,barbell
+0777,spell caster,spell caster,waist,abs,dumbbell
+1362,esfinge,sphinx,back,spine,body weight
+0778,flexión con reptado de araña,spider crawl push up,upper legs,glutes,body weight
+1363,estiramiento de columna,spine stretch,back,spine,body weight
+2329,giro de columna,spine twist,waist,abs,body weight
+2368,sentadillas búlgaras,split squats,upper legs,quads,body weight
+0786,envión en sentadilla,squat jerk,upper legs,quads,barbell
+1705,sentadilla sobre bosu,squat on bosu ball,upper legs,quads,bosu ball
+1685,sentadilla con alcance por encima de la cabeza,squat to overhead reach,upper legs,quads,body weight
+1686,sentadilla con alcance por encima de la cabeza y giro,squat to overhead reach with twist,upper legs,quads,body weight
+2297,"crunch sobre pelota suiza (rango completo, manos tras nuca)",stability ball crunch (full range hands behind head),waist,abs,stability ball
+3291,stalder press,stalder press,upper arms,triceps,body weight
+3669,arquero de pie,standing archer,back,upper back,body weight
+0788,press tras nuca de pie,standing behind neck press,shoulders,delts,barbell
+1490,elevación de gemelos de pie (en una escalera),standing calf raise (on a staircase),lower legs,calves,body weight
+1397,gemelos de pie,standing calves,lower legs,calves,body weight
+1398,estiramiento de gemelos de pie,standing calves calf stretch,lower legs,calves,body weight
+1599,estiramiento de femorales y gemelos de pie con banda,standing hamstring and calf stretch with strap,upper legs,hamstrings,rope
+0794,estiramiento lateral de pie,standing lateral stretch,back,lats,body weight
+1364,báscula pélvica de pie,standing pelvic tilt,back,spine,body weight
+0795,curl femoral a una pierna de pie,standing single leg curl,upper legs,hamstrings,body weight
+0796,rueda abdominal de pie,standing wheel rollerout,waist,abs,wheel roller
+3223,salto de estrella,star jump (male),cardio,cardiovascular system,body weight
+2138,carrera en bicicleta fija (v. 3),stationary bike run v. 3,cardio,cardiovascular system,stationary bike
+0798,caminata en bicicleta fija,stationary bike walk,cardio,cardiovascular system,leverage machine
+3314,maltés con piernas abiertas,straddle maltese,waist,abs,body weight
+3298,planche con piernas abiertas,straddle planche,waist,abs,body weight
+1427,abductor externo de cadera con pierna recta,straight leg outer hip abductor,upper legs,abductors,body weight
+0803,flexión superman,superman push-up,chest,pectorals,body weight
+0805,caída abdominal en suspensión,suspended abdominal fallout,waist,abs,body weight
+0806,flexión en suspensión,suspended push-up,chest,pectorals,body weight
+0807,crunch invertido en suspensión,suspended reverse crunch,waist,abs,body weight
+0808,remo en suspensión,suspended row,back,upper back,body weight
+0809,sentadilla búlgara en suspensión,suspended split squat,upper legs,quads,body weight
+3433,patadas de nadador (v. 2),swimmer kicks v. 2 (male),upper legs,glutes,body weight
+3318,swing 360,swing 360,cardio,cardiovascular system,body weight
+1753,fondo entre tres bancos,three bench dip,upper arms,triceps,body weight
+2459,volteo de neumático,tire flip,upper legs,glutes,tire
+0811,peso muerto con barra hexagonal,trap bar deadlift,upper legs,glutes,trap bar
+0814,fondo de tríceps,triceps dip,upper arms,triceps,body weight
+0812,fondo de tríceps (pierna en el banco),triceps dip (bench leg),upper arms,triceps,body weight
+0813,fondo de tríceps (entre bancos),triceps dip (between benches),upper arms,triceps,body weight
+0815,fondos de tríceps en el piso,triceps dips floor,upper arms,triceps,body weight
+0816,press de tríceps,triceps press,upper arms,triceps,body weight
+0817,estiramiento de tríceps,triceps stretch,upper arms,triceps,body weight
+0871,crunch con rodillas al pecho,tuck crunch,waist,abs,body weight
+0818,jalón al pecho con doble maneral de agarre paralelo,twin handle parallel grip lat pulldown,back,lats,cable
+1466,elevación de cadera con giro,twist hip lift,upper legs,glutes,body weight
+2802,elevación de piernas con giro,twisted leg raise,waist,abs,body weight
+2801,elevación de piernas con giro,twisted leg raise (female),waist,abs,body weight
+3231,toque de dos puntas de pie,two toe touch (male),back,spine,body weight
+1365,estiramiento de espalda alta,upper back stretch,back,upper back,body weight
+1366,perro boca arriba,upward facing dog,back,spine,body weight
+3420,V-sit en el piso,v-sit on floor,waist,abs,body weight
+0826,elevación vertical de piernas (en paralelas),vertical leg raise (on parallel bars),waist,abs,body weight
+2141,caminar en elíptica,walk elliptical cross trainer,cardio,cardiovascular system,elliptical machine
+3655,zancada con rodillas altas caminando,walking high knees lunge,cardio,cardiovascular system,body weight
+1460,zancada caminando,walking lunge,upper legs,glutes,body weight
+3666,caminar en cinta inclinada,walking on incline treadmill,cardio,cardiovascular system,leverage machine
+2311,caminar en escaladora,walking on stepmill,cardio,cardiovascular system,stepmill machine
+0830,fondo en banco con lastre,weighted bench dip,upper arms,triceps,weighted
+2987,dominada supina con agarre cerrado y lastre en jaula de fondos,weighted close grip chin-up on dip cage,back,lats,weighted
+3643,sentadillas cosaco con lastre,weighted cossack squats (male),upper legs,glutes,weighted
+0832,crunch con lastre,weighted crunch,waist,abs,weighted
+3670,abdominal declinado con lastre,weighted decline sit-up,waist,abs,weighted
+0833,elevación de gemelos tipo burro con lastre,weighted donkey calf raise,lower legs,calves,weighted
+1310,flexión en caída con lastre,weighted drop push up,chest,pectorals,weighted
+2135,plancha frontal con lastre,weighted front plank,waist,abs,weighted
+0834,elevación frontal con lastre,weighted front raise,shoulders,delts,weighted
+0866,elevación de piernas y cadera colgado con lastre,weighted hanging leg-hip raise,waist,abs,weighted
+0835,hiperextensión con lastre (sobre pelota suiza),weighted hyperextension (on stability ball),back,spine,weighted
+3641,paso de rodillas con balanceo y lastre,weighted kneeling step with swing,shoulders,delts,weighted
+3644,zancada con balanceo y lastre,weighted lunge with swing,upper legs,glutes,weighted
+3286,muscle up con lastre,weighted muscle up,back,lats,weighted
+3312,muscle up con lastre (en barra),weighted muscle up (on bar),back,lats,weighted
+3290,dominada a una mano con lastre,weighted one hand pull up,back,lats,weighted
+0840,crunch por encima de la cabeza con lastre (sobre pelota suiza),weighted overhead crunch (on stability ball),waist,abs,weighted
+0841,dominada con lastre,weighted pull-up,back,lats,weighted
+0844,brazo circular con lastre,weighted round arm,shoulders,delts,weighted
+0846,giro ruso con lastre,weighted russian twist,waist,abs,weighted
+0845,giro ruso con lastre (piernas arriba),weighted russian twist (legs up),waist,abs,weighted
+2371,giro ruso con lastre (v. 2),weighted russian twist v. 2,waist,abs,weighted
+0847,curl de bíceps sentado con lastre (sobre pelota suiza),weighted seated bicep curl (on stability ball),upper arms,biceps,medicine ball
+0849,giro sentado con lastre (sobre pelota suiza),weighted seated twist (on stability ball),waist,abs,weighted
+0850,flexión lateral de tronco con lastre (sobre pelota suiza),weighted side bend (on stability ball),waist,abs,weighted
+0851,sentadilla sissy con lastre,weighted sissy squat,upper legs,quads,weighted
+0852,sentadilla con lastre,weighted squat,upper legs,glutes,weighted
+0853,curl de pie con lastre,weighted standing curl,upper arms,biceps,weighted
+0854,apretón de mano de pie con lastre,weighted standing hand squeeze,lower arms,forearms,weighted
+3313,fondo en barra recta con lastre,weighted straight bar dip,chest,pectorals,weighted
+3642,zancada con estiramiento y lastre,weighted stretch lunge,upper legs,glutes,weighted
+0856,press svend con lastre,weighted svend press,chest,pectorals,weighted
+1754,fondos entre tres bancos con lastre,weighted three bench dips,upper arms,triceps,weighted
+1755,fondos de tríceps con lastre,weighted tricep dips,upper arms,triceps,weighted
+1767,fondo de tríceps en paralelas altas con lastre,weighted triceps dip on high parallel bars,upper arms,triceps,weighted
+0857,rueda abdominal,wheel rollerout,waist,abs,wheel roller
+3637,carrera con rueda,wheel run,cardio,cardiovascular system,body weight
+1429,dominada con agarre abierto,wide grip pull-up,back,lats,body weight
+1367,dominada posterior con agarre abierto,wide grip rear pull-up,back,lats,body weight
+1311,flexión con manos abiertas,wide hand push up,chest,pectorals,body weight
+2363,fondo de pecho en paralelas altas con agarre abierto,wide-grip chest dip on high parallel bars,chest,pectorals,body weight
+0858,sprints cortos,wind sprints,waist,abs,body weight
+1604,el mejor estiramiento del mundo,world greatest stretch,upper legs,hamstrings,body weight
+1428,círculos de muñeca,wrist circles,lower arms,forearms,body weight
+0859,enrollador de muñeca,wrist rollerer,lower arms,forearms,weighted
