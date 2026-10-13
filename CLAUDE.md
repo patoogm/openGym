@@ -49,7 +49,7 @@ frontend/src/
   main.jsx            entrada, registra el service worker (no en mobile)
   App.jsx             shell: rutas, aplica theme/accent en <html>, TabBar, RestTimer, Modals, Toast
   index.css           ★ TODO el sistema de diseño (tokens + componentes + layout desktop)
-  sheets.jsx          ★ casi todos los bottom sheets/diálogos (≈65 KB, 126 inline styles)
+  sheets.jsx          ★ casi todos los bottom sheets/diálogos (≈65 KB, sin inline styles)
   components/
     ui.jsx            ★ controles propios: NumberField, TextField, TextArea, SearchField, Switch,
                         Segmented, Stepper, Slider, Check, Section, Row, SelectRow, Button
