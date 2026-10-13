@@ -44,6 +44,7 @@ export default function StudentList({ students, selectedId = null, onOpen, onInv
         const { done, planned } = weekSummary(s, today)
         const texts = compact ? attentionTexts(s, today) : []
         return <div key={s.id} className={'item' + (s.id === selectedId ? ' sel' : '')} aria-current={s.id === selectedId ? 'true' : undefined} {...rowProps(() => onOpen(s.id))}>
+          <span className="avatar" aria-hidden="true">{(s.name || '?').trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase()}</span>
           <div className="grow">
             <div className="tt">{s.live && <Icon name="dot" className="live-dot" />}{s.name}
               {!compact && s.pendingRequests > 0 && <span className="tag warn">{s.pendingRequests}</span>}</div>

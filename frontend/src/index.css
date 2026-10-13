@@ -346,8 +346,15 @@ h4.sec{
 .wk-mini .d.miss{background:none;box-shadow:inset 0 0 0 1.5px var(--orange)}
 .wk-mini .d.today{outline:1.5px solid var(--label-2);outline-offset:2px}
 .attn{display:flex;align-items:center;gap:8px;padding:10px 12px;margin-bottom:12px;border-radius:var(--r);
-  background:color-mix(in srgb,var(--orange) 12%,transparent);color:var(--label)}
-.attn > .icn:first-child{color:var(--orange);flex:none}
+  background:var(--orange-soft);color:var(--label)}
+.attn > .icn:first-child{color:var(--orange-ink);flex:none}
+.avatar{
+  width:44px;height:44px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+  background:var(--acc-soft);color:var(--label);font-size:15px;font-weight:600;letter-spacing:.02em;
+}
+.feed-ic{width:36px;height:36px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+  background:var(--acc);color:var(--on-acc);font-size:18px}
+.feed-ic.change{background:var(--orange-soft);color:var(--orange-ink)}
 .attn{cursor:pointer}
 .attn .grow{min-width:0}
 .live-dot{font-size:9px;color:var(--green);display:inline-block;margin-right:5px}
@@ -1287,6 +1294,12 @@ h4.sec{
 /* -------------------------------------------- profile + login (desktop) --- */
 /* Login: the old inline wrapper, as a class so desktop can turn it into a card. */
 .login{display:flex;flex-direction:column;justify-content:center;min-height:78vh;text-align:center}
+.login-logo{
+  width:72px;height:72px;border-radius:var(--r-xl);margin:0 auto;display:flex;align-items:center;justify-content:center;
+  background:var(--acc);color:var(--on-acc);font-size:40px;
+}
+.login-h1{font-size:34px;font-weight:700;letter-spacing:-.028em;margin:var(--sp-3) 0 var(--sp-1)}
+.login .small{line-height:1.5}
 @media (min-width:1000px){
   .amain-in .narrow.page{max-width:var(--page-w)}
   .narrow.login{
