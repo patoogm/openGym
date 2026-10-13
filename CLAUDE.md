@@ -28,7 +28,7 @@ con **Coach mode** (coach ↔ alumnos, rutinas asignadas, invitaciones) y **Prog
 | Backend | `api/server.js` — Node sin framework, deps: `@simplewebauthn/server`, `web-push`. Datos en JSON bajo `./data` |
 | Mobile | Capacitor 7 (`frontend/android`, `frontend/ios`) |
 | Tests | Vitest (frontend, `src/lib/*.test.js`), `node --test` (api) |
-| Deploy | Docker Compose (nginx `web` + `api` + media), Render (`render.yaml`) |
+| Deploy | Docker Compose (nginx `web` + `api` + media); Render (`render.yaml`) solo sirve el build demo estático (sin API) |
 
 ## 3. Comandos
 
@@ -119,7 +119,7 @@ Semántica en uso: naranja = workout en curso / racha; amarillo = objetivo de pe
 
 **Acento** (por usuario, sincronizado; `<html data-accent="…">`):
 `lime` (default → green), `sky`, `orange`, `violet`, `pink`, `red`, `teal`, `gold`.
-Derivados: `--acc`, `--acc-2` (pressed), `--on-acc` (texto sobre acento, elegido por **contraste medido**, no por gusto; medido el 2026-10-09 en `.btn.primary`: `sky`, `violet`, `pink` y `red` con texto blanco quedan en 3,4–4,1:1, por debajo de 4,5:1 — ver deuda), `--acc-soft` (16%), `--acc-line` (38%).
+Derivados: `--acc`, `--acc-2` (pressed), `--on-acc` (texto sobre acento: **negro en los 8 acentos**, elegido por contraste medido; el mínimo es 5,08:1 en violeta claro, el blanco no llegaba a 4,5:1 en sky/violet/pink/red), `--acc-soft` (16%), `--acc-line` (38%).
 Los nombres de acento se validan contra `ACCENTS` en `lib/format.js`.
 
 **Geometría**: `--r-sm 8px`, `--r 12px`, `--r-card 14px`, `--r-lg 16px`, `--r-xl 22px`, `--pad 16px`, `--icon-stroke 1.7`.
@@ -236,7 +236,7 @@ config de ejercicio en rutina, reprogramar día, calendario, detalle de workout,
 
 ### Deuda de diseño conocida
 - **Inline `style={{…}}`**: quedan 246 (medido el 2026-10-09; eran ~340). `sheets.jsx` (126) y `Admin.jsx` (12) quedaron fuera a propósito del barrido de espaciado (sheets = UI mobile compartida que no se rediseñó; Admin = solo operador). En vistas y componentes quedan sobre todo estilos dinámicos (anchos de barras, colores por estado, tamaños de íconos): `RoutineEdit.jsx` (17), `Home.jsx` (14), `ProgressViews.jsx` (12), `Workout.jsx` (9), `Settings.jsx` (9), `Stats.jsx` (8), `Login.jsx` (7).
-- **Contraste de `--on-acc`**: con texto blanco, los acentos `sky`, `violet`, `pink` y `red` no llegan a 4,5:1 en el botón primario (dark 3,4–3,7; light 3,6–4,1). Con texto negro los cuatro pasarían de 5,7:1 (calculado, dark). Es una decisión de diseño (negro sobre rojo/rosa cambia el carácter del acento), no se tocó.
+- ~~Contraste de `--on-acc`~~ resuelto (2026-10-13): texto negro sobre los 8 acentos en ambos temas (≥5,08:1).
 - **Desktop, decisiones pendientes** (no son defectos): `.wchoose` queda medio vacío si solo existe Freestyle; el GIF minimizado sigue reservando su columna 5fr; al cruzar 1000px el shell se remonta (latido de presencia y se pierde input sin confirmar).
 - **Caso borde sin confirmar**: entrar directo a `/library/<id de un ejercicio propio>` podría redirigir de más si los ejercicios propios se hidrataran de forma asíncrona (hoy el store lee localStorage de forma síncrona).
 - El sitio `website/` conserva `theme-color #0c0e12` (es una landing aparte).

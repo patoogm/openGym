@@ -1,6 +1,26 @@
+# Render deploy = the browser-only DEMO (the same build as the GitHub Pages one).
+#
+# There is no API behind it: passkeys, sync between devices and the admin dashboard need the
+# Node backend, so the demo stays in guest mode with a seeded example history (everything in
+# localStorage). The exercise media comes from a CDN instead of the ~140 MB media volume.
+# Free tier, no Docker and no nginx: Render just serves frontend/dist (HashRouter, so no
+# rewrite rules are needed).
+#
+# A full deploy (API + passkeys) is NOT possible on the free tier: it needs a private service
+# for `api/` with a persistent disk on /data (both paid), `ORIGIN`/`RP_ID` set to the public
+# URL, and the web container's nginx pointing at that service instead of `http://api:3000`.
+# For that, self-host with `docker compose up -d` (see README).
 services:
   - type: web
-    name: opengym
-    env: docker
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
+    name: opengym-demo
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_DEMO
+        value: "1"
+      - key: VITE_IMG_BASE
+        value: https://cdn.jsdelivr.net/gh/hasaneyldrm/exercises-dataset@7455efae41b330c265e7cd4b78dfa848e7ce5ebd/images/
+      - key: VITE_GIF_BASE
+        value: https://cdn.jsdelivr.net/gh/hasaneyldrm/exercises-dataset@7455efae41b330c265e7cd4b78dfa848e7ce5ebd/videos/
