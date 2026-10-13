@@ -22,7 +22,7 @@ con **Coach mode** (coach ↔ alumnos, rutinas asignadas, invitaciones) y **Prog
 | Capa | Tecnología |
 |---|---|
 | Frontend | React 19 + Vite 8, React Router 7 (**HashRouter**), Zustand 5. JS/JSX (no TypeScript) |
-| Estilos | **Un solo archivo CSS plano**: `frontend/src/index.css` (~940 líneas). Sin Tailwind, sin CSS-in-JS, sin librería de componentes |
+| Estilos | **Un solo archivo CSS plano**: `frontend/src/index.css` (~1250 líneas). Sin Tailwind, sin CSS-in-JS, sin librería de componentes |
 | Iconos | Set propio dibujado a mano en SVG: `frontend/src/components/Icon.jsx` (nada de emoji ni librerías) |
 | Gráficos | SVG a mano (`LineChart`, `Heatmap`, `BodyMap`). Sin librería de charts |
 | Backend | `api/server.js` — Node sin framework, deps: `@simplewebauthn/server`, `web-push`. Datos en JSON bajo `./data` |
@@ -49,7 +49,7 @@ frontend/src/
   main.jsx            entrada, registra el service worker (no en mobile)
   App.jsx             shell: rutas, aplica theme/accent en <html>, TabBar, RestTimer, Modals, Toast
   index.css           ★ TODO el sistema de diseño (tokens + componentes + layout desktop)
-  sheets.jsx          ★ casi todos los bottom sheets/diálogos (≈65 KB, 129 inline styles)
+  sheets.jsx          ★ casi todos los bottom sheets/diálogos (≈65 KB, 126 inline styles)
   components/
     ui.jsx            ★ controles propios: NumberField, TextField, TextArea, SearchField, Switch,
                         Segmented, Stepper, Slider, Check, Section, Row, SelectRow, Button
@@ -78,7 +78,8 @@ frontend/src/
   locales/*.js        traducciones UI (la key es el string en inglés)
   instr/*.js, names/  instrucciones y nombres de ejercicios por idioma (lazy-load, enormes: no abrir)
 api/                  backend
-docs/superpowers/     specs y planes de features (coach mode, blocks, routine sections)
+docs/superpowers/     specs y planes de features (coach mode, blocks, routine sections, desktop del atleta)
+docs/agent-import/    prompt + catálogo CSV (1.324 ejercicios) para armar un plan `.json` con cualquier agente externo e importarlo desde Plan → compartir; formato = `lib/plan-share.js`
 website/              landing estática (HTML/CSS propios, separada de la app)
 ```
 
@@ -255,6 +256,6 @@ config de ejercicio en rutina, reprogramar día, calendario, detalle de workout,
    - cambios de markup en `views/` / `components/` usando esas clases (no inline styles).
 5. **Verificar**: `npm test`, `check-locales.mjs`, y recorrido visual de las pantallas tocadas en ambos temas y un par de acentos.
 
-**Estado (2026-10-09)**: el rediseño desktop del atleta (sidebar, Workout con rail, Home, Plan/Program/RoutineEdit, Stats/History, Library, Settings/Profile/Login, QA) está completo; planes en `docs/superpowers/plans/2026-10-09-athlete-desktop-*.md`, spec en `docs/superpowers/specs/2026-10-09-athlete-desktop-design.md`.
+**Estado (2026-10-13)**: el rediseño desktop del atleta (sidebar, Workout con rail, Home, Plan/Program/RoutineEdit, Stats/History, Library, Settings/Profile/Login, QA) está completo; planes en `docs/superpowers/plans/2026-10-09-athlete-desktop-*.md`, spec en `docs/superpowers/specs/2026-10-09-athlete-desktop-design.md`. Contraste de `--on-acc` resuelto (negro en los 8 acentos). El agente LLM integrado (generar bloques con un modelo) está **descartado**: los planes se arman a mano o con un agente externo vía `docs/agent-import/`. `render.yaml` despliega solo el build demo estático.
 
 Cuando se decida algo de diseño (nueva paleta, nueva fuente, nuevo componente), actualizar este archivo en §5 para que siga siendo la fuente de verdad.
