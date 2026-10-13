@@ -829,10 +829,10 @@ h4.sec{
 .hm-days span{height:11px;font-size:10px;color:var(--label-2);line-height:11px}
 .hm-grid{display:flex;gap:3px}
 .hm-col{display:flex;flex-direction:column;gap:3px}
-.hm-c{width:11px;height:11px;border-radius:3px;background:var(--surface-2);flex:none}
-.hm-c.l1{background:color-mix(in srgb,var(--acc) 30%,var(--surface-2))}
-.hm-c.l2{background:color-mix(in srgb,var(--acc) 55%,var(--surface-2))}
-.hm-c.l3{background:color-mix(in srgb,var(--acc) 78%,var(--surface-2))}
+.hm-c{width:11px;height:11px;border-radius:3px;background:var(--surface-3);flex:none}
+.hm-c.l1{background:color-mix(in srgb,var(--acc) 28%,transparent)}
+.hm-c.l2{background:color-mix(in srgb,var(--acc) 50%,transparent)}
+.hm-c.l3{background:color-mix(in srgb,var(--acc) 75%,transparent)}
 .hm-c.l4{background:var(--acc)}
 .hm-c.today{box-shadow:0 0 0 1.5px var(--acc)}
 .hm-c.future{opacity:.3}
@@ -867,32 +867,33 @@ h4.sec{
 
 .mrow{display:flex;align-items:center;gap:9px;padding:5px 0}
 .mrow .nm{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mrow .bar{width:74px;height:5px;border-radius:3px;background:var(--surface-2);flex:none;overflow:hidden}
-.mrow .bar i{display:block;height:100%;background:var(--acc);border-radius:3px}
+.mrow .bar{width:96px;height:8px;border-radius:4px;background:var(--surface-3);flex:none;overflow:hidden}
+.mrow .bar i{display:block;height:100%;background:var(--acc);border-radius:4px}
 .mrow .v{font-size:12px;color:var(--label-2);min-width:52px;text-align:right;flex:none}
 /* A headline number inside a card — tile weight without a tile around it, for the pair of
    readings at the top of the effort card. */
 .stat-v{font-size:26px;font-weight:600;letter-spacing:-.026em;line-height:1.1}
 .mchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
 .mchip{font-size:12px;padding:4px 9px;border-radius:99px;background:var(--surface-2);color:var(--label-2)}
-.mchip.miss{background:color-mix(in srgb,var(--orange) 16%,transparent);color:var(--orange)}
-.mchip.on{background:var(--acc);color:#fff}
+.mchip.miss{background:var(--orange-soft);color:var(--orange-ink)}
+.mchip.on{background:var(--acc);color:var(--on-acc)}
 
 /* --- stat tiles --- */
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .tile{background:var(--surface);border-radius:var(--r-card);padding:14px}
 .tile .l{
-  color:var(--label-2);font-size:13px;font-weight:400;letter-spacing:-.004em;
+  color:var(--label-2);font-size:12px;font-weight:400;letter-spacing:-.004em;
   text-transform:none;display:flex;align-items:center;gap:5px;
 }
 .tile .l .icn{font-size:14px;color:var(--label)}
-.tile .v{font-size:26px;font-weight:600;letter-spacing:-.026em;margin-top:5px;line-height:1.1}
+.tile .v{font-size:30px;font-weight:600;letter-spacing:-.028em;margin-top:5px;line-height:1.1}
+.tile .v.sm{font-size:22px}
 .tile.tappable:active{background:var(--surface-2)}
 
 /* --- PR badge --- */
 .pr{
   display:inline-flex;align-items:center;gap:4px;
-  background:color-mix(in srgb,var(--yellow) 18%,transparent);color:var(--yellow);
+  background:color-mix(in srgb,var(--yellow) 18%,transparent);color:var(--yellow-ink);
   border-radius:6px;padding:3px 8px;font-size:12px;font-weight:500;
 }
 .pr .icn{font-size:13px}
@@ -1189,7 +1190,7 @@ h4.sec{
 .today-row .lrow-i.live{background:var(--orange);color:#000}
 .today-row .lrow-i.plan{background:var(--orange-soft);color:var(--orange-ink)}
 .lrow-i.flame{background:var(--orange-soft);color:var(--orange-ink);width:36px;height:36px;border-radius:10px;font-size:22px}
-.goal-ink{color:var(--yellow-ink)}
+.goal-ink,.btn.goal-ink{color:var(--yellow-ink)}
 .today-row .lrow-i.rest{background:var(--surface-3)}
 /* .tag.warn carries a left margin for use inside lists; the Today row spaces itself */
 .today-row .tag.warn{margin-left:0}
