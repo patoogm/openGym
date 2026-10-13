@@ -25,7 +25,8 @@ export default function SessionRail({ A, done, total, onJump, onFinish, onDiscar
   return <aside className="wrail" aria-label={t('Exercises')}>
     <div className="wrail-hd">
       <div className="wrail-name">{A.name}</div>
-      <div className="wrail-sub"><Elapsed start={A.start} /> · {t('{0} sets', done + '/' + total)}</div>
+      <div className="wrail-time"><Elapsed start={A.start} /></div>
+      <div className="wrail-sub">{t('{0} sets', done + '/' + total)}</div>
       <div className="wprog"><i style={{ width: pct + '%' }} /></div>
     </div>
     <div className="wout" ref={listRef}>
@@ -34,7 +35,7 @@ export default function SessionRail({ A, done, total, onJump, onFinish, onDiscar
         ? <div key={r.key} className="wsection">{r.label}</div>
         : <button key={r.key} type="button" className={'wout-i ' + r.status}
           aria-current={r.status === 'current' ? 'step' : undefined} onClick={() => onJump(r.first)}>
-          <span className="wout-ic"><Icon name={r.status === 'done' ? 'check' : r.status === 'current' ? 'play' : 'dot'} /></span>
+          <span className="wout-ic">{r.status === 'done' ? <Icon name="check" /> : r.status === 'current' ? <Icon name="play" /> : <span className="wout-dot" />}</span>
           <span className="wout-names">{r.items.map(it => <span key={it.idx} className="cap1">{nameFor(exOr(it.id))}</span>)}</span>
           {r.superset && <Icon name="link" className="wout-ss" />}
           <span className="wout-n">{r.done}/{r.total}</span>
@@ -42,10 +43,10 @@ export default function SessionRail({ A, done, total, onJump, onFinish, onDiscar
     </div>
     <div className="wrail-ft">
       <RestTimer inline />
-      <button type="button" className={allDone ? 'btn primary' : 'btn ghost dim'} onClick={onFinish}>
+      <button type="button" className={allDone ? 'btn primary' : 'btn tinted'} onClick={onFinish}>
         {allDone ? t('Finish workout') : t('Finish workout early · {0} exercises', exDone + '/' + A.entries.length)}
       </button>
-      <Button variant="ghost" className="dim" onClick={onDiscard}>{t('Discard')}</Button>
+      <Button variant="ghost" className="discard" onClick={onDiscard}>{t('Discard')}</Button>
     </div>
   </aside>
 }

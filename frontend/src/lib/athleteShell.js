@@ -18,6 +18,9 @@ export const ATHLETE_MORE = [
   { k: 'settings', icon: 'gear', to: '/settings', label: 'Settings' }
 ]
 
+// Only listed while a session is running: it takes the place of the Start button.
+export const ATHLETE_WORKOUT = { k: 'workout', icon: 'dumbbell', to: '/workout', label: 'Workout' }
+
 const SECTION = {
   '': 'home', home: 'home', plan: 'plan', workout: 'workout', stats: 'stats', history: 'history',
   library: 'library', program: 'program', profile: 'profile', settings: 'settings', admin: 'admin'

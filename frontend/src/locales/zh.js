@@ -1,5 +1,6 @@
 // Simplified Chinese UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Workout': '训练',
   'Confirm': '确认',
   'Cancel': '取消',
   'Delete': '删除',

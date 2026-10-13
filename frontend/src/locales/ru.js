@@ -1,5 +1,6 @@
 // Russian UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Workout': 'Тренировка',
   'Confirm': 'Подтвердить',
   'Cancel': 'Отмена',
   'Delete': 'Удалить',

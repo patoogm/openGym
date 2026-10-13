@@ -126,6 +126,7 @@ Los nombres de acento se validan contra `ACCENTS` en `lib/format.js`.
 **Geometría**: `--r-sm 8px`, `--r 12px`, `--r-card 14px`, `--r-lg 16px`, `--r-xl 22px`, `--pad 16px`, `--icon-stroke 1.7`.
 
 **Spacing y anchos (desktop)**: `--sp-1…--sp-8` (4/8/12/16/20/24/32/40px) para márgenes y gaps nuevos; `--page-w` 720px (columna de lectura) y `--wide-w` 1200px (dashboards).
+**Tokens del rediseño del Workout**: `--orange-soft` (naranja 16%: chip de sesión en vivo, `.tag.warn`, `.progline.warn`) y `--red-ink` (texto destructivo, `.btn.discard`). Sheets siguen en `--bg-el`.
 **Tinta de aviso**: `--orange-ink` (naranja legible como texto: igual a `--orange` en dark, `#a85a00` en light); lo usa `.tag.warn`.
 **Motion**: `--ease cubic-bezier(.32,.72,0,1)`, `--fast 140ms`, `--med 220ms`. `prefers-reduced-motion` apaga todo.
 **Safe areas**: `--sat`, `--sab` (env insets).

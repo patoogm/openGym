@@ -110,14 +110,15 @@ function ExerciseBlock({ entryIdx, compact, onToggle, onField, onAddSet, onRemov
       <button aria-label={t('Increase')} onClick={() => bump(s, i, col, 1)}><Icon name="plus" /></button>
     </div>
   )
+  const activeSet = entry.sets.findIndex(x => !x.done)
   return <div className={'exblock' + (compact ? ' compact' : '') + (ex.gif ? ' has-media' : '')}>
-    <Media ex={ex} key={entry.id} compact={compact} minimizable />
-    <div className="exbody">
+    <div className="exhead">
       <div className="row between mb-2">
-        <div style={{ fontSize: compact ? 17 : 20, fontWeight: 600, letterSpacing: '-.02em', lineHeight: 1.2 }} className="cap1">{nameFor(ex)}</div>
+        <div className="exname cap1">{nameFor(ex)}</div>
         <button className="iconbtn" aria-label={t('Details')} onClick={() => exerciseDetailSheet(ex)}><Icon name="info" /></button>
       </div>
-      <div className="row" style={{ gap: 6, flexWrap: 'wrap', marginBottom: 8 }}>
+      <div className="row" style={{ gap: 6, flexWrap: 'wrap' }}>
+        <span className="tag nocap">{t('{0} sets', entry.sets.length)}</span>
         {cardio && <span className="tag acc"><Icon name="figureRun" />{t('Cardio')}</span>}
         {/* You log the total; this is the split, so the set in front of you is unambiguous
             without the rep count having to mean two different things (issue #31). */}
@@ -126,16 +127,21 @@ function ExerciseBlock({ entryIdx, compact, onToggle, onField, onAddSet, onRemov
         {ex.eq && <span className="tag">{t(ex.eq)}</span>}
         {best > 0 && <span className="tag nocap">{t('Best:')} {fmtNum(best)} {S.unit}</span>}
       </div>
-      {iv && <div className="small dim" style={{ margin: '2px 0 10px' }}>{intervalSummary(iv)}</div>}
-      {last && <div className="small dim mb-1">{t('Last time')} ({fmtDate(last.d)}): {last.sets.map(s => setLabel(entry.id, s, last.target)).join(', ')}</div>}
+    </div>
+    <div className="exleft">
+      <Media ex={ex} key={entry.id} compact={compact} minimizable />
+      {iv && <div className="small dim mt-2">{intervalSummary(iv)}</div>}
+      {last && <div className="small dim mt-2">{t('Last time')} ({fmtDate(last.d)}): {last.sets.map(s => setLabel(entry.id, s, last.target)).join(', ')}</div>}
       {plan && plan.why && plan.kind !== 'off' && <div className={'progline' + (plan.kind === 'deload' ? ' warn' : '')}>
         <Icon name={plan.kind === 'up' ? 'arrowUp' : plan.kind === 'deload' ? 'arrowDown' : 'lightbulb'} />
         <span>{t(...plan.why)}</span>
       </div>}
+    </div>
+    <div className="exbody">
       <div className="card mt-3 mb-0">
         {/* the header carries the same eff3 sizing as the rows, or the labels drift off their columns */}
         <div className={'sethead' + (col3 ? ' eff3' : '')}><span className="n-sp" /><span className="w-sp">{col1.hd}</span>{col2 && <span className="r-sp">{col2.hd}</span>}{col3 && <span className="eff-sp">{col3.hd}</span>}{timed && <span className="ck-sp" />}<span className="ck-sp" /></div>
-        {entry.sets.map((s, i) => <div key={i} className={'setrow' + (s.done ? ' done' : '') + (col3 ? ' eff3' : '')}>
+        {entry.sets.map((s, i) => <div key={i} className={'setrow' + (s.done ? ' done' : i === activeSet ? ' active' : ' pend') + (col3 ? ' eff3' : '')}>
           <div className="n">{i + 1}</div>
           {cell(s, i, col1, 'w')}
           {col2 && cell(s, i, col2, 'r')}
@@ -279,7 +285,7 @@ function ActiveWorkout() {
   const body = <>
     {A.entries.length ? <>
       {A.entries[cur]?.section && <div className="wsection">{A.entries[cur].section}</div>}
-      <div className="muted small mb-2">{isSuperset ? t('Superset {0} / {1}', unitIdx + 1, units.length) : t('Exercise {0} / {1}', unitIdx + 1, units.length)}</div>
+      <div className="weyebrow">{A.name} · {isSuperset ? t('Superset {0} / {1}', unitIdx + 1, units.length) : t('Exercise {0} / {1}', unitIdx + 1, units.length)}</div>
       {isSuperset ? (
         <div className="ss-card">
           <div className="ss-hd"><Icon name="link" />{t('Superset · do these back-to-back, rest after both')}</div>
@@ -314,17 +320,23 @@ function ActiveWorkout() {
   </div>
 
   return <div className="narrow">
-    <div className="hdr">
-      <button className="iconbtn" aria-label={t('Discard')} onClick={discard}><Icon name="xmark" /></button>
-      <div className="ta-c"><div style={{ fontWeight: 600 }}>{A.name}</div><div className="sub"><Elapsed start={A.start} /> · {t('{0} sets', done + '/' + total)}</div></div>
-      <button className="iconbtn" style={{ color: 'var(--acc)' }} aria-label={t('Finish')} onClick={finishWorkout}><Icon name="check" /></button>
+    <div className="whd">
+      <div className="grow">
+        <div className="t-title">{A.name}</div>
+        <div className="t-sub muted">{isSuperset ? t('Superset {0} / {1}', unitIdx + 1, units.length) : t('Exercise {0} / {1}', Math.max(unitIdx + 1, 1), units.length)} · {t('{0} sets', done + '/' + total)}</div>
+      </div>
+      <span className="livechip"><Icon name="clock" /><Elapsed start={A.start} /></span>
     </div>
-    <div className="wprog"><i style={{ width: (total ? done / total * 100 : 0) + '%' }} /></div>
+    <div className="wseg" role="img" aria-label={t('Exercise {0} / {1}', exDone, A.entries.length)}>
+      {units.map((u, k) => <i key={k} className={u.every(ix => A.entries[ix].sets.length && A.entries[ix].sets.every(x => x.done)) ? 'on' : k === unitIdx ? 'cur' : ''} />)}
+    </div>
     {body}
     <div className="sp-3" />
     <button className={allDone ? 'btn primary' : 'btn ghost dim'} onClick={finishWorkout}>
       {allDone ? t('Finish workout') : t('Finish workout early · {0} exercises', exDone + '/' + A.entries.length)}
     </button>
+    <div className="sp-1" />
+    <button className="btn ghost discard" onClick={discard}>{t('Discard')}</button>
     <div style={{ height: 40 }} />
   </div>
 }

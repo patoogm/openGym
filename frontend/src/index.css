@@ -38,6 +38,8 @@
 
   /* system palette (iOS dark values) */
   --blue:#0a84ff; --green:#30d158; --red:#ff453a; --orange:#ff9f0a; --orange-ink:var(--orange);
+  --orange-soft:color-mix(in srgb,var(--orange) 16%,transparent);   /* live-session chip, streak, attention */
+  --red-ink:var(--red);   /* destructive text (Discard, Delete) */
   --yellow:#ffd60a; --teal:#40c8e0; --indigo:#5e5ce6; --pink:#ff375f;
   --purple:#bf5af2; --mint:#63e6e2; --brown:#ac8e68; --grey:#8e8e93;
 
@@ -85,6 +87,7 @@
 
   --blue:#007aff; --green:#34c759; --red:#ff3b30; --orange:#ff9500;
   --orange-ink:#a85a00;   /* readable orange text on a light surface */
+  --red-ink:#d70015;      /* readable red text on a light surface */
   --yellow:#ffcc00; --teal:#30b0c7; --indigo:#5856d6; --pink:#ff2d55;
   --purple:#af52de; --mint:#00c7be; --brown:#a2845e; --grey:#8e8e93;
   --acc-2:#248a3d;
@@ -387,7 +390,7 @@ h4.sec{
   font-weight:500;text-transform:capitalize;
 }
 .tag.acc{background:var(--acc-soft);color:var(--acc)}
-.tag.warn{background:color-mix(in srgb,var(--orange) 16%,transparent);color:var(--orange-ink);margin-left:6px}
+.tag.warn{background:var(--orange-soft);color:var(--orange-ink);margin-left:6px}
 
 /* ---------------------------------------------------------------- chips -- */
 .chips{
@@ -559,6 +562,30 @@ h4.sec{
 /* ------------------------------------------------------------- workout --- */
 .wprog{height:4px;background:var(--surface-2);border-radius:99px;overflow:hidden;margin-bottom:16px}
 .wprog i{display:block;height:100%;background:var(--acc);border-radius:99px;transition:width var(--med) var(--ease)}
+/* session header: routine name + where you are on the left, live clock chip on the right */
+.whd{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--sp-3);margin-bottom:var(--sp-3)}
+.whd .grow{min-width:0}
+.whd .t-title{overflow-wrap:anywhere;line-height:1.15}
+.livechip{
+  display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 var(--sp-3);flex:none;
+  border-radius:99px;background:var(--orange-soft);color:var(--orange-ink);
+  font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;
+}
+.livechip .icn{font-size:16px}
+/* one segment per exercise (a superset is one) */
+.wseg{display:flex;gap:4px;margin-bottom:var(--sp-4)}
+.wseg i{flex:1;min-width:0;height:4px;border-radius:99px;background:var(--surface-3);transition:background var(--med) var(--ease)}
+.wseg i.cur{background:var(--acc-line)}
+.wseg i.on{background:var(--acc)}
+.wfoot{display:flex;flex-direction:column;gap:var(--sp-2)}
+.btn.discard{color:var(--red-ink)}
+.exname{font-size:22px;font-weight:700;letter-spacing:-.022em;line-height:1.2}
+.compact .exname{font-size:17px;font-weight:600}
+.exhead{margin-bottom:var(--sp-2)}
+.exhead .row{min-width:0}
+.exhead .iconbtn{flex:none}
+.exleft{min-width:0}
+.weyebrow{display:none}
 .wsection{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--label-3);margin-bottom:4px}
 .exmedia{position:relative;border-radius:var(--r-lg);overflow:hidden;background:#fff;margin-bottom:12px}
 .exmedia img{width:100%;height:320px;object-fit:contain;display:block}
@@ -584,7 +611,7 @@ h4.sec{
 .sethead .w-sp{flex:1.4;text-align:center}
 .sethead .r-sp{flex:1;text-align:center}
 .sethead .eff-sp{text-align:center}
-.sethead .ck-sp{width:30px;flex:none}
+.sethead .ck-sp{width:32px;flex:none}
 .setrow{display:flex;align-items:center;gap:8px;padding:7px 0;position:relative}
 .setrow+.setrow::before{
   content:'';position:absolute;left:32px;right:0;top:0;height:var(--hair);background:var(--sep);
@@ -611,14 +638,31 @@ h4.sec{
 .setrow.eff3 .stp.eff button{width:20px}
 .setrow.eff3 .stp .num{font-size:14px}
 .setrow.done .n{background:var(--acc);color:var(--on-acc)}
-.setrow.done{opacity:.45}
+.setrow.done>:not(.chk){opacity:.45}
+/* confirm slot is 32px for every row so the columns line up; the active row's button grows to a
+   44px target with a negative margin instead of pushing the steppers over */
+.setrow .chk{width:32px;height:32px}
+.setrow.pend .n,.setrow.pend .stp .num{color:var(--label-3)}
+.setrow.active{
+  margin:2px -8px;padding:var(--sp-2);border-radius:var(--r);
+  box-shadow:inset 0 0 0 1.5px var(--acc);
+}
+.setrow.active+.setrow::before,.setrow.done+.setrow.active::before{display:none}
+.setrow.active .n{background:var(--acc);color:var(--on-acc)}
+.setrow.active .stp button{height:48px}
+.setrow.active .stp .num{font-size:20px;font-weight:600}
+.setrow.active.eff3 .stp .num{font-size:16px}
+.setrow.active .chk{width:44px;height:44px;margin:-6px;background:var(--acc);color:var(--on-acc);box-shadow:none}
+.setrow.active .chk .icn{font-size:20px}
 /* why the next target is what it is (issue #17) */
 .progline{
-  display:flex;align-items:flex-start;gap:7px;margin:6px 0 2px;
-  font-size:13px;line-height:1.38;color:var(--acc);
+  display:flex;align-items:flex-start;gap:var(--sp-2);margin:var(--sp-2) 0 0;padding:10px var(--sp-3);
+  background:var(--acc-soft);border-radius:var(--r);
+  font-size:15px;line-height:1.38;color:var(--label);
 }
-.progline.warn{color:var(--yellow)}
-.progline svg{flex:none;margin-top:2px}
+.progline .icn,.progline svg{flex:none;margin-top:2px;font-size:16px;color:var(--acc)}
+.progline.warn{background:var(--orange-soft)}
+.progline.warn .icn,.progline.warn svg{color:var(--orange-ink)}
 
 /* start a timed set (issue #16) — sits where you'd otherwise reach for the checkbox */
 .setrow .setgo{
@@ -657,6 +701,9 @@ h4.sec{
 #timer.rest{flex-direction:column;align-items:stretch;gap:10px}
 #timer.rest .head{display:flex;align-items:center;gap:12px}
 #timer.rest .acts{display:flex;align-items:center;gap:8px}
+#timer .rest-ic,.timer-inline .rest-ic{font-size:22px;color:var(--acc);flex:none}
+#timer .rest-lbl,.timer-inline .rest-lbl{font-size:12px;color:var(--label-2);line-height:1.2}
+#timer .rest-tx,.timer-inline .rest-tx{min-width:66px}
 #timer.rest .acts .btn{padding-top:11px;padding-bottom:11px}   /* sweaty hands, mid-set */
 #timer.rest .acts .skip{margin-left:auto;min-width:84px}
 /* work timer (issue #16): the same bar doing the opposite job — outlined and tinted so a
@@ -983,6 +1030,7 @@ h4.sec{
   .cside-i .grow{flex:1;min-width:0}
   .cside-i:hover{background:var(--surface)}
   .cside-i.on{background:var(--surface-2);color:var(--label)}
+  .live-dot-o{width:8px;height:8px;border-radius:50%;background:var(--orange);flex:none}
   .cside .btn.primary{margin-top:14px}
   .cside-foot{margin-top:auto;padding-top:8px;border-top:var(--hair) solid var(--sep)}
   .cmain,.amain{min-width:0}
@@ -1071,8 +1119,9 @@ h4.sec{
     display:flex;flex-direction:column;gap:var(--sp-4);
     padding:var(--sp-4);background:var(--surface);border-radius:var(--r-card);
   }
-  .wrail-name{font-size:17px;font-weight:600;letter-spacing:-.02em;overflow-wrap:anywhere}
-  .wrail-sub{font-size:15px;color:var(--label-2);margin:2px 0 var(--sp-3)}
+  .wrail-name{font-size:15px;color:var(--label-2);overflow-wrap:anywhere}
+  .wrail-time{font-size:40px;font-weight:700;letter-spacing:-.03em;line-height:1.1;color:var(--orange-ink);margin:2px 0 var(--sp-3)}
+  .wrail-sub{font-size:15px;color:var(--label-2);margin:0 0 var(--sp-2)}
   .wrail-hd .wprog{margin-bottom:0}
   /* the outline scrolls on its own so the timer and Finish stay in view */
   .wout{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
@@ -1083,9 +1132,10 @@ h4.sec{
     transition:background var(--fast),color var(--fast);
   }
   .wout-i:hover{background:var(--surface-2)}
-  .wout-i.current{background:var(--surface-2);color:var(--label);box-shadow:inset 3px 0 0 var(--acc)}
+  .wout-i.current{background:var(--acc-soft);color:var(--label)}
   .wout-i.done{color:var(--label-3)}
   .wout-ic{width:20px;font-size:16px;flex:none;display:flex;justify-content:center}
+  .wout-dot{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--label-4)}
   .wout-i.current .wout-ic,.wout-i.done .wout-ic{color:var(--acc)}
   .wout-names{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:15px;overflow-wrap:anywhere}
   .wout-ss{font-size:14px;color:var(--acc);flex:none}
@@ -1094,11 +1144,19 @@ h4.sec{
   .wrail-ft .timer-inline{background:var(--surface-2)}
   /* 44px touch targets for the set steppers (tablet/laptop touch) */
   .wmain .setrow .stp button{height:44px}
+  .wmain .setrow.active{background:var(--surface-2)}
+  .wmain .setrow.active .stp{background:var(--surface-3)}
+  .wmain .setrow.active .stp button{height:44px}
+  .weyebrow{display:block;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--label-2);margin-bottom:var(--sp-1)}
+  .exblock:not(.compact) .exname{font-size:34px;letter-spacing:-.03em}
+  .wrail-ft .btn.primary,.wrail-ft .btn.tinted{min-height:48px}
 }
 /* media beside the set table once the main column has room (≈1440px viewport and up) */
 @container (min-width:760px){
-  .exblock.has-media:not(.compact){display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:var(--sp-5);align-items:start}
+  .exblock.has-media:not(.compact){display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--sp-2) var(--sp-5);align-items:start}
+  .exblock.has-media:not(.compact) .exhead{grid-column:1/-1}
   .exblock.has-media:not(.compact) .exmedia{margin-bottom:0}
+  .exblock.has-media:not(.compact) .exmedia+*{margin-top:var(--sp-3)}
   .exblock.has-media:not(.compact) .exmedia:not(.mini) img{height:300px}
 }
 
