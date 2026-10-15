@@ -289,8 +289,14 @@ export function ExerciseDetail({ ex, close }) {
   const st = useStore(s => s.S)
   const last = lastEntryFor(st, ex.id)
   const best = bestWeightFor(st, ex.id)
+  const steps = instrFor(ex)
+  // the primary action sits in the header on a wide panel and under the media on a narrow one
+  const add = cls => <Button variant="primary" icon="plus" className={cls} onClick={() => addToRoutineSheet(ex)}>{t('Add to my plan')}</Button>
   return <>
-    <h3 className="cap1">{nameFor(ex)}</h3>
+    <div className="exd-head">
+      <h3 className="cap1">{nameFor(ex)}</h3>
+      {add('exd-add-head')}
+    </div>
     <div className="exd">
     <div className="exd-media">
     <Media ex={ex} />
@@ -301,16 +307,26 @@ export function ExerciseDetail({ ex, close }) {
       {(ex.sm || []).slice(0, 3).map((s, i) => <span key={i} className="tag">{t(s)}</span>)}
     </div>
     {ex.desc && <div className="exnote">{ex.desc}</div>}
-    </div>
-    <div className="exd-main">
-    {best > 0 && <div className="small row mb-2 gap-1"><Icon name="trophy" className="ic-sm goal-ink" />{t('Best:')} <b className="accent">{fmtNum(best)} {st.unit}</b>{last ? ` · ${t('last')} ${fmtDate(last.d)}: ${last.sets.map(s => setLabel(ex.id, s, last.target)).join(', ')}` : ''}</div>}
-    <Button variant="primary" icon="plus" className="mt-3 mb-1" onClick={() => addToRoutineSheet(ex)}>{t('Add to my plan')}</Button>
+    {add('exd-add-main')}
     {ex.custom && <div className="row gap-2 mt-2">
       <Button icon="pencil" className="f-1" onClick={() => { close && close(); customExSheet(ex) }}>{t('Edit')}</Button>
       <Button variant="danger" icon="trash" className="f-1" onClick={() => deleteCustomEx(ex, close)}>{t('Delete')}</Button>
     </div>}
-    {!isCardio(ex) && <OneRM ex={ex} />}
-    {instrFor(ex).length > 0 &&<><h4 className="sec">{t('How to')}{!INSTR_LANGS.includes(getLang()) && <span className="dim nocase"> · {t('instructions in English')}</span>}</h4><ol className="steps-list">{instrFor(ex).map((s, i) => <li key={i}>{s}</li>)}</ol></>}
+    </div>
+    <div className="exd-main">
+    {best > 0 && <div className="card exd-best">
+      <span className="lrow-i"><Icon name="trophy" /></span>
+      <div className="grow">
+        <div className="small muted">{t('Best:')}</div>
+        <div className="t-head"><span className="accent">{fmtNum(best)} {st.unit}</span></div>
+        {last && <div className="small dim">{t('last')} {fmtDate(last.d)}: {last.sets.map(s => setLabel(ex.id, s, last.target)).join(', ')}</div>}
+      </div>
+    </div>}
+    {!isCardio(ex) && <div className="card"><OneRM ex={ex} /></div>}
+    {steps.length > 0 && <div className="card">
+      <h4 className="sec">{t('How to')}{!INSTR_LANGS.includes(getLang()) && <span className="dim nocase"> · {t('instructions in English')}</span>}</h4>
+      <ol className="steps-list">{steps.map((s, i) => <li key={i}>{s}</li>)}</ol>
+    </div>}
     </div>
     </div>
   </>
