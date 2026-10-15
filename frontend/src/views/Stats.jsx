@@ -308,9 +308,11 @@ export default function Stats() {
   </>
 
   return <>
-    {hdr}{tiles}{heat}
+    {hdr}{tiles}
+    {/* activity and body weight share a row at the same height */}
+    <div className="cols eq">{heat}{bwCard}</div>
     {(muscle || effort) && <div className="cols">{muscle}{effort}</div>}
-    <div className="cols">{bwCard}{recentCard}</div>
+    {recentCard && <div className="cols">{recentCard}</div>}
     {exCard}
   </>
 }
