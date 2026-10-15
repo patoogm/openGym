@@ -1,5 +1,6 @@
 // Italian UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Resize panel': 'Ridimensiona il pannello',
   'Workout': 'Allenamento',
   'Confirm': 'Conferma',
   'Cancel': 'Annulla',

@@ -6,6 +6,7 @@ import { countEx } from '../lib/routine.js'
 import { t } from '../lib/i18n.js'
 import { dayAssignSheet, loadStarterPlan, planToolsSheet } from '../sheets.jsx'
 import Icon from '../components/Icon.jsx'
+import PaneGrip from '../components/PaneGrip.jsx'
 import { Button } from '../components/ui.jsx'
 import { glyphOf, DEFAULT_GLYPH } from '../lib/glyphs.js'
 import { isAssigned } from '../lib/coaching.js'
@@ -79,6 +80,7 @@ export default function Plan() {
   </>
 
   return <div className="pane">
+    <PaneGrip />
     {/* routines first: they are what you pick from; the week schedule is secondary here */}
     <section className="pane-list" aria-label={t('Plan')}>{header}{routinesCol}{scheduleCol}</section>
     <section className="pane-detail">

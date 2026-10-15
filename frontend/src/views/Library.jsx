@@ -8,6 +8,7 @@ import { t, nameFor } from '../lib/i18n.js'
 import { Thumb } from '../components/Media.jsx'
 import { ExerciseDetail, openExercise, addToRoutineSheet, customExSheet } from '../sheets.jsx'
 import Icon from '../components/Icon.jsx'
+import PaneGrip from '../components/PaneGrip.jsx'
 import { Button } from '../components/ui.jsx'
 import ErrorBoundary from '../components/ErrorBoundary.jsx'
 import { useIsDesktop } from '../lib/useIsDesktop.js'
@@ -79,6 +80,7 @@ export default function Library() {
   if (!desktop) return <>{header}{controls}{listEl}{more}</>
 
   return <div className="pane">
+    <PaneGrip />
     <section className="pane-list lib-list" aria-label={t('Exercises')}>{header}{controls}{listEl}{more}</section>
     <section className="pane-detail">
       <ErrorBoundary key={selected ? selected.id : 'none'}>

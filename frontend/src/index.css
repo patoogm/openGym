@@ -1228,7 +1228,20 @@ h4.sec{
    coach's .cgrid/.cmaster/.cdetail, but inside the athlete content frame (which already has
    its own padding and width) instead of the full-bleed coach shell. */
 @media (min-width:1000px){
-  .pane{display:grid;grid-template-columns:var(--list-w) minmax(0,1fr);column-gap:var(--sp-6);align-items:start}
+  .pane{display:grid;grid-template-columns:var(--list-w) minmax(0,1fr);column-gap:var(--sp-6);align-items:start;position:relative}
+  /* drag handle between list and detail: a 12px hit area over the column gap, with a hairline that
+     lights up on hover/drag; the list column width is --list-w, set by PaneGrip */
+  .pane-grip{
+    position:absolute;top:0;bottom:0;z-index:2;width:12px;cursor:col-resize;touch-action:none;
+    left:calc(var(--list-w) + var(--sp-6) / 2 - 6px);
+  }
+  .pane-grip::after{
+    content:"";position:absolute;top:var(--sp-2);bottom:var(--sp-2);left:5px;width:2px;border-radius:1px;
+    background:transparent;transition:background var(--fast);
+  }
+  .pane-grip:hover::after,.pane-grip:focus-visible::after,body.resizing .pane-grip::after{background:var(--acc-line)}
+  .pane-grip:focus-visible{outline:none}
+  body.resizing{cursor:col-resize;user-select:none}
   .pane-list{
     position:sticky;top:var(--sp-5);max-height:calc(100vh - 2 * var(--sp-5));overflow-y:auto;
     min-width:0;padding-right:2px;
