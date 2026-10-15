@@ -1361,3 +1361,18 @@ h4.sec{
 .k-acc{background:var(--acc)}.k-plan{background:var(--label-3)}.k-ovr{background:var(--orange)}
 .nocase{text-transform:none!important;letter-spacing:0!important}
 .hidden{display:none!important}
+
+/* ------------------------------------------------------------ scrollbars --- */
+/* Desktop pointers only: slim rounded thumb, no track or arrow buttons, visible only while the
+   area is hovered (iOS-like). Touch keeps the native overlay bars. ::-webkit-scrollbar is used
+   on purpose: the standard scrollbar-width/color props keep the arrow buttons on Windows. */
+@media (hover:hover) and (pointer:fine){
+  ::-webkit-scrollbar{width:12px;height:12px;background:transparent}
+  ::-webkit-scrollbar-button{display:none}
+  ::-webkit-scrollbar-corner{background:transparent}
+  ::-webkit-scrollbar-thumb{
+    background:transparent;border-radius:6px;border:3px solid transparent;background-clip:content-box;
+  }
+  *:hover::-webkit-scrollbar-thumb{background-color:var(--label-4)}
+  *::-webkit-scrollbar-thumb:hover{background-color:var(--label-3)}
+}
