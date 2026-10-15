@@ -1,5 +1,7 @@
 // Korean UI strings. Keys are the English source strings (see lib/i18n.js).
 export default {
+  'Resize panel': '패널 너비 조절',
+  'Workout': '운동',
   'Confirm': '확인',
   'Cancel': '취소',
   'Delete': '삭제',

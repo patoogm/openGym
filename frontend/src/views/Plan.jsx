@@ -6,6 +6,7 @@ import { countEx } from '../lib/routine.js'
 import { t } from '../lib/i18n.js'
 import { dayAssignSheet, loadStarterPlan, planToolsSheet } from '../sheets.jsx'
 import Icon from '../components/Icon.jsx'
+import PaneGrip from '../components/PaneGrip.jsx'
 import { Button } from '../components/ui.jsx'
 import { glyphOf, DEFAULT_GLYPH } from '../lib/glyphs.js'
 import { isAssigned } from '../lib/coaching.js'
@@ -44,7 +45,7 @@ export default function Plan() {
 
   const scheduleCol = <div>
     <h4 className="sec">{t('Week schedule')}</h4>
-    <div className="list" style={{ display: 'flex', flexDirection: 'column' }}>
+    <div className="list col">
       {[1, 2, 3, 4, 5, 6, 0].map(d => {
         const r = S.routines.find(x => x.id === S.week[d])
         return <div key={d} className="item" {...rowProps(() => dayAssignSheet(d))}>
@@ -61,15 +62,16 @@ export default function Plan() {
       <Button size="sm" variant="tinted" icon="plus" onClick={addRoutine}>{t('New')}</Button>
     </div>
     {S.routines.length ? <div className="list">{S.routines.map(r => <div key={r.id}
-      className={'item' + (desktop && selected && r.id === selected.id ? ' sel' : '')}
+      className={'item rich' + (desktop && selected && r.id === selected.id ? ' sel' : '')}
       aria-current={desktop && selected && r.id === selected.id ? 'true' : undefined}
       {...rowProps(() => nav(desktop ? planRoutinePath(r.id) : planRoutineEditPath(r.id)))}>
       <span className="lrow-i"><Icon name={glyphOf(r.emoji)} /></span>
-      <div className="grow"><div className="tt">{r.name}{isAssigned(r) && <span className="tag acc" style={{ marginLeft: 6 }}>{t('from your coach')}</span>}</div><div className="ss">{exCount(countEx(r.ex))}</div></div>
+      <div className="grow"><div className="tt">{r.name}{isAssigned(r) && <span className="tag acc ml-1">{t('from your coach')}</span>}</div><div className="ss">{exCount(countEx(r.ex))}</div></div>
       <Icon name="chevronRight" className="chev" /></div>)}</div> : <>
       <div className="empty"><div className="ico"><Icon name="clipboard" /></div>{t('No routines yet.')}<br />{t('Create one or load the starter plan.')}</div>
       <Button icon="sparkles" onClick={loadStarterPlan}>{t('Load starter plan (Push / Pull / Legs)')}</Button>
     </>}
+    {!desktop && <Button className="mt-4" variant="tinted" icon="upload" onClick={planToolsSheet}>{t('Import a plan file')}</Button>}
   </div>
 
   if (!desktop) return <>
@@ -78,6 +80,7 @@ export default function Plan() {
   </>
 
   return <div className="pane">
+    <PaneGrip />
     {/* routines first: they are what you pick from; the week schedule is secondary here */}
     <section className="pane-list" aria-label={t('Plan')}>{header}{routinesCol}{scheduleCol}</section>
     <section className="pane-detail">

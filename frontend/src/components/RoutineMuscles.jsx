@@ -14,7 +14,7 @@ export default function RoutineMuscles({ r }) {
     <h2>{t('What this session hits')}</h2>
     <BodyMap load={load} body={S.body} />
     <div className="mchips">
-      {worked.slice(0, 6).map(m => <span key={m} className="mchip">{t(MUSCLE_NAME[m])}</span>)}
+      {worked.slice(0, 6).map(m => <span key={m} className="mchip hit">{t(MUSCLE_NAME[m])}</span>)}
     </div>
   </div>
 }

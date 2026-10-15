@@ -4,6 +4,7 @@ import { useStore } from '../store/useStore.js'
 import { t } from '../lib/i18n.js'
 import { WorkoutRow, openWorkout } from '../sheets.jsx'
 import Icon from '../components/Icon.jsx'
+import PaneGrip from '../components/PaneGrip.jsx'
 import WorkoutDetail from '../components/WorkoutDetail.jsx'
 import ErrorBoundary from '../components/ErrorBoundary.jsx'
 import { useIsDesktop } from '../lib/useIsDesktop.js'
@@ -38,6 +39,7 @@ export default function History() {
   if (!newest.length) return <>{header}{empty}</>
 
   return <div className="pane">
+    <PaneGrip />
     <section className="pane-list" aria-label={t('History')}>
       {header}
       <div className="list">{newest.map(w => <WorkoutRow key={w.id} w={w} sel={w.id === selected.id} onClick={() => nav(historyWorkoutPath(w.id))} />)}</div>

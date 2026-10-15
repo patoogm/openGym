@@ -5,6 +5,7 @@ import { useStore } from '../store/useStore.js'
 import { useIsDesktop } from '../lib/useIsDesktop.js'
 import { t } from '../lib/i18n.js'
 import { Button } from './ui.jsx'
+import Icon from './Icon.jsx'
 
 const clock = sec => Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0')
 
@@ -57,7 +58,8 @@ export default function RestTimer({ inline }) {
   return (
     <div id={id} className={cls('rest')}>
       <div className="head">
-        <div className="t">{clock(timer.left)}</div>
+        <Icon name="clock" className="rest-ic" />
+        <div className="rest-tx"><div className="rest-lbl">{t('Rest')}</div><div className="t">{clock(timer.left)}</div></div>
         <div className="bar"><i style={{ width: pct + '%' }} /></div>
       </div>
       <div className="acts">

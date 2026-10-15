@@ -18,6 +18,7 @@ import { fmtDate } from '../lib/format.js'
 import { t } from '../lib/i18n.js'
 import { useIsDesktop } from '../lib/useIsDesktop.js'
 import Icon from '../components/Icon.jsx'
+import PaneGrip from '../components/PaneGrip.jsx'
 import { Button } from '../components/ui.jsx'
 import { confirmSheet } from '../sheets.jsx'
 import { newManualBlock, activeBlock, materializeBlock, snapshotActiveBlock, finishActiveBlock } from '../lib/blocks.js'
@@ -138,6 +139,7 @@ export default function Program() {
   if (!desktop) return <div className="narrow">{header}{body}</div>
 
   return <div className="pane">
+    <PaneGrip />
     <section className="pane-list" aria-label={t('Program')}>{header}{body}</section>
     <section className="pane-detail">{previewBlock || <div className="empty"><div className="ico"><Icon name="calendar" /></div>{t('Block preview')}</div>}</section>
   </div>

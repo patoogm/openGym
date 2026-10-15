@@ -46,7 +46,7 @@ function MuscleBalance({ S }) {
   return <div className="card">
     <div className="row between mb-2">
       <h2 className="m-0">{t('Muscle balance')} <span className="dim nocase">· {on ? t('by hard sets') : t('by sets worked')}</span></h2>
-      {rated && <Button size="sm" icon="flame" style={on ? { color: 'var(--yellow)' } : undefined}
+      {rated && <Button size="sm" icon="flame" className={on ? 'goal-ink' : undefined}
         onClick={() => { setHard(h => !h); setSel(null) }}>{on ? t('Hard') : t('All')}</Button>}
     </div>
     <Segmented className="seg-range" value={win} onChange={v => { setWin(v); setSel(null) }}
@@ -106,12 +106,12 @@ function EffortCard({ S }) {
           <div className="small dim">{t('average effort')}</div>
         </div>
         <div className="ta-r">
-          <div className="stat-v" style={{ color: 'var(--yellow)' }}>{sum.hardPct == null ? '—' : Math.round(sum.hardPct * 100) + '%'}</div>
+          <div className="stat-v goal-ink">{sum.hardPct == null ? '—' : Math.round(sum.hardPct * 100) + '%'}</div>
           <div className="small dim">{t('at {0} {1} or harder', hd, fmtNum(toScale(kind, HARD_RIR)))}</div>
         </div>
       </div>
       <div className="small dim mt-2">{t('{0} of {1} finished sets rated', sum.rated, sum.done)}</div>
-      {effortOf(S) === 'none' && <div className="small" style={{ color: 'var(--yellow)', marginTop: 4 }}>
+      {effortOf(S) === 'none' && <div className="small goal-ink mt-1">
         {t('Effort per set is switched off — turn it on in Settings to keep rating.')}
       </div>}
       {pts.length > 1 && <>
@@ -215,7 +215,7 @@ export default function Stats() {
     <div className="tile"><div className="l"><Icon name="dumbbell" />{t('Workouts')}</div><div className="v">{S.workouts.length}</div></div>
     <div className="tile"><div className="l"><Icon name="calendar" />{t('This month')}</div><div className="v">{monthW}</div></div>
     <div className="tile"><div className="l"><Icon name="flame" />{t('Week streak')}</div><div className="v">{streakWeeks(S)}</div></div>
-    <div className="tile"><div className="l"><Icon name="scale" />{t('Weight 30d')}</div><div className="v" style={{ fontSize: 22, color: bwDelta30 === null ? 'inherit' : bwDeltaColor(bwDelta30, (lastBW(S) || {}).w || 0) }}>{bwDelta30 === null ? '—' : (bwDelta30 > 0 ? '+' : '') + fmtNum(bwDelta30) + ' ' + S.unit}</div></div>
+    <div className="tile"><div className="l"><Icon name="scale" />{t('Weight 30d')}</div><div className="v sm" style={bwDelta30 === null ? undefined : { color: bwDeltaColor(bwDelta30, (lastBW(S) || {}).w || 0) }}>{bwDelta30 === null ? '—' : (bwDelta30 > 0 ? '+' : '') + fmtNum(bwDelta30) + ' ' + S.unit}</div></div>
   </div>
 
   const heat = <div className="card">
@@ -230,7 +230,7 @@ export default function Stats() {
     <div className="row between mb-2">
       <h2 className="m-0">{t('Body weight')}</h2>
       <div className="row gap-2">
-        <Button size="sm" icon="target" style={S.targetW ? { color: 'var(--yellow)' } : undefined} onClick={goalSheet}>{S.targetW ? fmtNum(S.targetW) : t('Goal')}</Button>
+        <Button size="sm" icon="target" className={S.targetW ? 'goal-ink' : undefined} onClick={goalSheet}>{S.targetW ? fmtNum(S.targetW) : t('Goal')}</Button>
         <Button size="sm" icon="plus" onClick={() => bwSheet()}>{t('Log')}</Button>
       </div>
     </div>
@@ -308,9 +308,11 @@ export default function Stats() {
   </>
 
   return <>
-    {hdr}{tiles}{heat}
+    {hdr}{tiles}
+    {/* activity and body weight share a row at the same height */}
+    <div className="cols eq">{heat}{bwCard}</div>
     {(muscle || effort) && <div className="cols">{muscle}{effort}</div>}
-    <div className="cols">{bwCard}{recentCard}</div>
+    {recentCard && <div className="cols">{recentCard}</div>}
     {exCard}
   </>
 }

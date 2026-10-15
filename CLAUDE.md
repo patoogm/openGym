@@ -49,7 +49,7 @@ frontend/src/
   main.jsx            entrada, registra el service worker (no en mobile)
   App.jsx             shell: rutas, aplica theme/accent en <html>, TabBar, RestTimer, Modals, Toast
   index.css           ★ TODO el sistema de diseño (tokens + componentes + layout desktop)
-  sheets.jsx          ★ casi todos los bottom sheets/diálogos (≈65 KB, 126 inline styles)
+  sheets.jsx          ★ casi todos los bottom sheets/diálogos (≈65 KB, sin inline styles)
   components/
     ui.jsx            ★ controles propios: NumberField, TextField, TextArea, SearchField, Switch,
                         Segmented, Stepper, Slider, Check, Section, Row, SelectRow, Button
@@ -126,6 +126,7 @@ Los nombres de acento se validan contra `ACCENTS` en `lib/format.js`.
 **Geometría**: `--r-sm 8px`, `--r 12px`, `--r-card 14px`, `--r-lg 16px`, `--r-xl 22px`, `--pad 16px`, `--icon-stroke 1.7`.
 
 **Spacing y anchos (desktop)**: `--sp-1…--sp-8` (4/8/12/16/20/24/32/40px) para márgenes y gaps nuevos; `--page-w` 720px (columna de lectura) y `--wide-w` 1200px (dashboards).
+**Tokens del rediseño del Workout**: `--orange-soft` (naranja 16%: chip de sesión en vivo, `.tag.warn`, `.progline.warn`) `--red-ink` (texto destructivo, `.btn.discard`) y `--yellow-ink` (texto de meta/esfuerzo, `.goal-ink`). Sheets siguen en `--bg-el`.
 **Tinta de aviso**: `--orange-ink` (naranja legible como texto: igual a `--orange` en dark, `#a85a00` en light); lo usa `.tag.warn`.
 **Motion**: `--ease cubic-bezier(.32,.72,0,1)`, `--fast 140ms`, `--med 220ms`. `prefers-reduced-motion` apaga todo.
 **Safe areas**: `--sat`, `--sab` (env insets).
@@ -236,7 +237,7 @@ config de ejercicio en rutina, reprogramar día, calendario, detalle de workout,
 - No abrir los archivos de datos gigantes (`exercises-data.js`, `body-paths.js`, `instr/`, `names/`).
 
 ### Deuda de diseño conocida
-- **Inline `style={{…}}`**: quedan 246 (medido el 2026-10-09; eran ~340). `sheets.jsx` (126) y `Admin.jsx` (12) quedaron fuera a propósito del barrido de espaciado (sheets = UI mobile compartida que no se rediseñó; Admin = solo operador). En vistas y componentes quedan sobre todo estilos dinámicos (anchos de barras, colores por estado, tamaños de íconos): `RoutineEdit.jsx` (17), `Home.jsx` (14), `ProgressViews.jsx` (12), `Workout.jsx` (9), `Settings.jsx` (9), `Stats.jsx` (8), `Login.jsx` (7).
+- **Inline `style={{…}}`**: quedan 246 (medido el 2026-10-09; eran ~340). `sheets.jsx` (0, migrado 2026-10-13) y `Admin.jsx` (12) quedaron fuera a propósito del barrido de espaciado (sheets = UI mobile compartida que no se rediseñó; Admin = solo operador). En vistas y componentes quedan sobre todo estilos dinámicos (anchos de barras, colores por estado, tamaños de íconos): `RoutineEdit.jsx` (17), `Home.jsx` (14), `ProgressViews.jsx` (12), `Workout.jsx` (9), `Settings.jsx` (9), `Stats.jsx` (8), `Login.jsx` (7).
 - ~~Contraste de `--on-acc`~~ resuelto (2026-10-13): texto negro sobre los 8 acentos en ambos temas (≥5,08:1).
 - **Desktop, decisiones pendientes** (no son defectos): `.wchoose` queda medio vacío si solo existe Freestyle; el GIF minimizado sigue reservando su columna 5fr; al cruzar 1000px el shell se remonta (latido de presencia y se pierde input sin confirmar).
 - **Caso borde sin confirmar**: entrar directo a `/library/<id de un ejercicio propio>` podría redirigir de más si los ejercicios propios se hidrataran de forma asíncrona (hoy el store lee localStorage de forma síncrona).

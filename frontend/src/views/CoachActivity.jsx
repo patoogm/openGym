@@ -18,6 +18,7 @@ export default function CoachActivity() {
       : feed.map(g => <div key={g.d}>
         <div className="feed-day">{fmtDate(g.d, true)}</div>
         <div className="list">{g.items.map((i, n) => <div key={i.studentId + g.d + i.workout + n} className="item" {...rowProps(() => nav('/coach/alumno/' + i.studentId))}>
+          <span className="feed-ic" aria-hidden="true"><Icon name="check" /></span>
           <div className="grow"><div className="tt">{i.name}</div><div className="ss">terminó {i.workout || 'un entreno'}</div></div>
           <Icon name="chevronRight" className="chev" />
         </div>)}</div>

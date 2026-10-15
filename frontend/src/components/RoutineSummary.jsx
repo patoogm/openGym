@@ -3,13 +3,14 @@ import { useStore } from '../store/useStore.js'
 import { useUI } from '../store/useUI.js'
 import { isAssigned } from '../lib/coaching.js'
 import { exOr } from '../lib/exercises.js'
-import { exCount } from '../lib/format.js'
+import { exCount, DAYN } from '../lib/format.js'
 import { t, nameFor } from '../lib/i18n.js'
 import { supersetUnits, exLine } from '../lib/history.js'
 import { sectionsOf, countEx } from '../lib/routine.js'
 import { POLICY_NAME } from '../lib/progression.js'
 import { glyphOf } from '../lib/glyphs.js'
 import { planRoutineEditPath } from '../lib/athleteShell.js'
+import { startFlow } from '../sheets.jsx'
 import { Thumb } from './Media.jsx'
 import Icon from './Icon.jsx'
 import { Button } from './ui.jsx'
@@ -28,16 +29,19 @@ export default function RoutineSummary({ r }) {
   const unitFirst = new Set(units.filter(u => u.length > 1).map(u => u[0]))
   const inSS = new Set(units.filter(u => u.length > 1).flat())
 
+  const days = [1, 2, 3, 4, 5, 6, 0].filter(d => S.week[d] === r.id).map(d => t(DAYN[d]))
   return <div>
     <div className="hdr">
       <span className="lrow-i"><Icon name={glyphOf(r.emoji)} /></span>
       <div className="grow">
+        {days.length > 0 && <div className="weyebrow show">{days.join(' · ')}</div>}
         <h1>{r.name}</h1>
         <div className="sub">{exCount(countEx(r.ex))}{assigned && <span className="tag acc">{t('from your coach')}</span>}</div>
       </div>
       {assigned
-        ? <Button size="sm" variant="tinted" icon="pencil" onClick={() => openSheet(close => <AdjustSheet r={r} close={close} />)}>{t('Request a change')}</Button>
-        : <Button size="sm" variant="tinted" icon="pencil" onClick={() => nav(planRoutineEditPath(r.id))}>{t('Edit')}</Button>}
+        ? <Button size="sm" icon="pencil" onClick={() => openSheet(close => <AdjustSheet r={r} close={close} />)}>{t('Request a change')}</Button>
+        : <Button size="sm" icon="pencil" onClick={() => nav(planRoutineEditPath(r.id))}>{t('Edit')}</Button>}
+      {countEx(r.ex) > 0 && <Button size="sm" variant="primary" icon="play" onClick={() => startFlow(r.id)}>{t('Start')}</Button>}
     </div>
     <div className="small muted mb-3">{t('Progression')}: {t(POLICY_NAME[r.prog || 'linear'])}</div>
 
@@ -45,14 +49,15 @@ export default function RoutineSummary({ r }) {
       <div>
         {countEx(r.ex) ? <div className="list">
           {groups.map((g, gi) => <div key={gi}>
-            {g.name !== null && <div className="sec" style={{ margin: '12px 2px 6px', fontWeight: 600 }}>{g.name}</div>}
+            {g.name !== null && <div className="sec sec-g">{g.name}</div>}
             {g.rows.map(({ e, i }) => {
               const ex = exOr(e.id)
               return <div key={i}>
                 {unitFirst.has(i) && <div className="ss-label"><Icon name="link" />{t('Superset')}</div>}
                 <div className={'item' + (inSS.has(i) ? ' in-ss' : '')}>
                   <Thumb ex={ex} />
-                  <div className="grow"><div className="tt cap1">{nameFor(ex)}</div><div className="ss">{exLine(e, S.unit)}</div></div>
+                  <div className="grow"><div className="tt cap1">{nameFor(ex)}</div></div>
+                  <div className="rx-v">{exLine(e, S.unit)}</div>
                 </div>
               </div>
             })}

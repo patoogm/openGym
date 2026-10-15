@@ -38,6 +38,9 @@
 
   /* system palette (iOS dark values) */
   --blue:#0a84ff; --green:#30d158; --red:#ff453a; --orange:#ff9f0a; --orange-ink:var(--orange);
+  --orange-soft:color-mix(in srgb,var(--orange) 16%,transparent);   /* live-session chip, streak, attention */
+  --red-ink:var(--red);   /* destructive text (Discard, Delete) */
+  --yellow-ink:var(--yellow);   /* weight goal text and line */
   --yellow:#ffd60a; --teal:#40c8e0; --indigo:#5e5ce6; --pink:#ff375f;
   --purple:#bf5af2; --mint:#63e6e2; --brown:#ac8e68; --grey:#8e8e93;
 
@@ -85,6 +88,8 @@
 
   --blue:#007aff; --green:#34c759; --red:#ff3b30; --orange:#ff9500;
   --orange-ink:#a85a00;   /* readable orange text on a light surface */
+  --red-ink:#d70015;      /* readable red text on a light surface */
+  --yellow-ink:#9a7b00;   /* readable yellow text on a light surface */
   --yellow:#ffcc00; --teal:#30b0c7; --indigo:#5856d6; --pink:#ff2d55;
   --purple:#af52de; --mint:#00c7be; --brown:#a2845e; --grey:#8e8e93;
   --acc-2:#248a3d;
@@ -183,6 +188,9 @@ body.resting #app{padding-bottom:calc(250px + var(--sab))}
 .hdr{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:8px 0 18px}
 .hdr h1{font-size:34px;line-height:1.06;font-weight:700;letter-spacing:-.028em}
 .hdr .sub{color:var(--label-2);font-size:15px;letter-spacing:-.006em;margin-top:4px}
+/* Home: the date reads first, the greeting under it */
+.hdr.date-first>div{display:flex;flex-direction:column}
+.hdr.date-first .sub{order:-1;margin:0 0 2px}
 
 .iconbtn{
   width:36px;height:36px;border-radius:50%;flex:none;
@@ -190,6 +198,7 @@ body.resting #app{padding-bottom:calc(250px + var(--sab))}
   display:flex;align-items:center;justify-content:center;font-size:18px;
   transition:background var(--fast),transform var(--fast);
 }
+.iconbtn.lg{width:44px;height:44px;font-size:20px}
 .iconbtn:active{background:var(--surface-2);transform:scale(.92)}
 .iconbtn.on-ss{background:var(--acc-soft);color:var(--acc)}
 .iconbtn.danger{color:var(--red)}
@@ -273,7 +282,7 @@ h4.sec{
 .btn.primary{background:var(--acc);color:var(--on-acc)}
 .btn.primary:active{background:var(--acc-2)}
 .btn.tinted{background:var(--acc-soft);color:var(--acc)}
-.btn.danger{background:color-mix(in srgb,var(--red) 15%,transparent);color:var(--red)}
+.btn.danger{background:color-mix(in srgb,var(--red) 15%,transparent);color:var(--red-ink)}
 .btn.ghost,.btn.plain{background:none;color:var(--acc);font-weight:400}
 .btn.ghost:active,.btn.plain:active{background:var(--surface-2)}
 .btn.sm{padding:8px 14px;width:auto;font-size:15px;border-radius:var(--r-sm);gap:5px}
@@ -337,8 +346,15 @@ h4.sec{
 .wk-mini .d.miss{background:none;box-shadow:inset 0 0 0 1.5px var(--orange)}
 .wk-mini .d.today{outline:1.5px solid var(--label-2);outline-offset:2px}
 .attn{display:flex;align-items:center;gap:8px;padding:10px 12px;margin-bottom:12px;border-radius:var(--r);
-  background:color-mix(in srgb,var(--orange) 12%,transparent);color:var(--label)}
-.attn > .icn:first-child{color:var(--orange);flex:none}
+  background:var(--orange-soft);color:var(--label)}
+.attn > .icn:first-child{color:var(--orange-ink);flex:none}
+.avatar{
+  width:44px;height:44px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+  background:var(--acc-soft);color:var(--label);font-size:15px;font-weight:600;letter-spacing:.02em;
+}
+.feed-ic{width:36px;height:36px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+  background:var(--acc);color:var(--on-acc);font-size:18px}
+.feed-ic.change{background:var(--orange-soft);color:var(--orange-ink)}
 .attn{cursor:pointer}
 .attn .grow{min-width:0}
 .live-dot{font-size:9px;color:var(--green);display:inline-block;margin-right:5px}
@@ -355,13 +371,12 @@ h4.sec{
 .wday .dot{width:5px;height:5px;border-radius:50%;background:transparent;margin:0 auto}
 .wday .dot.plan{background:var(--label-3)}
 .wday .dot.ovr{background:var(--orange)}
-.wday .dot.done{background:var(--acc)}
+.wday.done .num{background:var(--acc);color:var(--on-acc)}
+.wday.done .num .icn{font-size:18px;--icon-stroke:2.4}
 .wday:active{background:var(--surface-2)}
-.wday.today .num{
-  background:var(--acc);color:var(--on-acc);font-weight:600;
-  width:31px;height:31px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;margin:2px auto;
-}
+.wday .num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:2px auto}
+.wday.today .num{box-shadow:inset 0 0 0 1.5px var(--acc);font-weight:600}
+.wday.today.done .num{box-shadow:none}
 
 /* ----------------------------------------------------------------- list -- */
 .list{display:flex;flex-direction:column;gap:8px}
@@ -379,6 +394,14 @@ h4.sec{
 }
 .item .tt{font-size:16px;font-weight:400;line-height:1.25;letter-spacing:-.009em}
 .item .ss{color:var(--label-2);font-size:13px;margin-top:2px}
+/* routine rows (Plan): 44px icon square, 17/600 name, 15px subtitle */
+.item.rich .lrow-i{width:44px;height:44px;border-radius:var(--r);font-size:24px;background:var(--acc-soft);color:var(--acc)}
+.item.rich .tt{font-size:17px;font-weight:600;letter-spacing:-.014em}
+.item.rich .ss{font-size:15px}
+.list.col{display:flex;flex-direction:column}
+.sec-g{margin:var(--sp-3) 2px 6px;font-weight:600}
+.rx-v{flex:none;max-width:45%;text-align:right;font-size:15px;color:var(--label-2);overflow-wrap:anywhere}
+.weyebrow.show{display:block;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--label-2);margin-bottom:var(--sp-1)}
 .item .grow{flex:1;min-width:0}
 .chev{color:var(--label);flex:none;font-size:15px;--icon-stroke:2.4}
 .tag{
@@ -387,7 +410,7 @@ h4.sec{
   font-weight:500;text-transform:capitalize;
 }
 .tag.acc{background:var(--acc-soft);color:var(--acc)}
-.tag.warn{background:color-mix(in srgb,var(--orange) 16%,transparent);color:var(--orange-ink);margin-left:6px}
+.tag.warn{background:var(--orange-soft);color:var(--orange-ink);margin-left:6px}
 
 /* ---------------------------------------------------------------- chips -- */
 .chips{
@@ -559,6 +582,30 @@ h4.sec{
 /* ------------------------------------------------------------- workout --- */
 .wprog{height:4px;background:var(--surface-2);border-radius:99px;overflow:hidden;margin-bottom:16px}
 .wprog i{display:block;height:100%;background:var(--acc);border-radius:99px;transition:width var(--med) var(--ease)}
+/* session header: routine name + where you are on the left, live clock chip on the right */
+.whd{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--sp-3);margin-bottom:var(--sp-3)}
+.whd .grow{min-width:0}
+.whd .t-title{overflow-wrap:anywhere;line-height:1.15}
+.livechip{
+  display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 var(--sp-3);flex:none;
+  border-radius:99px;background:var(--orange-soft);color:var(--orange-ink);
+  font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;
+}
+.livechip .icn{font-size:16px}
+/* one segment per exercise (a superset is one) */
+.wseg{display:flex;gap:4px;margin-bottom:var(--sp-4)}
+.wseg i{flex:1;min-width:0;height:4px;border-radius:99px;background:var(--surface-3);transition:background var(--med) var(--ease)}
+.wseg i.cur{background:var(--acc-line)}
+.wseg i.on{background:var(--acc)}
+.wfoot{display:flex;flex-direction:column;gap:var(--sp-2)}
+.btn.discard{color:var(--red-ink)}
+.exname{font-size:22px;font-weight:700;letter-spacing:-.022em;line-height:1.2}
+.compact .exname{font-size:17px;font-weight:600}
+.exhead{margin-bottom:var(--sp-2)}
+.exhead .row{min-width:0}
+.exhead .iconbtn{flex:none}
+.exleft{min-width:0}
+.weyebrow{display:none}
 .wsection{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--label-3);margin-bottom:4px}
 .exmedia{position:relative;border-radius:var(--r-lg);overflow:hidden;background:#fff;margin-bottom:12px}
 .exmedia img{width:100%;height:320px;object-fit:contain;display:block}
@@ -584,7 +631,7 @@ h4.sec{
 .sethead .w-sp{flex:1.4;text-align:center}
 .sethead .r-sp{flex:1;text-align:center}
 .sethead .eff-sp{text-align:center}
-.sethead .ck-sp{width:30px;flex:none}
+.sethead .ck-sp{width:32px;flex:none}
 .setrow{display:flex;align-items:center;gap:8px;padding:7px 0;position:relative}
 .setrow+.setrow::before{
   content:'';position:absolute;left:32px;right:0;top:0;height:var(--hair);background:var(--sep);
@@ -611,14 +658,31 @@ h4.sec{
 .setrow.eff3 .stp.eff button{width:20px}
 .setrow.eff3 .stp .num{font-size:14px}
 .setrow.done .n{background:var(--acc);color:var(--on-acc)}
-.setrow.done{opacity:.45}
+.setrow.done>:not(.chk){opacity:.45}
+/* confirm slot is 32px for every row so the columns line up; the active row's button grows to a
+   44px target with a negative margin instead of pushing the steppers over */
+.setrow .chk{width:32px;height:32px}
+.setrow.pend .n,.setrow.pend .stp .num{color:var(--label-3)}
+.setrow.active{
+  margin:2px -8px;padding:var(--sp-2);border-radius:var(--r);
+  box-shadow:inset 0 0 0 1.5px var(--acc);
+}
+.setrow.active+.setrow::before,.setrow.done+.setrow.active::before{display:none}
+.setrow.active .n{background:var(--acc);color:var(--on-acc)}
+.setrow.active .stp button{height:48px}
+.setrow.active .stp .num{font-size:20px;font-weight:600}
+.setrow.active.eff3 .stp .num{font-size:16px}
+.setrow.active .chk{width:44px;height:44px;margin:-6px;background:var(--acc);color:var(--on-acc);box-shadow:none}
+.setrow.active .chk .icn{font-size:20px}
 /* why the next target is what it is (issue #17) */
 .progline{
-  display:flex;align-items:flex-start;gap:7px;margin:6px 0 2px;
-  font-size:13px;line-height:1.38;color:var(--acc);
+  display:flex;align-items:flex-start;gap:var(--sp-2);margin:var(--sp-2) 0 0;padding:10px var(--sp-3);
+  background:var(--acc-soft);border-radius:var(--r);
+  font-size:15px;line-height:1.38;color:var(--label);
 }
-.progline.warn{color:var(--yellow)}
-.progline svg{flex:none;margin-top:2px}
+.progline .icn,.progline svg{flex:none;margin-top:2px;font-size:16px;color:var(--acc)}
+.progline.warn{background:var(--orange-soft)}
+.progline.warn .icn,.progline.warn svg{color:var(--orange-ink)}
 
 /* start a timed set (issue #16) — sits where you'd otherwise reach for the checkbox */
 .setrow .setgo{
@@ -657,6 +721,9 @@ h4.sec{
 #timer.rest{flex-direction:column;align-items:stretch;gap:10px}
 #timer.rest .head{display:flex;align-items:center;gap:12px}
 #timer.rest .acts{display:flex;align-items:center;gap:8px}
+#timer .rest-ic,.timer-inline .rest-ic{font-size:22px;color:var(--acc);flex:none}
+#timer .rest-lbl,.timer-inline .rest-lbl{font-size:12px;color:var(--label-2);line-height:1.2}
+#timer .rest-tx,.timer-inline .rest-tx{min-width:66px}
 #timer.rest .acts .btn{padding-top:11px;padding-bottom:11px}   /* sweaty hands, mid-set */
 #timer.rest .acts .skip{margin-left:auto;min-width:84px}
 /* work timer (issue #16): the same bar doing the opposite job — outlined and tinted so a
@@ -687,8 +754,9 @@ h4.sec{
 }
 :root[data-theme="light"] .sheet{background:var(--bg)}
 @keyframes sheetup{from{transform:translateY(100%)}to{transform:none}}
+.sheet .btn.primary,.center .btn.primary{min-height:50px}
 .sheet .grab{width:36px;height:5px;border-radius:99px;background:var(--label-4);margin:6px auto 14px}
-.sheet h3{font-size:20px;font-weight:600;letter-spacing:-.021em;margin-bottom:14px}
+.sheet h3{font-size:20px;font-weight:700;letter-spacing:-.021em;margin-bottom:14px}
 .center{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   width:min(84vw,300px);background:var(--bg-el);border-radius:var(--r-lg);padding:20px;
@@ -777,10 +845,10 @@ h4.sec{
 .hm-days span{height:11px;font-size:10px;color:var(--label-2);line-height:11px}
 .hm-grid{display:flex;gap:3px}
 .hm-col{display:flex;flex-direction:column;gap:3px}
-.hm-c{width:11px;height:11px;border-radius:3px;background:var(--surface-2);flex:none}
-.hm-c.l1{background:color-mix(in srgb,var(--acc) 30%,var(--surface-2))}
-.hm-c.l2{background:color-mix(in srgb,var(--acc) 55%,var(--surface-2))}
-.hm-c.l3{background:color-mix(in srgb,var(--acc) 78%,var(--surface-2))}
+.hm-c{width:11px;height:11px;border-radius:3px;background:var(--surface-3);flex:none}
+.hm-c.l1{background:color-mix(in srgb,var(--acc) 28%,transparent)}
+.hm-c.l2{background:color-mix(in srgb,var(--acc) 50%,transparent)}
+.hm-c.l3{background:color-mix(in srgb,var(--acc) 75%,transparent)}
 .hm-c.l4{background:var(--acc)}
 .hm-c.today{box-shadow:0 0 0 1.5px var(--acc)}
 .hm-c.future{opacity:.3}
@@ -815,32 +883,34 @@ h4.sec{
 
 .mrow{display:flex;align-items:center;gap:9px;padding:5px 0}
 .mrow .nm{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mrow .bar{width:74px;height:5px;border-radius:3px;background:var(--surface-2);flex:none;overflow:hidden}
-.mrow .bar i{display:block;height:100%;background:var(--acc);border-radius:3px}
+.mrow .bar{width:96px;height:8px;border-radius:4px;background:var(--surface-3);flex:none;overflow:hidden}
+.mrow .bar i{display:block;height:100%;background:var(--acc);border-radius:4px}
 .mrow .v{font-size:12px;color:var(--label-2);min-width:52px;text-align:right;flex:none}
 /* A headline number inside a card — tile weight without a tile around it, for the pair of
    readings at the top of the effort card. */
 .stat-v{font-size:26px;font-weight:600;letter-spacing:-.026em;line-height:1.1}
 .mchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
 .mchip{font-size:12px;padding:4px 9px;border-radius:99px;background:var(--surface-2);color:var(--label-2)}
-.mchip.miss{background:color-mix(in srgb,var(--orange) 16%,transparent);color:var(--orange)}
-.mchip.on{background:var(--acc);color:#fff}
+.mchip.miss{background:var(--orange-soft);color:var(--orange-ink)}
+.mchip.on{background:var(--acc);color:var(--on-acc)}
+.mchip.hit{background:var(--acc-soft);color:var(--label)}
 
 /* --- stat tiles --- */
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .tile{background:var(--surface);border-radius:var(--r-card);padding:14px}
 .tile .l{
-  color:var(--label-2);font-size:13px;font-weight:400;letter-spacing:-.004em;
+  color:var(--label-2);font-size:12px;font-weight:400;letter-spacing:-.004em;
   text-transform:none;display:flex;align-items:center;gap:5px;
 }
 .tile .l .icn{font-size:14px;color:var(--label)}
-.tile .v{font-size:26px;font-weight:600;letter-spacing:-.026em;margin-top:5px;line-height:1.1}
+.tile .v{font-size:30px;font-weight:600;letter-spacing:-.028em;margin-top:5px;line-height:1.1}
+.tile .v.sm{font-size:22px}
 .tile.tappable:active{background:var(--surface-2)}
 
 /* --- PR badge --- */
 .pr{
   display:inline-flex;align-items:center;gap:4px;
-  background:color-mix(in srgb,var(--yellow) 18%,transparent);color:var(--yellow);
+  background:color-mix(in srgb,var(--yellow) 18%,transparent);color:var(--yellow-ink);
   border-radius:6px;padding:3px 8px;font-size:12px;font-weight:500;
 }
 .pr .icn{font-size:13px}
@@ -921,16 +991,17 @@ h4.sec{
 
 /* --- home: today's session row --- */
 .today-row{
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-  margin-top:12px;padding:12px 14px;border-radius:var(--r);background:var(--surface-2);
-  transition:background var(--fast);width:100%;text-align:left;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--sp-3);
+  margin-top:var(--sp-3);padding:var(--sp-3) var(--sp-4);border-radius:var(--r);background:var(--surface-2);
 }
-.today-row:active{background:var(--surface-3)}
-.today-row .lbl2{font-size:11px;font-weight:500;letter-spacing:.03em;text-transform:uppercase;color:var(--label-3)}
+.today-info{gap:var(--sp-3);min-width:0;flex:1 1 200px}
+.today-tx{min-width:0}
+.today-row .lbl2{font-size:12px;color:var(--label-2)}
 .today-row .ttl{
-  font-weight:500;font-size:17px;line-height:1.25;text-transform:capitalize;
-  letter-spacing:-.012em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;
+  font-weight:600;font-size:20px;line-height:1.25;text-transform:capitalize;
+  letter-spacing:-.018em;overflow-wrap:anywhere;margin-top:1px;
 }
+.today-row .today-go{flex:1 1 100%;min-height:50px}
 
 /* --------------------------------------------------- desktop (≥1000px) --- */
 .cols{display:block}
@@ -956,7 +1027,21 @@ h4.sec{
   #timer.rest{flex-direction:row;align-items:center;gap:14px}
   #timer.rest .head{flex:1;min-width:0}
   .exmedia img{height:380px}
-  .hm-wrap{display:flex;flex-direction:column;align-items:center}
+  /* the heatmap scales to its card (53 week columns, square cells) instead of a fixed 14px grid,
+     so it fits a half-width card without scrolling */
+  .hm-wrap{display:flex;flex-direction:column;overflow:visible}
+  .hm-months{display:grid;grid-template-columns:repeat(53,minmax(0,1fr));gap:3px}
+  .hm-months span{width:auto}
+  .hm-days{display:grid;grid-template-rows:repeat(7,1fr);gap:3px}
+  .hm-days span{height:auto;display:flex;align-items:center}
+  .hm-grid{flex:1;min-width:0;display:grid;grid-template-columns:repeat(53,minmax(0,1fr));gap:3px}
+  .hm-col{display:grid;grid-template-rows:repeat(7,auto);gap:3px}
+  .hm-c{width:auto;height:auto;aspect-ratio:1}
+  .hm-legend .hm-c{width:10px;height:10px;aspect-ratio:auto}
+  /* two cards side by side at the same height; the first one centres its content */
+  .cols.eq{align-items:stretch}
+  .cols.eq>.card{display:flex;flex-direction:column}
+  .cols.eq>.card:first-child .hm-wrap{flex:1;justify-content:center}
 }
 
 /* -------------------------------------------------- coach desktop shell --- */
@@ -983,6 +1068,7 @@ h4.sec{
   .cside-i .grow{flex:1;min-width:0}
   .cside-i:hover{background:var(--surface)}
   .cside-i.on{background:var(--surface-2);color:var(--label)}
+  .live-dot-o{width:8px;height:8px;border-radius:50%;background:var(--orange);flex:none}
   .cside .btn.primary{margin-top:14px}
   .cside-foot{margin-top:auto;padding-top:8px;border-top:var(--hair) solid var(--sep)}
   .cmain,.amain{min-width:0}
@@ -1009,7 +1095,7 @@ h4.sec{
    .cside-i); what is new is the content frame, a sidebar group divider, and the rest/work
    timer docked in the sidebar so it is visible on every screen. */
 @media (min-width:1000px){
-  .amain-in{max-width:var(--wide-w);margin:0 auto;padding:22px 28px calc(40px + var(--sab))}
+  .amain-in{max-width:none;margin:0;padding:22px 28px calc(40px + var(--sab))}
   .amain-in.vfade{animation:viewfade var(--med) var(--ease)}
   .cside-sec{margin-top:var(--sp-4);padding-top:var(--sp-2);border-top:var(--hair) solid var(--sep)}
   .cside-i .grow{overflow-wrap:anywhere}
@@ -1071,8 +1157,9 @@ h4.sec{
     display:flex;flex-direction:column;gap:var(--sp-4);
     padding:var(--sp-4);background:var(--surface);border-radius:var(--r-card);
   }
-  .wrail-name{font-size:17px;font-weight:600;letter-spacing:-.02em;overflow-wrap:anywhere}
-  .wrail-sub{font-size:15px;color:var(--label-2);margin:2px 0 var(--sp-3)}
+  .wrail-name{font-size:15px;color:var(--label-2);overflow-wrap:anywhere}
+  .wrail-time{font-size:40px;font-weight:700;letter-spacing:-.03em;line-height:1.1;color:var(--orange-ink);margin:2px 0 var(--sp-3)}
+  .wrail-sub{font-size:15px;color:var(--label-2);margin:0 0 var(--sp-2)}
   .wrail-hd .wprog{margin-bottom:0}
   /* the outline scrolls on its own so the timer and Finish stay in view */
   .wout{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
@@ -1083,9 +1170,10 @@ h4.sec{
     transition:background var(--fast),color var(--fast);
   }
   .wout-i:hover{background:var(--surface-2)}
-  .wout-i.current{background:var(--surface-2);color:var(--label);box-shadow:inset 3px 0 0 var(--acc)}
+  .wout-i.current{background:var(--acc-soft);color:var(--label)}
   .wout-i.done{color:var(--label-3)}
   .wout-ic{width:20px;font-size:16px;flex:none;display:flex;justify-content:center}
+  .wout-dot{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--label-4)}
   .wout-i.current .wout-ic,.wout-i.done .wout-ic{color:var(--acc)}
   .wout-names{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:15px;overflow-wrap:anywhere}
   .wout-ss{font-size:14px;color:var(--acc);flex:none}
@@ -1094,11 +1182,19 @@ h4.sec{
   .wrail-ft .timer-inline{background:var(--surface-2)}
   /* 44px touch targets for the set steppers (tablet/laptop touch) */
   .wmain .setrow .stp button{height:44px}
+  .wmain .setrow.active{background:var(--surface-2)}
+  .wmain .setrow.active .stp{background:var(--surface-3)}
+  .wmain .setrow.active .stp button{height:44px}
+  .weyebrow{display:block;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--label-2);margin-bottom:var(--sp-1)}
+  .exblock:not(.compact) .exname{font-size:34px;letter-spacing:-.03em}
+  .wrail-ft .btn.primary,.wrail-ft .btn.tinted{min-height:48px}
 }
 /* media beside the set table once the main column has room (≈1440px viewport and up) */
 @container (min-width:760px){
-  .exblock.has-media:not(.compact){display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:var(--sp-5);align-items:start}
+  .exblock.has-media:not(.compact){display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--sp-2) var(--sp-5);align-items:start}
+  .exblock.has-media:not(.compact) .exhead{grid-column:1/-1}
   .exblock.has-media:not(.compact) .exmedia{margin-bottom:0}
+  .exblock.has-media:not(.compact) .exmedia+*{margin-top:var(--sp-3)}
   .exblock.has-media:not(.compact) .exmedia:not(.mini) img{height:300px}
 }
 
@@ -1121,8 +1217,11 @@ h4.sec{
 .iconbtn.sm{width:30px;height:30px;font-size:15px}
 .card .big.sm{font-size:22px}
 /* the "Today" row's icon square: in progress / planned / rest day */
-.today-row .lrow-i.live{background:var(--orange)}
-.today-row .lrow-i.plan{background:var(--acc)}
+.today-row .lrow-i{width:44px;height:44px;border-radius:var(--r);font-size:24px}
+.today-row .lrow-i.live{background:var(--orange);color:#000}
+.today-row .lrow-i.plan{background:var(--orange-soft);color:var(--orange-ink)}
+.lrow-i.flame{background:var(--orange-soft);color:var(--orange-ink);width:36px;height:36px;border-radius:10px;font-size:22px}
+.goal-ink,.btn.goal-ink{color:var(--yellow-ink)}
 .today-row .lrow-i.rest{background:var(--surface-3)}
 /* .tag.warn carries a left margin for use inside lists; the Today row spaces itself */
 .today-row .tag.warn{margin-left:0}
@@ -1143,20 +1242,36 @@ h4.sec{
    coach's .cgrid/.cmaster/.cdetail, but inside the athlete content frame (which already has
    its own padding and width) instead of the full-bleed coach shell. */
 @media (min-width:1000px){
-  .pane{display:grid;grid-template-columns:var(--list-w) minmax(0,1fr);column-gap:var(--sp-6);align-items:start}
+  .pane{display:grid;grid-template-columns:var(--list-w) minmax(0,1fr);column-gap:var(--sp-6);align-items:start;position:relative}
+  /* drag handle between list and detail: a 12px hit area over the column gap, with a hairline that
+     lights up on hover/drag; the list column width is --list-w, set by PaneGrip */
+  .pane-grip{
+    position:absolute;top:0;bottom:0;z-index:2;width:12px;cursor:col-resize;touch-action:none;
+    left:calc(var(--list-w) + var(--sp-6) / 2 - 6px);
+  }
+  .pane-grip::after{
+    content:"";position:absolute;top:var(--sp-2);bottom:var(--sp-2);left:5px;width:2px;border-radius:1px;
+    background:transparent;transition:background var(--fast);
+  }
+  .pane-grip:hover::after,.pane-grip:focus-visible::after,body.resizing .pane-grip::after{background:var(--acc-line)}
+  .pane-grip:focus-visible{outline:none}
+  body.resizing{cursor:col-resize;user-select:none}
   .pane-list{
     position:sticky;top:var(--sp-5);max-height:calc(100vh - 2 * var(--sp-5));overflow-y:auto;
     min-width:0;padding-right:2px;
   }
   .pane-detail{min-width:0;container-type:inline-size}
   #app .pane-list .list,#app .pane-detail .list,#app .redit .list{display:flex;flex-direction:column}
-  .pane-list .item.sel{background:var(--surface-2);box-shadow:inset 3px 0 0 var(--acc)}
+  .pane-list .item.sel{background:var(--acc-soft);box-shadow:inset 0 0 0 1.5px var(--acc)}
   .pane-detail .narrow{max-width:none;margin:0}
   .pane-detail .hdr>.lrow-i{align-self:center}
   /* a routine's summary: the muscle map goes beside the exercises only once the detail pane
      has room (≈1366px viewport and up); below that it stacks under them */
   .rsum{display:grid;grid-template-columns:minmax(0,1fr);column-gap:var(--sp-5);align-items:start}
   .rsum>*{min-width:0}
+  /* exercise rows sit inside wrapper divs (section > row), so .list's gap never reached them */
+  .rsum .list>div{display:flex;flex-direction:column;gap:var(--sp-2)}
+  .rsum .list>div>.sec-g{margin-bottom:0}
   /* the routine editor: exercises on the left, progression / coverage / delete on the right */
   .redit{
     display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
@@ -1195,10 +1310,29 @@ h4.sec{
   .lib-list .chips{flex-wrap:wrap;overflow-x:hidden;overflow-y:auto;max-height:116px;padding:2px}
   .pane-detail .exmedia{margin-bottom:var(--sp-3)}
 }
-/* media + tags on the left, numbers and instructions on the right once the panel has room */
+/* routine editor: exercise rows sit in wrapper divs inside each section, so .list gap never reached them */
+.rows>div+div{margin-top:var(--sp-2)}
+/* Exercise detail (sheet and Library panel). Numbers and instructions live in cards; the primary
+   action sits under the media. On a wide container the media column is the bigger one and the
+   numbers + instructions go beside it. */
+.exd-head{display:flex;align-items:flex-start;gap:var(--sp-3)}
+.exd-head h3{flex:1;min-width:0}
+.exd-add-main{margin-top:var(--sp-3)}
+.exd-main{margin-top:var(--sp-3)}
+.exd-below{margin-top:var(--sp-3)}
+.exd-below .card:last-child{margin-bottom:0}
+.exd-main .card,.exd-below .card{margin-bottom:var(--sp-3)}
+.exd-main .card h4.sec,.exd-below .card h4.sec{margin:0 0 var(--sp-2);padding:0}
+.exd-best{display:flex;align-items:center;gap:var(--sp-3)}
+.exd-best .lrow-i{width:40px;height:40px;border-radius:var(--r);background:var(--surface-2);color:var(--yellow-ink);font-size:22px}
 @container (min-width:760px){
-  .exd{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--sp-5);align-items:start}
+  .exd-head{margin-bottom:var(--sp-4)}
+  .exd-head h3{margin-bottom:0}
+  .exd{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);column-gap:var(--sp-5);align-items:start}
   .exd>*{min-width:0}
+  .exd-main{margin-top:0}
+  .pane-detail .exd-head h3{font-size:28px;letter-spacing:-.024em}
+  .pane-detail .exd-head,.pane-detail .exd{max-width:1240px}
 }
 
 /* ----------------------------------------------- settings panes (desktop) --- */
@@ -1210,6 +1344,12 @@ h4.sec{
 /* -------------------------------------------- profile + login (desktop) --- */
 /* Login: the old inline wrapper, as a class so desktop can turn it into a card. */
 .login{display:flex;flex-direction:column;justify-content:center;min-height:78vh;text-align:center}
+.login-logo{
+  width:72px;height:72px;border-radius:var(--r-xl);margin:0 auto;display:flex;align-items:center;justify-content:center;
+  background:var(--acc);color:var(--on-acc);font-size:40px;
+}
+.login-h1{font-size:34px;font-weight:700;letter-spacing:-.028em;margin:var(--sp-3) 0 var(--sp-1)}
+.login .small{line-height:1.5}
 @media (min-width:1000px){
   .amain-in .narrow.page{max-width:var(--page-w)}
   .narrow.login{
@@ -1222,7 +1362,8 @@ h4.sec{
 
 /* ------------------------------------------------ desktop polish (plan 8) --- */
 @media (min-width:1000px){
-  .today-row .tag{white-space:nowrap}
+  .today-row .today-go{flex:none;width:auto;min-width:140px;padding-left:var(--sp-5);padding-right:var(--sp-5)}
+  .today-row .btn{white-space:nowrap}
   /* long labels (de/ru/hi) wrap instead of running under the chevron */
   .pane-list .item .tt{overflow-wrap:anywhere}
   /* focus rings inside scroll containers must not be clipped by the container's edge */
@@ -1246,5 +1387,41 @@ h4.sec{
 .sp-1{height:var(--sp-1)}.sp-2{height:var(--sp-2)}.sp-3{height:var(--sp-3)}.sp-4{height:var(--sp-4)}.sp-5{height:var(--sp-5)}
 .ta-l{text-align:left!important}.ta-c{text-align:center!important}.ta-r{text-align:right!important}
 .w-full{width:100%!important}
+.my-2{margin-block:var(--sp-2)!important}.my-3{margin-block:var(--sp-3)!important}
+.gap-0{gap:0!important}
+.wrap{flex-wrap:wrap}.f-1{flex:1}.jc-c{justify-content:center}
+.lh{line-height:1.45}
+.fs-15{font-size:15px}.fs-20{font-size:20px}
+.red-ink{color:var(--red-ink)}.warn-ink{color:var(--orange-ink)}
+
+/* --- sheets and dialogs (were inline styles in sheets.jsx) --- */
+.sheet-body{padding:var(--sp-2) 0}
+.sheet-hero{font-size:44px;display:flex;justify-content:center;color:var(--acc)}
+.tiles.compact .v{font-size:18px}
+.brow{padding:var(--sp-2) 2px;border-bottom:var(--hair) solid var(--sep)}
+.sched-row{padding:var(--sp-3) 2px;border-block:var(--hair) solid var(--sep);margin-bottom:var(--sp-4);gap:var(--sp-3)}
+.sect-t-pad{padding:0 2px var(--sp-2)}
+.hint{margin:var(--sp-2) 2px 0}
+.pull-up{margin-top:calc(-1 * var(--sp-3))}
+.ic-sm{font-size:14px}
+.ic-star{font-size:12px;display:inline-block;margin-right:var(--sp-1);vertical-align:-1px}
+.lrow-i.neutral{background:var(--surface-3)}
+.lrow-i.s34{width:34px;height:34px;border-radius:var(--r-sm);font-size:19px}
+.k-acc{background:var(--acc)}.k-plan{background:var(--label-3)}.k-ovr{background:var(--orange)}
 .nocase{text-transform:none!important;letter-spacing:0!important}
 .hidden{display:none!important}
+
+/* ------------------------------------------------------------ scrollbars --- */
+/* Desktop pointers only: slim rounded thumb, no track or arrow buttons, visible only while the
+   area is hovered (iOS-like). Touch keeps the native overlay bars. ::-webkit-scrollbar is used
+   on purpose: the standard scrollbar-width/color props keep the arrow buttons on Windows. */
+@media (hover:hover) and (pointer:fine){
+  ::-webkit-scrollbar{width:12px;height:12px;background:transparent}
+  ::-webkit-scrollbar-button{display:none}
+  ::-webkit-scrollbar-corner{background:transparent}
+  ::-webkit-scrollbar-thumb{
+    background:transparent;border-radius:6px;border:3px solid transparent;background-clip:content-box;
+  }
+  *:hover::-webkit-scrollbar-thumb{background-color:var(--label-4)}
+  *::-webkit-scrollbar-thumb:hover{background-color:var(--label-3)}
+}
