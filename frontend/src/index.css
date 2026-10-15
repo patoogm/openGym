@@ -1081,7 +1081,7 @@ h4.sec{
    .cside-i); what is new is the content frame, a sidebar group divider, and the rest/work
    timer docked in the sidebar so it is visible on every screen. */
 @media (min-width:1000px){
-  .amain-in{max-width:var(--wide-w);margin:0 auto;padding:22px 28px calc(40px + var(--sab))}
+  .amain-in{max-width:var(--wide-w);margin:0;padding:22px 28px calc(40px + var(--sab))}
   .amain-in.vfade{animation:viewfade var(--med) var(--ease)}
   .cside-sec{margin-top:var(--sp-4);padding-top:var(--sp-2);border-top:var(--hair) solid var(--sep)}
   .cside-i .grow{overflow-wrap:anywhere}
