@@ -131,7 +131,7 @@ export default function RoutineEdit() {
     ? <div className="list">
       {(() => { const groups = sectionsOf(r.ex); const leadingOffset = groups[0] && groups[0].name === null ? 1 : 0; const hasSections = r.ex.some(isSection); return groups.map((g, gi) => {
         const mi = g.name === null ? -1 : sectionMarkerIndex(gi - leadingOffset)
-        return <div key={gi}>
+        return <div key={gi} className="rows">
           {g.name !== null && <SectionHeader name={g.name}
             onRename={v => { if (mi < 0) return; update(s => { s.routines.find(x => x.id === id).ex[mi].section = v.trim() || t('New section') }) }}
             onMove={dir => { if (mi < 0) return; move(mi, dir) }}

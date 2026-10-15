@@ -1296,6 +1296,8 @@ h4.sec{
   .lib-list .chips{flex-wrap:wrap;overflow-x:hidden;overflow-y:auto;max-height:116px;padding:2px}
   .pane-detail .exmedia{margin-bottom:var(--sp-3)}
 }
+/* routine editor: exercise rows sit in wrapper divs inside each section, so .list gap never reached them */
+.rows>div+div{margin-top:var(--sp-2)}
 /* Exercise detail (sheet and Library panel). Numbers and instructions live in cards; the primary
    action sits under the media. On a wide container the media column is the bigger one and the
    numbers + instructions go beside it. */
