@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import { fmtNum, fmtDate, MONTHS, isoOf } from '../lib/format.js'
 import { t } from '../lib/i18n.js'
 
-const W = 340   // viewBox width; the svg stretches to its container, height comes from `h`
+const W0 = 340  // viewBox width until the container is measured (first paint, tests)
 
 // points: [{ t: ms, y: num, d?: iso, m?: 0..1, note?: str }] sorted by t.
 //   m    marks the point — a second reading carried by the same dot (bigger and more solid =
@@ -17,6 +17,21 @@ export default function LineChart({ points, h = 150, unit = '', color = 'var(--a
   const wrapRef = useRef(null)
   const tipRef = useRef(null)
   const [hover, setHover] = useState(null)   // { x, y, iso, v }
+  // The viewBox is as wide as the container, in pixels, so text and strokes keep their size at
+  // any width and the height is exactly `h` (a fixed 340-unit box scaled up on a desktop card
+  // made the labels huge, the chart tall and the line skewed).
+  const [W, setW] = useState(W0)
+  const has = !!(points && points.length)
+  useLayoutEffect(() => {
+    const el = wrapRef.current
+    if (!el) return
+    const measure = () => { const w = Math.round(el.clientWidth); if (w >= 120) setW(w) }
+    measure()
+    if (typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [has])
 
   // The tooltip is placed after layout, from its measured size, because the chart
   // lives in an overflow-clipped box: a fixed half-width offset (what this used to
@@ -110,7 +125,7 @@ export default function LineChart({ points, h = 150, unit = '', color = 'var(--a
       onMouseMove={onMove} onMouseDown={onMove}
       onMouseLeave={() => setHover(null)}
       onTouchStart={onMove} onTouchMove={onMove}>
-      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" style={{ aspectRatio: `${W}/${H}` }}>
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
         <defs><linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor={color} stopOpacity=".28" />
           <stop offset="1" stopColor={color} stopOpacity="0" />
