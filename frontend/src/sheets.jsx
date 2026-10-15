@@ -290,12 +290,11 @@ export function ExerciseDetail({ ex, close }) {
   const last = lastEntryFor(st, ex.id)
   const best = bestWeightFor(st, ex.id)
   const steps = instrFor(ex)
-  // the primary action sits in the header on a wide panel and under the media on a narrow one
+  // the primary action sits under the media, next to the tags
   const add = cls => <Button variant="primary" icon="plus" className={cls} onClick={() => addToRoutineSheet(ex)}>{t('Add to my plan')}</Button>
   return <>
     <div className="exd-head">
       <h3 className="cap1">{nameFor(ex)}</h3>
-      {add('exd-add-head')}
     </div>
     <div className="exd">
     <div className="exd-media">
