@@ -301,9 +301,6 @@ export default function Stats() {
     <div className="list">{recentRows}</div>
   </div> : null
 
-  // two columns only when both cards exist; a lone card takes the full width
-  const pair = (a, b) => a && b ? <div className="cols">{a}{b}</div> : (a || b)
-
   if (!desktop) return <>
     {hdr}{tiles}{heat}{muscle}{effort}
     <div className="cols">{bwCard}{exCard}</div>
@@ -312,8 +309,8 @@ export default function Stats() {
 
   return <>
     {hdr}{tiles}{heat}
-    {pair(muscle, effort)}
-    {pair(bwCard, recentCard)}
+    {(muscle || effort) && <div className="cols">{muscle}{effort}</div>}
+    <div className="cols">{bwCard}{recentCard}</div>
     {exCard}
   </>
 }
