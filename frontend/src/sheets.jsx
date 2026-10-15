@@ -311,8 +311,7 @@ export function ExerciseDetail({ ex, close }) {
       <Button icon="pencil" className="f-1" onClick={() => { close && close(); customExSheet(ex) }}>{t('Edit')}</Button>
       <Button variant="danger" icon="trash" className="f-1" onClick={() => deleteCustomEx(ex, close)}>{t('Delete')}</Button>
     </div>}
-    </div>
-    <div className="exd-main">
+    <div className="exd-below">
     {best > 0 && <div className="card exd-best">
       <span className="lrow-i"><Icon name="trophy" /></span>
       <div className="grow">
@@ -322,6 +321,9 @@ export function ExerciseDetail({ ex, close }) {
       </div>
     </div>}
     {!isCardio(ex) && <div className="card"><OneRM ex={ex} /></div>}
+    </div>
+    </div>
+    <div className="exd-main">
     {steps.length > 0 && <div className="card">
       <h4 className="sec">{t('How to')}{!INSTR_LANGS.includes(getLang()) && <span className="dim nocase"> · {t('instructions in English')}</span>}</h4>
       <ol className="steps-list">{steps.map((s, i) => <li key={i}>{s}</li>)}</ol>
